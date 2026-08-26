@@ -5,7 +5,7 @@
 
 # 站点信息（侧边栏 / 页脚展示）
 blog_name: 我的技术博客
-blog_author: ABC1319
+blog_author: Sky
 blog_description: 基于 Hexo + Butterfly 搭建
 
 # 导航菜单：名称: 路径 || 图标
@@ -22,11 +22,11 @@ social:
 
 # 头像（复用主题自带图片，避免裂图；可换成自己的 /img/avatar.png）
 avatar:
-  img: /img/butterfly-icon.png
+  img: /img/favicon.png
   effect: false
 
 # 站点图标
-favicon: /img/favicon.ico
+favicon: /img/favicon.png
 
 # 本地搜索（依赖 hexo-generator-search）
 local_search:
