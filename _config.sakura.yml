@@ -41,7 +41,7 @@ bg:
   - /img/wallpaper/country-cottage.webp
   - /img/wallpaper/hammock.webp
   - /img/wallpaper/bookshelf.webp
-bgclass: filter-dot
+bgclass: ""  # 原图效果，不添加像素/点阵滤镜
 
 # 开始菜单（使用本地壁纸）
 startdash:
