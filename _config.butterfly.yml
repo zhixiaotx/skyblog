@@ -1,0 +1,40 @@
+# ===========================================================
+# Butterfly 主题配置覆盖（放在站点根目录，升级主题不会丢失）
+# 完整配置见 themes/butterfly/_config.yml
+# ===========================================================
+
+# 站点信息（侧边栏 / 页脚展示）
+blog_name: 我的技术博客
+blog_author: ABC1319
+blog_description: 基于 Hexo + Butterfly 搭建
+
+# 导航菜单：名称: 路径 || 图标
+menu:
+  Home: / || fas fa-home
+  Archives: /archives/ || fas fa-archive
+  Tags: /tags/ || fas fa-tags
+  Categories: /categories/ || fas fa-folder-open
+  About: /about/ || fas fa-heart
+
+# 社交链接：图标: 链接 || 名称 || 颜色
+social:
+  fab fa-github: https://github.com/zhixiaotx || Github || '#24292e'
+
+# 头像（复用主题自带图片，避免裂图；可换成自己的 /img/avatar.png）
+avatar:
+  img: /img/butterfly-icon.png
+  effect: false
+
+# 站点图标
+favicon: /img/favicon.ico
+
+# 本地搜索（依赖 hexo-generator-search）
+local_search:
+  enable: true
+  preload: true
+  top_n_per_article: 1
+
+# 首页文章列表展示摘要
+index_post_content:
+  method: 3
+  length: 500
