@@ -1,0 +1,70 @@
+# ============================================================
+# Sakura 主题覆盖配置（对应 themes/sakura/_config.yml）
+# 站点级配置在根 _config.yml；这里只覆盖主题自定义项
+# ============================================================
+
+# 站点名（导航栏显示）
+prefixName: ""
+siteName: Sky
+
+# favicon 与头像（复用已上传到 source/img 的图片）
+favicon: /img/favicon.png
+avatar: /img/favicon.png
+
+url: https://zhixiaotx.github.io/skyblog
+description: 基于 Hexo + Sakura 搭建的二次元技术博客
+cdn: https://cdn.jsdelivr.net/gh/honjun/cdn@1.6
+
+# 关闭 pjax / mathjax，减少首次部署的兼容风险
+pjax: 0
+mathjax: 0
+
+notice: 欢迎来到 Sky 的小天地 🌸
+lazyloadImg: https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg
+
+# 导航菜单（路径已通过主题 url_for 兼容 /skyblog/ 子目录）
+menus:
+  首页: { path: /, fa: fa-home }
+  归档: { path: /archives/, fa: fa-archive }
+  标签: { path: /tags/, fa: fa-tags }
+  分类: { path: /categories/, fa: fa-folder-open }
+  关于: { path: /about/, fa: fa-heart }
+  RSS: { path: /atom.xml, fa: fa-rss }
+
+# 首页背景图（使用 Sakura 官方 CDN 封面）
+bg:
+  - https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(1).jpg.webp
+  - https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(2).jpg.webp
+  - https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(3).jpg.webp
+  - https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(4).jpg.webp
+bgclass: filter-dot
+
+# 开始菜单（用 CDN 封面图，避免 404）
+startdash:
+  - {url: /about/, title: Sky, desc: 关于本站, img: https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(1).jpg.webp}
+  - {url: /archives/, title: 归档, desc: 所有文章, img: https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(2).jpg.webp}
+
+siteBuildingTime: 08/26/2026
+
+# 移动端社交按钮（使用 Font Awesome 图标，无需图片）
+msocial:
+  github: {url: https://github.com/zhixiaotx, fa: fa-github, color: 333}
+  email: {url: mailto:1224329606@qq.com, fa: fa-envelope, color: dd4b39}
+
+# 背景音乐（网易云）
+aplayer:
+  id: 2660651585
+  server: netease
+  type: playlist
+  fixed: true
+  autoplay: false
+  loop: all
+  order: random
+  preload: auto
+  volume: 0.7
+  mutex: true
+
+# 评论系统：暂不启用（如需可配置 Valine / Waline）
+valine: false
+waline:
+  enable: false
