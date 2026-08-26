@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - 页面走丢了 | Sky</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+      background: #0d1117;
+      color: #fff;
+      overflow: hidden;
+    }
+    .bg {
+      position: fixed; inset: 0;
+      background: url(/skyblog/img/wallpaper/night-clouds.webp) center/cover no-repeat;
+      filter: brightness(0.55) saturate(1.1);
+      transform: scale(1.05);
+      animation: slowzoom 20s ease-in-out infinite alternate;
+    }
+    @keyframes slowzoom { from { transform: scale(1.05); } to { transform: scale(1.15); } }
+    .overlay {
+      position: fixed; inset: 0;
+      background: radial-gradient(circle at 50% 40%, rgba(254,150,0,0.18), rgba(13,17,23,0.75) 70%);
+    }
+    .wrap {
+      position: relative; z-index: 2;
+      height: 100%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 24px;
+    }
+    .code {
+      font-size: clamp(72px, 18vw, 180px);
+      font-weight: 800; letter-spacing: 6px;
+      background: linear-gradient(135deg, #fe9600, #ffd479);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 8px 40px rgba(254,150,0,0.35);
+      line-height: 1;
+    }
+    .sub { margin-top: 8px; font-size: clamp(16px, 3.5vw, 22px); color: #ffe9c7; letter-spacing: 2px; }
+    .msg { margin-top: 18px; font-size: 14px; color: rgba(255,255,255,0.7); max-width: 420px; line-height: 1.7; }
+    .petals { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+    .petal {
+      position: absolute; top: -10%;
+      width: 12px; height: 12px; background: #ffb7c5;
+      border-radius: 12px 1px 12px 1px; opacity: 0.8;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-10vh) rotate(0deg); }
+      100% { transform: translateY(110vh) rotate(360deg); }
+    }
+    .btn {
+      margin-top: 30px; display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+    }
+    .btn a {
+      text-decoration: none; color: #0d1117; font-weight: 700;
+      padding: 12px 26px; border-radius: 999px;
+      background: linear-gradient(135deg, #fe9600, #ffd479);
+      box-shadow: 0 6px 20px rgba(254,150,0,0.4);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .btn a.ghost {
+      color: #ffe9c7; background: transparent;
+      border: 1px solid rgba(255,233,199,0.5); box-shadow: none;
+    }
+    .btn a:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(254,150,0,0.55); }
+    .btn a.ghost:hover { background: rgba(255,233,199,0.12); }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="overlay"></div>
+  <div class="petals" id="petals"></div>
+  <div class="wrap">
+    <div class="code">404</div>
+    <div class="sub">呀，页面不小心走丢了 🌸</div>
+    <p class="msg">你访问的页面可能已被移动、删除，或者从来没有存在过。<br>不如回到首页，看看别的风景吧～</p>
+    <div class="btn">
+      <a href="/skyblog/">回到首页</a>
+      <a class="ghost" href="/skyblog/archives/">浏览文章</a>
+    </div>
+  </div>
+  <script>
+    // 生成樱花飘落
+    (function () {
+      var box = document.getElementById('petals');
+      for (var i = 0; i < 18; i++) {
+        var p = document.createElement('div');
+        p.className = 'petal';
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.animationDuration = (6 + Math.random() * 8) + 's';
+        p.style.animationDelay = (-Math.random() * 10) + 's';
+        p.style.opacity = (0.4 + Math.random() * 0.5).toFixed(2);
+        p.style.transform = 'scale(' + (0.6 + Math.random() * 0.9) + ')';
+        box.appendChild(p);
+      }
+    })();
+  </script>
+</body>
+</html>

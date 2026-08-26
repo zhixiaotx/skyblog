@@ -31,18 +31,22 @@ menus:
   关于: { path: /about/, fa: fa-heart }
   RSS: { path: /atom.xml, fa: fa-rss }
 
-# 首页背景图（使用 Sakura 官方 CDN 封面）
+# 首页背景图（使用本地壁纸，已放到 source/img/wallpaper/）
 bg:
-  - https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(1).jpg.webp
-  - https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(2).jpg.webp
-  - https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(3).jpg.webp
-  - https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(4).jpg.webp
+  - /img/wallpaper/anime-scene.webp
+  - /img/wallpaper/china-city.webp
+  - /img/wallpaper/night-clouds.webp
+  - /img/wallpaper/city-night.webp
+  - /img/wallpaper/beach-sailboat.webp
+  - /img/wallpaper/country-cottage.webp
+  - /img/wallpaper/hammock.webp
+  - /img/wallpaper/bookshelf.webp
 bgclass: filter-dot
 
-# 开始菜单（用 CDN 封面图，避免 404）
+# 开始菜单（使用本地壁纸）
 startdash:
-  - {url: /about/, title: Sky, desc: 关于本站, img: https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(1).jpg.webp}
-  - {url: /archives/, title: 归档, desc: 所有文章, img: https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(2).jpg.webp}
+  - {url: /about/, title: Sky, desc: 关于本站, img: /img/wallpaper/anime-scene.webp}
+  - {url: /archives/, title: 归档, desc: 所有文章, img: /img/wallpaper/city-night.webp}
 
 siteBuildingTime: 08/26/2026
 
