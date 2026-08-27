@@ -33,17 +33,7 @@ menus:
   友人帐: { path: /links/, fa: fa-link }
   关于: { path: /about/, fa: fa-heart }
 
-# 首页背景图（使用本地壁纸，已放到 source/img/wallpaper/）
-bg:
-  - /img/wallpaper/anime-scene.webp
-  - /img/wallpaper/china-city.webp
-  - /img/wallpaper/night-clouds.webp
-  - /img/wallpaper/city-night.webp
-  - /img/wallpaper/beach-sailboat.webp
-  - /img/wallpaper/country-cottage.webp
-  - /img/wallpaper/hammock.webp
-  - /img/wallpaper/bookshelf.webp
-bgclass: ""  # 原图效果，不添加像素/点阵滤镜
+# 背景图与 bgclass 已统一放到 themes/sakura/_config.yml（避免数组 concat 重复）
 
 # 开始菜单（使用本地壁纸，img 以 / 开头即走本地 url_for，避免 CDN 裂图）
 startdash:
