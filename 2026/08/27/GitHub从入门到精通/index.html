@@ -447,11 +447,11 @@
 <hr>
 <h2 id="二、动手前，只准备四样东西"><a href="#二、动手前，只准备四样东西" class="headerlink" title="二、动手前，只准备四样东西"></a>二、动手前，只准备四样东西</h2><p>你需要 Git、一个 GitHub 账号、一个编辑器和一个练习项目。编辑器用 VS Code 就够了，项目可以是一张网页，也可以是一份 Markdown 文档。</p>
 <p>先在终端确认 Git：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure>
 
 <p>这次演练使用的是 macOS 和 Git 2.49.0。Windows 用户可以用 Git Bash 或 VS Code 内置终端，下面的 Git 命令相同。</p>
 <p>接着配置提交作者：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;你的名字&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;你的邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;你的名字&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;你的邮箱&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>这是写进提交记录的作者信息，不负责登录 GitHub。如果你只想给当前练习项目配置，把 <code>--global</code> 换成 <code>--local</code>。</p>
 <p>GitHub 的登录是另一件事。命令行常用三种方式：</p>
@@ -464,72 +464,72 @@
 <hr>
 <h2 id="三、别急着-init，先确认终端到底在哪"><a href="#三、别急着-init，先确认终端到底在哪" class="headerlink" title="三、别急着 init，先确认终端到底在哪"></a>三、别急着 init，先确认终端到底在哪</h2><p>这次练习从一个普通网页开始。它能在浏览器打开，但还没有任何 Git 历史。</p>
 <p>项目里有三个文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">index.html</span><br><span class="line">style.css</span><br><span class="line">.gitignore</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">index.html</span><br><span class="line">style.css</span><br><span class="line">.gitignore</span><br></pre></td></tr></table></figure>
 
 <p>在 VS Code 选择「打开文件夹」，不要只点开一个 HTML 文件。然后在内置终端运行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">pwd</span></span><br><span class="line"><span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">pwd</span></span><br><span class="line"><span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
 
 <p><code>pwd</code> 显示当前目录，<code>ls</code> 列出文件。看到 <code>index.html</code> 和 <code>style.css</code> 以后再继续。</p>
 <p>这个检查看着很笨，却能挡住最麻烦的一类事故：有人在桌面、Documents，甚至用户主目录执行 <code>git init</code>，随后 <code>git add .</code> 把几千个无关文件放进暂存区。Git 没坏，目录选错了。</p>
 <hr>
 <h2 id="四、git-init-做了什么"><a href="#四、git-init-做了什么" class="headerlink" title="四、git init 做了什么"></a>四、git init 做了什么</h2><p>现在初始化仓库：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git init -b main</span><br><span class="line">git status --short</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git init -b main</span><br><span class="line">git status --short</span><br></pre></td></tr></table></figure>
 
 <p><code>git init -b main</code> 在当前目录创建 <code>.git</code>，并把初始分支命名为 <code>main</code>。<code>.git</code> 是一个隐藏目录，提交、分支、暂存区、远程地址等信息都放在里面。项目文件还在原处，Git 从这一刻开始观察它们。</p>
 <p>截图里的 <code>??</code> 表示未跟踪。文件已经存在，Git 还没决定要不要记录。</p>
 <p>想确认仓库根目录，可以运行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rev-parse --show-toplevel</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git rev-parse --show-toplevel</span><br></pre></td></tr></table></figure>
 
 <p>输出应该是当前项目文件夹。若提示 <code>fatal: not a git repository</code>，先检查目录，再看是否执行过 <code>git init</code>。</p>
 <hr>
 <h2 id="五、第一次提交，先留住一个可靠起点"><a href="#五、第一次提交，先留住一个可靠起点" class="headerlink" title="五、第一次提交，先留住一个可靠起点"></a>五、第一次提交，先留住一个可靠起点</h2><p>项目还没修改，为什么要先提交？因为后面所有变化都需要一个可比较的起点。先在浏览器打开网页，确认标题、卡片和报名区能显示；把窗口缩窄，看看手机宽度有没有横向滚动。</p>
 <p>再看 <code>.gitignore</code>。这次使用的内容是：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.env</span><br><span class="line">.env.*</span><br><span class="line">*.log</span><br><span class="line">node_modules/</span><br><span class="line">dist/</span><br><span class="line">build/</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.env</span><br><span class="line">.env.*</span><br><span class="line">*.log</span><br><span class="line">node_modules/</span><br><span class="line">dist/</span><br><span class="line">build/</span><br></pre></td></tr></table></figure>
 
 <p><code>.gitignore</code> 用来挡住密钥、日志、依赖和构建产物。它主要对尚未跟踪的文件生效。一个密钥如果已经提交过，后来补上 <code>.gitignore</code>，那段历史还在，真正的处理还包括吊销或轮换密钥。</p>
 <p>开始挑选第一次提交的文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add index.html style.css .gitignore</span><br><span class="line">git status --short</span><br><span class="line">git diff --cached --<span class="built_in">stat</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git add index.html style.css .gitignore</span><br><span class="line">git status --short</span><br><span class="line">git diff --cached --<span class="built_in">stat</span></span><br></pre></td></tr></table></figure>
 
 <p>状态中的 <code>A</code> 是 Added，表示文件已经进入暂存区。<code>git diff --cached --stat</code> 会告诉你这次准备提交几个文件、大概改了多少行。想看具体内容，运行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff --cached</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git diff --cached</span><br></pre></td></tr></table></figure>
 
 <p>确认以后提交：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;chore: 初始化校园 AI 招新页&quot;</span></span><br><span class="line">git <span class="built_in">log</span> --oneline</span><br><span class="line">git status</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;chore: 初始化校园 AI 招新页&quot;</span></span><br><span class="line">git <span class="built_in">log</span> --oneline</span><br><span class="line">git status</span><br></pre></td></tr></table></figure>
 
 <p>Commit 可以理解成带作者、时间、说明和父提交的项目快照。<code>ffdf4ff</code> 是这次提交哈希的短写，在当前仓库中用它就能准确定位版本。</p>
 <p><code>feat</code>、<code>fix</code>、<code>docs</code>、<code>style</code>、<code>chore</code> 是常见的提交类型，并非 Git 强制语法。比前缀更重要的是后面的中文：做了什么，改了哪个对象，为什么做。</p>
 <hr>
 <h2 id="六、第二次提交：把-AI-的修改当成待审稿"><a href="#六、第二次提交：把-AI-的修改当成待审稿" class="headerlink" title="六、第二次提交：把 AI 的修改当成待审稿"></a>六、第二次提交：把 AI 的修改当成待审稿</h2><p>接下来给页面加一个「查看报名方式」按钮。使用 AI 编程工具时，我会把边界写进提示词：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">只修改 index.html，在介绍文字下方增加&quot;查看报名方式&quot;链接，</span><br><span class="line">链接到页面内的 #apply。不要修改 style.css，不要执行 Git 提交。</span><br><span class="line">完成后告诉我改了哪个文件。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">只修改 index.html，在介绍文字下方增加&quot;查看报名方式&quot;链接，</span><br><span class="line">链接到页面内的 #apply。不要修改 style.css，不要执行 Git 提交。</span><br><span class="line">完成后告诉我改了哪个文件。</span><br></pre></td></tr></table></figure>
 
 <p>手工修改也很简单：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;cta&quot;</span> <span class="attr">href</span>=<span class="string">&quot;#apply&quot;</span>&gt;</span>查看报名方式<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;cta&quot;</span> <span class="attr">href</span>=<span class="string">&quot;#apply&quot;</span>&gt;</span>查看报名方式<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>AI 说完成了，先别提交。运行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git status --short</span><br><span class="line">git diff -- index.html</span><br><span class="line">git diff --check</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git status --short</span><br><span class="line">git diff -- index.html</span><br><span class="line">git diff --check</span><br></pre></td></tr></table></figure>
 
 <p><code>git diff</code> 显示工作区里尚未暂存的变化。绿色 <code>+</code> 是新增行，红色 <code>-</code> 是删除行。<code>git diff --check</code> 没有输出，说明没有发现明显的尾随空格等格式问题；它不会替你检查按钮能不能点。</p>
 <p>回到浏览器刷新，点击按钮，再把窗口缩窄。页面应该滚动到报名区，按钮和卡片在窄屏下仍然正常。</p>
 <p>测试通过后才提交：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git add index.html</span><br><span class="line">git diff --cached</span><br><span class="line">git commit -m <span class="string">&quot;feat: 新增报名入口，方便快速查看申请方式&quot;</span></span><br><span class="line">git <span class="built_in">log</span> --oneline -2</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git add index.html</span><br><span class="line">git diff --cached</span><br><span class="line">git commit -m <span class="string">&quot;feat: 新增报名入口，方便快速查看申请方式&quot;</span></span><br><span class="line">git <span class="built_in">log</span> --oneline -2</span><br></pre></td></tr></table></figure>
 
 <p>这时仓库里有两个能说清楚的版本：起始页和报名按钮。以后按钮出问题，可以直接找到它是哪次加进来的。</p>
 <p>顺便把两个 diff 分清：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git diff              <span class="comment"># 工作区与暂存区之间的差异</span></span><br><span class="line">git diff --cached     <span class="comment"># 暂存区与最近一次提交之间的差异</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git diff              <span class="comment"># 工作区与暂存区之间的差异</span></span><br><span class="line">git diff --cached     <span class="comment"># 暂存区与最近一次提交之间的差异</span></span><br></pre></td></tr></table></figure>
 
 <p>如果 <code>git diff</code> 没输出，文件可能没保存，也可能已经暂存或提交。依次看 <code>git status</code>、<code>git diff --cached</code> 和 <code>git log</code>，比反复输入 <code>git add .</code> 靠谱。</p>
 <hr>
 <h2 id="七、分支：给不确定的改动留一个试验位置"><a href="#七、分支：给不确定的改动留一个试验位置" class="headerlink" title="七、分支：给不确定的改动留一个试验位置"></a>七、分支：给不确定的改动留一个试验位置</h2><p>按钮只增加一行，风险不大。把整套主题从紫色改成橙色，结果可能好看，也可能很俗，这种修改适合放进分支。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git switch -c experiment/warm-theme</span><br><span class="line">git branch --show-current</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git switch -c experiment/warm-theme</span><br><span class="line">git branch --show-current</span><br></pre></td></tr></table></figure>
 
 <p>分支在概念上是指向某个提交的名字。新分支刚创建时与 <code>main</code> 指向同一提交，所以文件完全一样。等实验分支产生新提交，两条线才分开。</p>
 <p>图里蓝色的 <code>main</code> 仍指着第二次提交，橙色的 <code>experiment</code> 已经指向第三次提交。项目并没有复制出两套文件，变化的只是两个分支名分别指向哪里。</p>
 <p>修改 <code>style.css</code> 的颜色变量，刷新页面确认以后提交：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git diff -- style.css</span><br><span class="line">git diff --check</span><br><span class="line">git add style.css</span><br><span class="line">git commit -m <span class="string">&quot;style: 在实验分支试用暖色主题&quot;</span></span><br><span class="line">git <span class="built_in">log</span> --oneline --graph --decorate --all</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git diff -- style.css</span><br><span class="line">git diff --check</span><br><span class="line">git add style.css</span><br><span class="line">git commit -m <span class="string">&quot;style: 在实验分支试用暖色主题&quot;</span></span><br><span class="line">git <span class="built_in">log</span> --oneline --graph --decorate --all</span><br></pre></td></tr></table></figure>
 
 <p><code>HEAD</code> 表示你当前站在哪里。截图里 <code>HEAD</code> 指向 <code>experiment/warm-theme</code>，<code>main</code> 仍停在按钮提交。</p>
 <p>确定保留暖色主题，切回 <code>main</code> 合并：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git switch main</span><br><span class="line">git merge experiment/warm-theme</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git switch main</span><br><span class="line">git merge experiment/warm-theme</span><br></pre></td></tr></table></figure>
 
 <p><code>main</code> 没有产生分叉，Git 直接把 <code>main</code> 指针向前移动到实验提交。</p>
 <hr>
@@ -563,15 +563,15 @@
           
             <div class="post-nepre half previous">
           
-            <a href="/skyblog/2026/08/27/%E5%85%B3%E4%BA%8E-GitHub-%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B%E6%83%85/" rel="prev">
+            <a href="/skyblog/2026/08/27/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="/skyblog/img/wallpaper/bookshelf.webp" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="/img/wallpaper/bookshelf.webp">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="/skyblog/img/wallpaper/anime-scene.webp" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="/img/wallpaper/anime-scene.webp">
               </div>
               <span class="label">
               Previous Post</span>
               <div class="info">
                 <h3>
-                关于-GitHub-的一些事情</h3>
+                手把手教程：从零搭建一个 Hexo + Sakura 二次元博客</h3>
                 <hr>
               </div>
             </a>
@@ -581,15 +581,15 @@
           
             <div class="post-nepre half next">
           
-            <a href="/skyblog/2026/08/26/hello-world/" rel="next">
+            <a href="/skyblog/2026/08/27/%E5%85%B3%E4%BA%8E-GitHub-%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B%E6%83%85/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="/skyblog/img/wallpaper/hammock.webp" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="/img/wallpaper/hammock.webp">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="/skyblog/img/wallpaper/bookshelf.webp" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="/img/wallpaper/bookshelf.webp">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                你好，世界：我的博客开通啦</h3>
+                关于-GitHub-的一些事情</h3>
                 <hr>
               </div>
             </a>
@@ -663,7 +663,7 @@
         <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/wordpress-rotating-ball-o.svg">
         <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/disqus-preloader.svg">
       </div>
-      <p style="color: #666666;">&copy 2018</p>
+      <p style="color: #666666;">&copy 2026</p>
     </div>
     <div class="footer-device">
     <p style="font-family: 'Ubuntu', sans-serif;">

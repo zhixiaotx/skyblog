@@ -460,20 +460,20 @@
 </blockquote>
 <p>在一台电脑上绑定多个 GitHub 账号的 SSH 密钥，可以按照以下步骤操作：</p>
 <h3 id="1-生成新的-SSH-密钥对"><a href="#1-生成新的-SSH-密钥对" class="headerlink" title="1. 生成新的 SSH 密钥对"></a>1. 生成新的 SSH 密钥对</h3><p>打开终端，输入以下命令生成一个新的密钥：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;your-email@example.com&quot;</span> -f ~/.ssh/github2_rsa</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;your-email@example.com&quot;</span> -f ~/.ssh/github2_rsa</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-添加新的-SSH-密钥到-SSH-代理"><a href="#2-添加新的-SSH-密钥到-SSH-代理" class="headerlink" title="2. 添加新的 SSH 密钥到 SSH 代理"></a>2. 添加新的 SSH 密钥到 SSH 代理</h3><p>输入以下命令将新密钥添加到 SSH 代理：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-add ~/.ssh/github2_rsa</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-add ~/.ssh/github2_rsa</span><br></pre></td></tr></table></figure>
 
 <h3 id="3-将新的-SSH-公钥添加到-GitHub"><a href="#3-将新的-SSH-公钥添加到-GitHub" class="headerlink" title="3. 将新的 SSH 公钥添加到 GitHub"></a>3. 将新的 SSH 公钥添加到 GitHub</h3><p>将新生成的公钥（<code>~/.ssh/github2_rsa.pub</code>）的内容添加到 GitHub 账号的 SSH keys 页面。在 GitHub 页面上选择 <strong>Settings</strong> &gt; <strong>SSH and GPG keys</strong> &gt; <strong>New SSH key</strong>，在 <strong>Key</strong> 框中粘贴公钥内容并保存。</p>
 <h3 id="4-设置-Git-全局用户名和邮箱"><a href="#4-设置-Git-全局用户名和邮箱" class="headerlink" title="4. 设置 Git 全局用户名和邮箱"></a>4. 设置 Git 全局用户名和邮箱</h3><p>在终端中输入以下两行命令分别设置 Git 全局用户名和邮箱：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;Your Name&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;youremail@domain.com&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;Your Name&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;youremail@domain.com&quot;</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="5-配置-SSH-config-文件"><a href="#5-配置-SSH-config-文件" class="headerlink" title="5. 配置 SSH config 文件"></a>5. 配置 SSH config 文件</h3><p>打开并编辑 SSH config 文件（通常位于 <code>~/.ssh/config</code>），在文件中添加以下内容：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Default GitHub</span></span><br><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    User git</span><br><span class="line">    IdentityFile ~/.ssh/id_rsa</span><br><span class="line"></span><br><span class="line"><span class="comment"># Second GitHub (use a different SSH key)</span></span><br><span class="line">Host github.com-second-account</span><br><span class="line">    HostName github.com</span><br><span class="line">    User git</span><br><span class="line">    IdentityFile ~/.ssh/github2_rsa</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Default GitHub</span></span><br><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    User git</span><br><span class="line">    IdentityFile ~/.ssh/id_rsa</span><br><span class="line"></span><br><span class="line"><span class="comment"># Second GitHub (use a different SSH key)</span></span><br><span class="line">Host github.com-second-account</span><br><span class="line">    HostName github.com</span><br><span class="line">    User git</span><br><span class="line">    IdentityFile ~/.ssh/github2_rsa</span><br></pre></td></tr></table></figure>
 
 <h3 id="6-测试-SSH-连接"><a href="#6-测试-SSH-连接" class="headerlink" title="6. 测试 SSH 连接"></a>6. 测试 SSH 连接</h3><p>输入以下命令测试 SSH 连接：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br><span class="line">ssh -T git@github.com-second-account</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br><span class="line">ssh -T git@github.com-second-account</span><br></pre></td></tr></table></figure>
 
 <p>如果两次都能成功连接，就说明绑定多个 GitHub 账号的 SSH 密钥已经完成。</p>
 <blockquote>
@@ -503,13 +503,13 @@
 <li>GitHub 的 contributions 统计就是按邮箱来统计的</li>
 </ol>
 <p><strong>配置全局用户名和邮箱</strong>（适用于所有仓库）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置全局用户名</span></span><br><span class="line">git config --global user.name <span class="string">&quot;用户名&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置全局邮箱</span></span><br><span class="line">git config --global user.email <span class="string">&quot;邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 配置全局用户名</span></span><br><span class="line">git config --global user.name <span class="string">&quot;用户名&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置全局邮箱</span></span><br><span class="line">git config --global user.email <span class="string">&quot;邮箱&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>配置单一仓库用户名和邮箱</strong>（指定的仓库）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config user.name <span class="string">&quot;用户名&quot;</span></span><br><span class="line">git config user.email <span class="string">&quot;邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config user.name <span class="string">&quot;用户名&quot;</span></span><br><span class="line">git config user.email <span class="string">&quot;邮箱&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>查看配置信息命令</strong>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --list</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --list</span><br></pre></td></tr></table></figure>
 
 <hr>
 <h3 id="方法三的原理和步骤"><a href="#方法三的原理和步骤" class="headerlink" title="方法三的原理和步骤"></a>方法三的原理和步骤</h3><p>以我理解：</p>
@@ -527,26 +527,26 @@
 <h4 id="3-启动-Git-Bash"><a href="#3-启动-Git-Bash" class="headerlink" title="3. 启动 Git Bash"></a>3. 启动 Git Bash</h4><p>一个简单的方法，直接进入要上传的文件路径下，空白处点击右键，点击 <strong>Git Bash Here</strong>。</p>
 <h4 id="4-连接-Git-Bash-与-GitHub"><a href="#4-连接-Git-Bash-与-GitHub" class="headerlink" title="4. 连接 Git Bash 与 GitHub"></a>4. 连接 Git Bash 与 GitHub</h4><p>这一步只需要在第一次使用时操作就好。</p>
 <p>打开 Git Bash 后输入如下代码：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;your name&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;your_email@youremail.com&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;your name&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;your_email@youremail.com&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>之后会弹出网页，按照要求输入账号密码就好。</p>
 <h4 id="5-在-GitHub-上创建-Repository"><a href="#5-在-GitHub-上创建-Repository" class="headerlink" title="5. 在 GitHub 上创建 Repository"></a>5. 在 GitHub 上创建 Repository</h4><p>点击右侧头像下 <strong>Your Repositories</strong>。</p>
-<h4 id="6-上传文件"><a href="#6-上传文件" class="headerlink" title="6. 上传文件"></a>6. 上传文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git init                          <span class="comment"># 初始化仓库</span></span><br><span class="line">git add README.md                 <span class="comment"># 可以替换为 git add . 意为上传文件夹下的所有文件</span></span><br><span class="line">git commit -m <span class="string">&quot;first commit&quot;</span>      <span class="comment"># 提交备注</span></span><br><span class="line">git branch -M main                <span class="comment"># 重命名分支为 main</span></span><br><span class="line">git remote add origin https://github.com/lixiaoling2468/test.git  <span class="comment"># 这里地址会变</span></span><br><span class="line">git push -u origin main           <span class="comment"># 上传文件</span></span><br></pre></td></tr></table></figure>
+<h4 id="6-上传文件"><a href="#6-上传文件" class="headerlink" title="6. 上传文件"></a>6. 上传文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git init                          <span class="comment"># 初始化仓库</span></span><br><span class="line">git add README.md                 <span class="comment"># 可以替换为 git add . 意为上传文件夹下的所有文件</span></span><br><span class="line">git commit -m <span class="string">&quot;first commit&quot;</span>      <span class="comment"># 提交备注</span></span><br><span class="line">git branch -M main                <span class="comment"># 重命名分支为 main</span></span><br><span class="line">git remote add origin https://github.com/lixiaoling2468/test.git  <span class="comment"># 这里地址会变</span></span><br><span class="line">git push -u origin main           <span class="comment"># 上传文件</span></span><br></pre></td></tr></table></figure>
 
 <p>顺利在这一步后就成功了，再去 GitHub 上查看，可以发现文件上传了。</p>
 <hr>
 <h3 id="上传部署时一些重要的-Git-命令汇总"><a href="#上传部署时一些重要的-Git-命令汇总" class="headerlink" title="上传部署时一些重要的 Git 命令汇总"></a>上传部署时一些重要的 Git 命令汇总</h3><p><strong>cd 进入克隆的这个文件夹</strong>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> + 文件夹名字</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> + 文件夹名字</span><br></pre></td></tr></table></figure>
 
 <p><strong>依次输入以下代码</strong>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;你的提交信息&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;你的提交信息&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>注意</strong>：会要求输入</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.email <span class="string">&quot;you@example.com&quot;</span></span><br><span class="line">git config --global user.name <span class="string">&quot;Your Name&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.email <span class="string">&quot;you@example.com&quot;</span></span><br><span class="line">git config --global user.name <span class="string">&quot;Your Name&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>来确定你的身份和上传的账号。</p>
 <p><strong>main 分支部署</strong>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git branch -M main</span><br><span class="line"></span><br><span class="line">git remote add origin https://github.com/xxxxx/xxxx.git  <span class="comment"># 这里地址会变</span></span><br><span class="line"></span><br><span class="line">git push -u origin main  <span class="comment"># 上传文件</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git branch -M main</span><br><span class="line"></span><br><span class="line">git remote add origin https://github.com/xxxxx/xxxx.git  <span class="comment"># 这里地址会变</span></span><br><span class="line"></span><br><span class="line">git push -u origin main  <span class="comment"># 上传文件</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
 
 <p>依次输入以上代码后，进入 GitHub 查看：文件夹已上传 GitHub，上传成功。</p>
 <hr>
@@ -582,15 +582,15 @@
           
             <div class="post-nepre half previous">
           
-            <a href="/skyblog/2026/08/27/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/" rel="prev">
+            <a href="/skyblog/2026/08/27/GitHub%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="/skyblog/img/wallpaper/anime-scene.webp" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="/img/wallpaper/anime-scene.webp">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="/skyblog/img/wallpaper/city-night.webp" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="/img/wallpaper/city-night.webp">
               </div>
               <span class="label">
               Previous Post</span>
               <div class="info">
                 <h3>
-                手把手教程：从零搭建一个 Hexo + Sakura 二次元博客</h3>
+                GitHub从入门到精通</h3>
                 <hr>
               </div>
             </a>
@@ -600,15 +600,15 @@
           
             <div class="post-nepre half next">
           
-            <a href="/skyblog/2026/08/27/GitHub%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/" rel="next">
+            <a href="/skyblog/2026/08/26/hello-world/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="/skyblog/img/wallpaper/city-night.webp" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="/img/wallpaper/city-night.webp">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="/skyblog/img/wallpaper/hammock.webp" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="/img/wallpaper/hammock.webp">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                GitHub从入门到精通</h3>
+                你好，世界：我的博客开通啦</h3>
                 <hr>
               </div>
             </a>
@@ -682,7 +682,7 @@
         <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/wordpress-rotating-ball-o.svg">
         <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/disqus-preloader.svg">
       </div>
-      <p style="color: #666666;">&copy 2018</p>
+      <p style="color: #666666;">&copy 2026</p>
     </div>
     <div class="footer-device">
     <p style="font-family: 'Ubuntu', sans-serif;">
