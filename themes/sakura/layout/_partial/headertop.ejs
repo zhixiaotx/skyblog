@@ -5,7 +5,14 @@
     <div class="focusinfo no-select">
       <div class="header-tou">
         <a href="<%- theme.url%>">
-          <img src="<%- url_for((theme.cdn || '') + theme.avatar) %>">
+          <% var _avatar = theme.avatar || ''; %>
+          <% if (/^https?:\/\//.test(_avatar) || _avatar.indexOf('//') === 0) { %>
+          <img src="<%- _avatar %>">
+          <% } else if (_avatar.indexOf('/') === 0) { %>
+          <img src="<%- url_for(_avatar) %>">
+          <% } else { %>
+          <img src="<%- url_for((theme.cdn || '') + _avatar) %>">
+          <% } %>
         </a>
       </div>
       <div class="header-info">
