@@ -29,7 +29,6 @@ menus:
   标签: { path: /tags/, fa: fa-tags }
   分类: { path: /categories/, fa: fa-folder-open }
   关于: { path: /about/, fa: fa-heart }
-  RSS: { path: /atom.xml, fa: fa-rss }
 
 # 首页背景图（使用本地壁纸，已放到 source/img/wallpaper/）
 bg:
