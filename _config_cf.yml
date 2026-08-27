@@ -6,5 +6,5 @@
 #       让 Cloudflare 域名下所有资源路径正确(否则 CSS/JS/图片全 404 = 样式丢失)
 # ============================================================
 
-url: https://skyblog.pages.dev    # ★ 改成你的 Cloudflare Pages 域名(项目名.pages.dev)
+url: https://skyblog-dju.pages.dev    # ★ 改成你的 Cloudflare Pages 域名(项目名.pages.dev)
 root: /                            # ★ 关键: 根路径(Cloudflare 部署在域名根, 不是子目录)
