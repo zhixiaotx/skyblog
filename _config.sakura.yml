@@ -43,10 +43,11 @@ bg:
   - /img/wallpaper/bookshelf.webp
 bgclass: ""  # 原图效果，不添加像素/点阵滤镜
 
-# 开始菜单（使用本地壁纸）
+# 开始菜单（使用本地壁纸，img 以 / 开头即走本地 url_for，避免 CDN 裂图）
 startdash:
   - {url: /about/, title: Sky, desc: 关于本站, img: /img/wallpaper/anime-scene.webp}
   - {url: /archives/, title: 归档, desc: 所有文章, img: /img/wallpaper/city-night.webp}
+  - {url: /tags/, title: 标签, desc: 按标签浏览, img: /img/wallpaper/china-city.webp}
 
 siteBuildingTime: 08/26/2026
 

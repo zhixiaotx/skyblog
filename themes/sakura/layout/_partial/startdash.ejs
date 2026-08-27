@@ -8,7 +8,14 @@
     <div class="the-feature square from_left_and_right">
       <a href="<%= theme.startdash[dash].url %>" target="_blank">
         <div class="img">
-          <img src="<%- (theme.cdn || '') + theme.startdash[dash].img %>">
+          <% var _sd_img = theme.startdash[dash].img || ''; %>
+          <% if (/^https?:\/\//.test(_sd_img) || _sd_img.indexOf('//') === 0) { %>
+          <img src="<%= _sd_img %>">
+          <% } else if (_sd_img.indexOf('/') === 0) { %>
+          <img src="<%- url_for(_sd_img) %>">
+          <% } else { %>
+          <img src="<%- (theme.cdn || '') + _sd_img %>">
+          <% } %>
         </div>
         <div class="info">
           <h3><%= theme.startdash[dash].title %></h3>
