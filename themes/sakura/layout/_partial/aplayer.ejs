@@ -1,7 +1,5 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
 <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
-<!-- require MetingJS -->
-<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
 <style>
   .aplayer .aplayer-lrc {
     height: 35px;
@@ -28,19 +26,50 @@
     background: rgba(255, 255, 255, 0.8);
   }
 </style>
-<meting-js
-<% for (i in theme.aplayer) {%>
-    <%- i %>="<%- theme.aplayer[i] %>"
-<% } %>
-</meting-js>
+<div id="aplayer" class="aplayer"></div>
 <script>
   $(function(){
-    $('body').on('click', '.aplayer', function(){
-      if($('.aplayer-button').hasClass('aplayer-play')) {
-        $('.aplayer-lrc').removeClass('lrc-show');
-      } else {
-        $('.aplayer-lrc').addClass('lrc-show');
-      }
-    })
+    var cfg = {
+      server: '<%- theme.aplayer.server %>',
+      type: '<%- theme.aplayer.type %>',
+      id: '<%- theme.aplayer.id %>',
+      fixed: <%- theme.aplayer.fixed === true ? 'true' : 'false' %>,
+      autoplay: <%- theme.aplayer.autoplay === true ? 'true' : 'false' %>,
+      loop: '<%- theme.aplayer.loop %>',
+      order: '<%- theme.aplayer.order %>',
+      preload: '<%- theme.aplayer.preload %>',
+      volume: <%- theme.aplayer.volume || 0.7 %>,
+      mutex: <%- theme.aplayer.mutex === true ? 'true' : 'false' %>
+    };
+    $.getJSON('https://api.i-meto.com/meting/api', {server: cfg.server, type: cfg.type, id: cfg.id})
+      .done(function(songs){
+        if (!songs || !songs.length) { console.log('music list empty'); return; }
+        var ap = new APlayer({
+          container: document.getElementById('aplayer'),
+          fixed: cfg.fixed,
+          autoplay: cfg.autoplay,
+          loop: cfg.loop,
+          order: cfg.order,
+          preload: cfg.preload,
+          volume: cfg.volume,
+          mutex: cfg.mutex,
+          audio: songs.map(function(s){
+            return {name: s.title, artist: s.author, url: s.url, cover: s.pic, lrc: s.lrc};
+          })
+        });
+        // 播放失败/坏链自动切下一首（网易云外链有部分 VIP/版权歌 404）
+        ap.on('error', function(){
+          try { ap.list.next(); } catch(e) {}
+        });
+        // 点击播放器切换歌词显示
+        $('body').on('click', '.aplayer', function(){
+          if ($('.aplayer-button').hasClass('aplayer-play')) {
+            $('.aplayer-lrc').removeClass('lrc-show');
+          } else {
+            $('.aplayer-lrc').addClass('lrc-show');
+          }
+        });
+      })
+      .fail(function(){ console.log('music api unavailable'); });
   });
 </script>
