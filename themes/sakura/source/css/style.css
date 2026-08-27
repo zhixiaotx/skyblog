@@ -1479,7 +1479,7 @@ a:hover,a:active {
 }
 .site-top ul li {
     float:left;
-    margin:0 8px;
+    margin:0 15px;
     position:relative;
     -webkit-transition:all 1s ease
 }
