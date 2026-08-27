@@ -29,6 +29,7 @@ menus:
   标签: { path: /tags/, fa: fa-tags }
   分类: { path: /categories/, fa: fa-folder-open }
   清单: { path: javascript:;, fa: fa-list-ul }
+  留言板: { path: /comment/, fa: fa-pencil-square-o }
   友人帐: { path: /links/, fa: fa-link }
   关于: { path: /about/, fa: fa-heart }
 
