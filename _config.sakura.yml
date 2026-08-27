@@ -58,9 +58,9 @@ msocial:
   github: {url: https://github.com/zhixiaotx, fa: fa-github, color: 333}
   email: {url: mailto:liuliu19901110@gmail.com, fa: fa-envelope, color: dd4b39}
 
-# 背景音乐（网易云）
+# 背景音乐（网易云飙升榜，原歌单外链已全部失效）
 aplayer:
-  id: 2660651585
+  id: 19723756
   server: netease
   type: playlist
   fixed: true
