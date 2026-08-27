@@ -701,6 +701,28 @@ Pages 项目 → Custom domains → `blog.yourname.com`
 
 零配置、不用管 `_config_cf.yml`，跟着 GitHub Pages 的工作流走即可。
 
+#### B.4 构建失败排查
+
+**症状**：日志出现 `Installing project dependencies: yarn` 然后
+`YN0028: The lockfile would have been modified by this install`，exit 1。
+
+**原因**：仓库里同时存在 `package-lock.json`（npm）和 `yarn.lock`（yarn）。
+Cloudflare 检测到 `yarn.lock` 就强制用 **Yarn 4** 装依赖，而 Yarn 4 的
+"不可变安装"发现 lockfile 需要更新就直接报错。
+
+**解决**：只保留一种包管理器的锁文件。本仓库用 npm：
+
+```bash
+git rm yarn.lock          # 删除 yarn.lock（保留 package-lock.json）
+git commit -m "fix: 删除 yarn.lock"
+git push origin main
+```
+
+重新 Save and Deploy，日志应变为 `Installing project dependencies: npm`。
+
+> 判断依据：Cloudflare 按"有 `yarn.lock` 用 yarn，否则有 `package-lock.json` 用 npm"选择
+> 包管理器。所以**别让两种锁文件同时存在**。
+
 ---
 
 ### C. Vercel
@@ -889,6 +911,12 @@ taskkill /F /IM node.exe                  # CMD
 `image-404.png`（猫图）。本项目已在 `index-items.ejs` 修复，
 只要文章 `photos:` 写对（见 §6）就显示封面。
 
+### Q10. Cloudflare Pages 构建失败：`YN0028` / `yarn.lock`
+
+**原因**：仓库同时存在 `package-lock.json` 和 `yarn.lock`，Cloudflare 选了
+Yarn 4 并因 lockfile 不一致报错。
+**解决**：`git rm yarn.lock` 删掉只留 npm 的锁文件（见 §12.B.4），重新部署。
+
 ---
 
 ## 15. 命令速查（CMD/PowerShell/Git Bash 都可）
@@ -1002,6 +1030,12 @@ highlight:
 ```
 
 改了要 `hexo clean && hexo generate` 才生效。
+
+### 🚨 10. 别让 npm 和 yarn 的锁文件同时存在
+
+`package-lock.json` 和 `yarn.lock` 同时在仓库里，Cloudflare/CI 会优先用
+`yarn.lock` → Yarn 4 → `YN0028` 报错。**只用一种包管理器**，本项目用 npm
+（见 §12.B.4）。
 
 ---
 
