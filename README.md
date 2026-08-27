@@ -116,6 +116,7 @@ npx hexo server
 hexo-blog/
 ├── _config.yml                # 【站点主配置】标题/URL/语言/部署
 ├── _config.sakura.yml         # 【Sakura 主题覆盖配置】
+├── _config_cf.yml             # 【Cloudflare 部署覆盖】url/root 改为根路径（见 §12.B）
 ├── package.json               # 【依赖清单】npm install 装这里
 ├── readme.md                  # 【本文档】
 ├── .gitignore                 # Git 忽略规则（public/node_modules 不入版本）
@@ -639,33 +640,66 @@ git -c http.version=HTTP/1.1 push -f origin HEAD:gh-pages
 ### B. Cloudflare Pages
 
 **优点**：全球 CDN、自动 HTTPS、支持自定义域名、免费。
+**注意**：Cloudflare Pages 的 **Framework preset 没有 Hexo 选项**（这正常），选 `None` 后手动填即可。
+
+#### B.0 前提：`_config_cf.yml`（解决样式丢失的关键）
+
+仓库根目录已有 `_config_cf.yml`，它的作用是**覆盖 GitHub Pages 的子目录配置**：
+
+```yaml
+url: https://你的项目名.pages.dev   # 改成你的实际 pages.dev 域名
+root: /                              # Cloudflare 部署在域名根，不是 /skyblog/ 子目录
+```
+
+> ⚠️ **为什么必须有它**：源码 `_config.yml` 的 `root: /skyblog/` 是给 GitHub Pages 子目录用的。
+> 不覆盖就部署到 Cloudflare，HTML 里所有资源还是 `/skyblog/css/...` → 域名根下 404 →
+> **页面变成裸 HTML（乱码/样式全丢）**。多 config 合并是官方支持的标准做法，
+> 且不影响 GitHub Pages 的 main 分支配置。
 
 #### B.1 步骤
 
 1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/) → Pages
 2. **Connect to Git** → 选 GitHub → 选 `zhixiaotx/skyblog`
-3. **Build settings**：
+3. **Build settings**（Framework preset 选 **None**，手动填）：
 
    | 项 | 值 |
    | --- | --- |
-   | Framework preset | Hexo |
-   | Build command | `npm run build` |
+   | Framework preset | **None**（Cloudflare 没有 Hexo 预设） |
+   | Build command | `npx hexo generate --config _config.yml,_config_cf.yml` |
    | Build output directory | `public` |
-   | Root directory | `hexo-blog`（如果 monorepo） |
+   | Root directory | `hexo-blog`（如果 monorepo；纯仓库留空） |
    | Node version | `20`（环境变量 `NODE_VERSION=20`） |
 
 4. **Environment variables**（Production）：
 
    | 变量 | 值 |
    | --- | --- |
+   | `NODE_VERSION` | `20` |
    | `PUBLIC_URL` | `https://your-project.pages.dev` |
 
 5. **Save and Deploy**。等 1-2 分钟，构建完即可访问。
+
+> 构建命令里的 `--config _config.yml,_config_cf.yml` 是 Hexo 的**多配置合并**语法：
+> 主配置 + CF 覆盖，后者优先级更高。改 `_config_cf.yml` 后 push 到 GitHub，
+> Cloudflare 会自动重新构建。
 
 #### B.2 自定义域名
 
 Pages 项目 → Custom domains → `blog.yourname.com`
 → Cloudflare 自动加 CNAME 和 HTTPS。
+
+#### B.3 备选：部署 `gh-pages` 分支（更简单）
+
+如果不想要构建过程，Cloudflare 也可以**直接部署现成的 `gh-pages` 分支**：
+
+| Build settings | 值 |
+| --- | --- |
+| Framework preset | None |
+| Build command | （留空） |
+| Build output directory | `/` |
+| 分支 | `gh-pages`（Connect to Git 时选） |
+
+零配置、不用管 `_config_cf.yml`，跟着 GitHub Pages 的工作流走即可。
 
 ---
 
