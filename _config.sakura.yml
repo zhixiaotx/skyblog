@@ -54,7 +54,7 @@ siteBuildingTime: 08/26/2026
 # 移动端社交按钮（使用 Font Awesome 图标，无需图片）
 msocial:
   github: {url: https://github.com/zhixiaotx, fa: fa-github, color: 333}
-  email: {url: mailto:1224329606@qq.com, fa: fa-envelope, color: dd4b39}
+  email: {url: mailto:liuliu19901110@gmail.com, fa: fa-envelope, color: dd4b39}
 
 # 背景音乐（网易云）
 aplayer:
