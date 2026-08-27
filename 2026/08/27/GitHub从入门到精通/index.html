@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  
+  <title itemprop="name">GitHub从入门到精通 | 我的技术博客</title>
+  
+    <link rel="shortcut icon" href="/skyblog/img/favicon.png">
+  
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+SerifMerriweather|Merriweather+Sans|Source+Code+Pro|Ubuntu:400,700|Noto+Serif+SC" media="all">
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="stylesheet" id="saukra_css-css" href="/skyblog/css/style.css" type="text/css" media="all">
+  <link rel="stylesheet" href="/skyblog/css/lib.min.css" media="all">
+  <link rel="stylesheet" href="/skyblog/css/font.css" media="all">
+  <link rel="stylesheet" href="/skyblog/css/insight.css" media="all">
+  <link rel="stylesheet" href="/skyblog/css/jquery.fancybox.min.css" media="all">
+  <link rel="stylesheet" href="/skyblog/css/zoom.css" media="all">
+  <link rel="stylesheet" type="text/css" href="/skyblog/css/sharejs.css">
+<!--   <link rel="stylesheet" id="saukra_css-css" href="https://2heng.xin/wp-content/cache/autoptimize/css/autoptimize_ad42a61f4c7d4bdd9f91afcff6b5dda5.css
+" type="text/css" media="all"> -->
+  <script>
+  /*Initial Variables*/
+  var mashiro_option = new Object();
+  var mashiro_global = new Object();
+  mashiro_option.NProgressON = true;
+  /* 
+   * 邮箱信息之类的东西可以填在这里，这些js变量基本都作用于sakura-app.js
+   * 这样的设置仅是为了方便在基于PHP开发的主题中设置js变量，既然移植到了Node上，我想或许可以精简这一逻辑吧
+   */
+  mashiro_option.email_domain = "";
+  mashiro_option.email_name = "";
+  mashiro_option.cookie_version_control = "";
+  mashiro_option.qzone_autocomplete = false;
+  mashiro_option.site_name = "Sky";
+  mashiro_option.author_name = "Sky";
+  mashiro_option.site_url = "https://zhixiaotx.github.io/skyblog";
+  mashiro_option.v_appId = "GyC3NzMvd0hT9Yyd2hYIC0MN-gzGzoHsz";
+  mashiro_option.v_appKey = "mgOpfzbkHYqU92CV4IDlAUHQ";
+  mashiro_option.mathjax = "0";
+  mashiro_option.qq_api_url = "https://api.mashiro.top/qqinfo/"; 
+  mashiro_option.qq_avatar_api_url = "https://api.mashiro.top/qqinfo/";
+
+  // mashiro_option.jsdelivr_css_src = "https://cdn.jsdelivr.net/gh/moezx/cdn@3.4.5/css/lib.min.css";
+  // mashiro_option.float_player_on = true;
+
+  /*End of Initial Variables*/
+  </script>
+  <script type="text/javascript">
+  var bg = "https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(1).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(2).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(3).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(4).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(5).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(6).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(7).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(8).jpg.webp,/img/wallpaper/anime-scene.webp,/img/wallpaper/china-city.webp,/img/wallpaper/night-clouds.webp,/img/wallpaper/city-night.webp,/img/wallpaper/beach-sailboat.webp,/img/wallpaper/country-cottage.webp,/img/wallpaper/hammock.webp,/img/wallpaper/bookshelf.webp".split(",");
+  var bgindex = Math.floor(Math.random()*bg.length);
+  if (!!window.ActiveXObject || "ActiveXObject" in window) { //is IE?
+    alert('朋友，IE浏览器未适配哦~');
+  }
+  </script>
+  <style type="text/css">
+  .hljs-ln{border-collapse:collapse}.hljs-ln td{padding:0}.hljs-ln-n:before{content:attr(data-line-number)}
+  </style>
+  <style type="text/css">.site-top .lower nav{display:block !important;}.author-profile i,.post-like a,.post-share .show-share,.sub-text,.we-info a,span.sitename,.post-more i:hover,#pagination a:hover,.post-content a:hover,.float-content i:hover{color:#FE9600}.feature i,.download,.navigator i:hover,.links ul li:before,.ar-time i,span.ar-circle,.object,.comment .comment-reply-link,.siren-checkbox-radio:checked + .siren-checkbox-radioInput:after{background:#FE9600}::-webkit-scrollbar-thumb{background:#FE9600}.download,.navigator i:hover,.link-title,.links ul li:hover,#pagination a:hover,.comment-respond input[type='submit']:hover{border-color:#FE9600}.entry-content a:hover,.site-info a:hover,.comment h4 a,#comments-navi a.prev,#comments-navi a.next,.comment h4 a:hover,.site-top ul li a:hover,.entry-title a:hover,#archives-temp h3,span.page-numbers.current,.sorry li a:hover,.site-title a:hover,i.iconfont.js-toggle-search.iconsearch:hover,.comment-respond input[type='submit']:hover{color:#FE9600}.comments .comments-main{display:block !important;}.comments .comments-hidden{display:none !important;}background-position:center center;background-attachment:inherit;}
+  </style>
+<meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/skyblog/atom.xml" title="我的技术博客" type="application/atom+xml">
+</head>
+
+<body class="page-template page-template-user page-template-page-analytics page-template-userpage-analytics-php page page-id-1297 chinese-font serif isWebKit">
+  <div class="scrollbar" id="bar">
+  </div>
+  <a href="#" class="cd-top faa-float animated"></a>
+  <section id="main-container">
+    <div class="headertop ">
+  <div id="banner_wave_1"></div>
+  <div id="banner_wave_2"></div>
+  <figure id="centerbg" class="centerbg">
+    <div class="focusinfo no-select">
+      <div class="header-tou">
+        <a href="https://zhixiaotx.github.io/skyblog">
+          
+          
+          <img src="/skyblog/img/favicon.png">
+          
+        </a>
+      </div>
+      <div class="header-info">
+        <p>基于 Hexo + Sakura 搭建的二次元技术博客</p>
+        <div class="top-social_v2">
+          <li id="bg-pre">
+            <img class="flipx" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
+          
+            
+              
+                <li>
+                  <a href="https://github.com/" target="_blank" class="social-github" title="github">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/github.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="sina">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/sina.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="wangyiyun">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/wangyiyun.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="zhihu">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/zhihu.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="email">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/email.svg">
+                  </a>
+                </li>
+              
+            
+              
+                <li class="wechat">
+                  <a href="/#">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/wechat.png">
+                  </a>
+                  <div class="wechatInner">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/wechat.jpg">
+                  </div>
+                </li>
+              
+            
+              
+                <li class="wechat">
+                  <a href="/#">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/wechat.png">
+                  </a>
+                  <div class="wechatInner">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/wechat.jpg">
+                  </div>
+                </li>
+              
+            
+          
+          <li id="bg-next">
+            <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
+        </div>
+      </div>
+    </div>
+  </figure>
+  <div id="video-container" style="">
+    <video style="object-fit: fill" id="bgvideo" class="video" video-name="" src="" width="auto" preload="auto">
+    </video>
+    <div id="video-btn" class="loadvideo videolive">
+    </div>
+    <div id="video-add">
+    </div>
+    <div class="video-stu">
+    </div>
+  </div>
+  <div class="headertop-down faa-float animated" onclick="headertop_down()">
+    <span>
+      <i class="fa fa-chevron-down" aria-hidden="true">
+      </i>
+    </span>
+  </div>
+</div>
+    <div id="page" class="site wrapper">
+      <header class="site-header no-select gizle sabit" role="banner">
+  <div class="site-top">
+    <div class="site-branding">
+      <span class="site-title">
+        <span class="logolink moe-mashiro">
+          <a href="/skyblog/">
+            <span class="sakurasono"></span>
+            <span class="shironeko">Sky</span>
+          </a>
+        </span>
+      </span>
+    </div>
+    <div class="searchbox search-form-submit">
+      <i class="iconfont js-toggle-search iconsearch icon-search">
+      </i>
+    </div>
+    <div id="show-nav" class="showNav mobile-fit">
+      <div class="line line1">
+      </div>
+      <div class="line line2">
+      </div>
+      <div class="line line3">
+      </div>
+    </div>
+    <div class="lower-cantiner">
+      <div class="lower">
+        <nav class="mobile-fit-control hide">
+          <ul id="menu-new" class="menu">
+            
+              <li>
+                <a href="/skyblog/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-home" aria-hidden="true"></i>
+                    首页
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/skyblog/archives/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-archive" aria-hidden="true"></i>
+                    归档
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/skyblog/categories/%E6%8A%80%E6%9C%AF/">
+                          <i class="fa fa-code" aria-hidden="true"></i>
+                          技术
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/categories/%E7%94%9F%E6%B4%BB/">
+                          <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                          生活
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/categories/%E8%B5%84%E6%BA%90/">
+                          <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                          资源
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/categories/%E9%9A%8F%E6%83%B3/">
+                          <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                          随想
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/categories/%E8%BD%AC%E8%BD%BD/">
+                          <i class="fa fa-book" aria-hidden="true"></i>
+                          转载
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/skyblog/tags/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-tags" aria-hidden="true"></i>
+                    标签
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/skyblog/categories/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-folder-open" aria-hidden="true"></i>
+                    分类
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="javascript:;">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-list-ul" aria-hidden="true"></i>
+                    清单
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/skyblog/tags/%E6%82%A6%E8%AF%BB/">
+                          <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                          书单
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/bangumi/">
+                          <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                          番组
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/music/">
+                          <i class="fa fa-headphones" aria-hidden="true"></i>
+                          歌单
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/tags/%E5%9B%BE%E9%9B%86/">
+                          <i class="fa fa-photo" aria-hidden="true"></i>
+                          图集
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/skyblog/comment/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-pencil-square-o" aria-hidden="true"></i>
+                    留言板
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/skyblog/links/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-link" aria-hidden="true"></i>
+                    友人帐
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/skyblog/about/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-heart" aria-hidden="true"></i>
+                    关于
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/skyblog/about/">
+                          <i class="fa fa-meetup" aria-hidden="true"></i>
+                          我？
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/theme-sakura/">
+                          <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                          主题
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/lab/">
+                          <i class="fa fa-cogs" aria-hidden="true"></i>
+                          Lab
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <link rel="stylesheet" type="text/css" href="/skyblog/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<div class="pattern-center-blank"></div>
+
+<div id="content" class="site-content">
+  <div id="primary" class="content-area">
+    <main id="main" class="site-main" role="main">
+      <article id="post-1" class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+        <div class="toc"></div>
+        <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
+        
+          <header class="entry-header">
+            <h1 class="entry-title">GitHub从入门到精通</h1>
+            <p class="entry-census">&nbsp;·&nbsp;2026-8-27&nbsp;·&nbsp;<span id="busuanzi_value_page_pv"></span>次阅读</p></p>
+
+            <hr>
+          </header>
+        
+        <div class="entry-content">
+          <h1 id="万字长文｜GitHub-从入门到精通"><a href="#万字长文｜GitHub-从入门到精通" class="headerlink" title="万字长文｜GitHub 从入门到精通"></a>万字长文｜GitHub 从入门到精通</h1><blockquote>
+<p><strong>作者</strong>：Miles<br><strong>来源</strong>：Miles的AI日记（微信公众号）<br><strong>原文链接</strong>：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/1FickGzrNjIc5UE-pOU_IA">https://mp.weixin.qq.com/s/1FickGzrNjIc5UE-pOU_IA</a></p>
+</blockquote>
+<hr>
+<p>如果你想用 GitHub 赚钱，最直接的路并不复杂：在许可证允许的前提下，找到有价值的开源项目，把部署、中文说明和售后做成服务，再去各类平台卖交付。</p>
+<p>但是真正能收钱的是信息筛选和落地能力。想做 AI、转 FDE，或者把自己变成一家 OPC，代码、文档、版本和协作早晚都会落到 GitHub 上。</p>
+<p>哪怕你做的是创作和自媒体，GitHub 上也有大量选题工具、自动化项目和内容生产流程，可文件一多、AI 一改，没有 Git 管版本，很快就会失控。所以，程序员要学，做项目、做内容的人也一样；它决定你能不能把灵感变成一个可管理、可复用、能交付的项目。</p>
+<p>这篇我断断续续磨了大半个月，从 0 到 1 把 Git、GitHub、Commit、分支、PR 和常见报错都实操了一遍，之后的直播也会沿着同一套流程来讲。正式开播前，我先把这份教程开源出来，大家可以先收藏，也可以跟着完整做一遍。</p>
+<hr>
+<h2 id="一、Git-和-GitHub，到底谁管什么"><a href="#一、Git-和-GitHub，到底谁管什么" class="headerlink" title="一、Git 和 GitHub，到底谁管什么"></a>一、Git 和 GitHub，到底谁管什么</h2><p>Git 是装在电脑里的版本管理工具。断网时，你仍然可以提交、看历史、建分支和合并。GitHub 是远程仓库与协作平台，它接收 Git 推上来的提交，再提供 Issues、Pull Requests、Actions、代码审查和权限管理。</p>
+<p>Git 最容易混的，是同一份修改会处在四个不同位置。下面这张信息图把工作区、暂存区、本地仓库和远程仓库拆成了四层。</p>
+<ul>
+<li><strong>工作区</strong>：你正在编辑的文件</li>
+<li><strong>暂存区</strong>：<code>git add</code> 后文件暂存的位置</li>
+<li><strong>本地仓库</strong>：<code>git commit</code> 后保存的版本历史</li>
+<li><strong>远程仓库</strong>：<code>git push</code> 后推送到 GitHub 的代码</li>
+</ul>
+<p>按下保存，只会把内容写进硬盘。<code>git add</code> 负责挑选，<code>git commit</code> 在本地留下版本，<code>git push</code> 才把这些提交送到 GitHub。</p>
+<p>所以提交前要看 diff、实际运行或测试；推送成功后，再去网页回查。这样出了问题，你能马上知道它停在哪一层。</p>
+<hr>
+<h2 id="二、动手前，只准备四样东西"><a href="#二、动手前，只准备四样东西" class="headerlink" title="二、动手前，只准备四样东西"></a>二、动手前，只准备四样东西</h2><p>你需要 Git、一个 GitHub 账号、一个编辑器和一个练习项目。编辑器用 VS Code 就够了，项目可以是一张网页，也可以是一份 Markdown 文档。</p>
+<p>先在终端确认 Git：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure>
+
+<p>这次演练使用的是 macOS 和 Git 2.49.0。Windows 用户可以用 Git Bash 或 VS Code 内置终端，下面的 Git 命令相同。</p>
+<p>接着配置提交作者：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;你的名字&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;你的邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这是写进提交记录的作者信息，不负责登录 GitHub。如果你只想给当前练习项目配置，把 <code>--global</code> 换成 <code>--local</code>。</p>
+<p>GitHub 的登录是另一件事。命令行常用三种方式：</p>
+<ul>
+<li><strong>GitHub CLI</strong>，通过 <code>gh auth login</code> 打开浏览器授权；</li>
+<li><strong>HTTPS</strong>，使用 Personal Access Token 或凭据管理器；</li>
+<li><strong>SSH</strong>，把公钥添加到 GitHub，后续通过密钥认证。</li>
+</ul>
+<p>刚入门可以选 GitHub CLI 或 HTTPS。使用 HTTPS 时，终端要求 Password 就填写 Token，普通账号密码已经不适用。<strong>Token 不要写进命令、远程 URL、README、聊天和截图。</strong></p>
+<hr>
+<h2 id="三、别急着-init，先确认终端到底在哪"><a href="#三、别急着-init，先确认终端到底在哪" class="headerlink" title="三、别急着 init，先确认终端到底在哪"></a>三、别急着 init，先确认终端到底在哪</h2><p>这次练习从一个普通网页开始。它能在浏览器打开，但还没有任何 Git 历史。</p>
+<p>项目里有三个文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">index.html</span><br><span class="line">style.css</span><br><span class="line">.gitignore</span><br></pre></td></tr></table></figure>
+
+<p>在 VS Code 选择「打开文件夹」，不要只点开一个 HTML 文件。然后在内置终端运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">pwd</span></span><br><span class="line"><span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+
+<p><code>pwd</code> 显示当前目录，<code>ls</code> 列出文件。看到 <code>index.html</code> 和 <code>style.css</code> 以后再继续。</p>
+<p>这个检查看着很笨，却能挡住最麻烦的一类事故：有人在桌面、Documents，甚至用户主目录执行 <code>git init</code>，随后 <code>git add .</code> 把几千个无关文件放进暂存区。Git 没坏，目录选错了。</p>
+<hr>
+<h2 id="四、git-init-做了什么"><a href="#四、git-init-做了什么" class="headerlink" title="四、git init 做了什么"></a>四、git init 做了什么</h2><p>现在初始化仓库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git init -b main</span><br><span class="line">git status --short</span><br></pre></td></tr></table></figure>
+
+<p><code>git init -b main</code> 在当前目录创建 <code>.git</code>，并把初始分支命名为 <code>main</code>。<code>.git</code> 是一个隐藏目录，提交、分支、暂存区、远程地址等信息都放在里面。项目文件还在原处，Git 从这一刻开始观察它们。</p>
+<p>截图里的 <code>??</code> 表示未跟踪。文件已经存在，Git 还没决定要不要记录。</p>
+<p>想确认仓库根目录，可以运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rev-parse --show-toplevel</span><br></pre></td></tr></table></figure>
+
+<p>输出应该是当前项目文件夹。若提示 <code>fatal: not a git repository</code>，先检查目录，再看是否执行过 <code>git init</code>。</p>
+<hr>
+<h2 id="五、第一次提交，先留住一个可靠起点"><a href="#五、第一次提交，先留住一个可靠起点" class="headerlink" title="五、第一次提交，先留住一个可靠起点"></a>五、第一次提交，先留住一个可靠起点</h2><p>项目还没修改，为什么要先提交？因为后面所有变化都需要一个可比较的起点。先在浏览器打开网页，确认标题、卡片和报名区能显示；把窗口缩窄，看看手机宽度有没有横向滚动。</p>
+<p>再看 <code>.gitignore</code>。这次使用的内容是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.env</span><br><span class="line">.env.*</span><br><span class="line">*.log</span><br><span class="line">node_modules/</span><br><span class="line">dist/</span><br><span class="line">build/</span><br></pre></td></tr></table></figure>
+
+<p><code>.gitignore</code> 用来挡住密钥、日志、依赖和构建产物。它主要对尚未跟踪的文件生效。一个密钥如果已经提交过，后来补上 <code>.gitignore</code>，那段历史还在，真正的处理还包括吊销或轮换密钥。</p>
+<p>开始挑选第一次提交的文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add index.html style.css .gitignore</span><br><span class="line">git status --short</span><br><span class="line">git diff --cached --<span class="built_in">stat</span></span><br></pre></td></tr></table></figure>
+
+<p>状态中的 <code>A</code> 是 Added，表示文件已经进入暂存区。<code>git diff --cached --stat</code> 会告诉你这次准备提交几个文件、大概改了多少行。想看具体内容，运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff --cached</span><br></pre></td></tr></table></figure>
+
+<p>确认以后提交：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;chore: 初始化校园 AI 招新页&quot;</span></span><br><span class="line">git <span class="built_in">log</span> --oneline</span><br><span class="line">git status</span><br></pre></td></tr></table></figure>
+
+<p>Commit 可以理解成带作者、时间、说明和父提交的项目快照。<code>ffdf4ff</code> 是这次提交哈希的短写，在当前仓库中用它就能准确定位版本。</p>
+<p><code>feat</code>、<code>fix</code>、<code>docs</code>、<code>style</code>、<code>chore</code> 是常见的提交类型，并非 Git 强制语法。比前缀更重要的是后面的中文：做了什么，改了哪个对象，为什么做。</p>
+<hr>
+<h2 id="六、第二次提交：把-AI-的修改当成待审稿"><a href="#六、第二次提交：把-AI-的修改当成待审稿" class="headerlink" title="六、第二次提交：把 AI 的修改当成待审稿"></a>六、第二次提交：把 AI 的修改当成待审稿</h2><p>接下来给页面加一个「查看报名方式」按钮。使用 AI 编程工具时，我会把边界写进提示词：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">只修改 index.html，在介绍文字下方增加&quot;查看报名方式&quot;链接，</span><br><span class="line">链接到页面内的 #apply。不要修改 style.css，不要执行 Git 提交。</span><br><span class="line">完成后告诉我改了哪个文件。</span><br></pre></td></tr></table></figure>
+
+<p>手工修改也很简单：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;cta&quot;</span> <span class="attr">href</span>=<span class="string">&quot;#apply&quot;</span>&gt;</span>查看报名方式<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>AI 说完成了，先别提交。运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git status --short</span><br><span class="line">git diff -- index.html</span><br><span class="line">git diff --check</span><br></pre></td></tr></table></figure>
+
+<p><code>git diff</code> 显示工作区里尚未暂存的变化。绿色 <code>+</code> 是新增行，红色 <code>-</code> 是删除行。<code>git diff --check</code> 没有输出，说明没有发现明显的尾随空格等格式问题；它不会替你检查按钮能不能点。</p>
+<p>回到浏览器刷新，点击按钮，再把窗口缩窄。页面应该滚动到报名区，按钮和卡片在窄屏下仍然正常。</p>
+<p>测试通过后才提交：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git add index.html</span><br><span class="line">git diff --cached</span><br><span class="line">git commit -m <span class="string">&quot;feat: 新增报名入口，方便快速查看申请方式&quot;</span></span><br><span class="line">git <span class="built_in">log</span> --oneline -2</span><br></pre></td></tr></table></figure>
+
+<p>这时仓库里有两个能说清楚的版本：起始页和报名按钮。以后按钮出问题，可以直接找到它是哪次加进来的。</p>
+<p>顺便把两个 diff 分清：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git diff              <span class="comment"># 工作区与暂存区之间的差异</span></span><br><span class="line">git diff --cached     <span class="comment"># 暂存区与最近一次提交之间的差异</span></span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>git diff</code> 没输出，文件可能没保存，也可能已经暂存或提交。依次看 <code>git status</code>、<code>git diff --cached</code> 和 <code>git log</code>，比反复输入 <code>git add .</code> 靠谱。</p>
+<hr>
+<h2 id="七、分支：给不确定的改动留一个试验位置"><a href="#七、分支：给不确定的改动留一个试验位置" class="headerlink" title="七、分支：给不确定的改动留一个试验位置"></a>七、分支：给不确定的改动留一个试验位置</h2><p>按钮只增加一行，风险不大。把整套主题从紫色改成橙色，结果可能好看，也可能很俗，这种修改适合放进分支。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git switch -c experiment/warm-theme</span><br><span class="line">git branch --show-current</span><br></pre></td></tr></table></figure>
+
+<p>分支在概念上是指向某个提交的名字。新分支刚创建时与 <code>main</code> 指向同一提交，所以文件完全一样。等实验分支产生新提交，两条线才分开。</p>
+<p>图里蓝色的 <code>main</code> 仍指着第二次提交，橙色的 <code>experiment</code> 已经指向第三次提交。项目并没有复制出两套文件，变化的只是两个分支名分别指向哪里。</p>
+<p>修改 <code>style.css</code> 的颜色变量，刷新页面确认以后提交：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git diff -- style.css</span><br><span class="line">git diff --check</span><br><span class="line">git add style.css</span><br><span class="line">git commit -m <span class="string">&quot;style: 在实验分支试用暖色主题&quot;</span></span><br><span class="line">git <span class="built_in">log</span> --oneline --graph --decorate --all</span><br></pre></td></tr></table></figure>
+
+<p><code>HEAD</code> 表示你当前站在哪里。截图里 <code>HEAD</code> 指向 <code>experiment/warm-theme</code>，<code>main</code> 仍停在按钮提交。</p>
+<p>确定保留暖色主题，切回 <code>main</code> 合并：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git switch main</span><br><span class="line">git merge experiment/warm-theme</span><br></pre></td></tr></table></figure>
+
+<p><code>main</code> 没有产生分叉，Git 直接把 <code>main</code> 指针向前移动到实验提交。</p>
+<hr>
+
+        </div>
+        <!-- .entry-content -->
+        <div class="single-reward">
+          <div class="reward-open">赏
+            <div class="reward-main">
+              <ul class="reward-row">
+                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/donate/AliPayQR.jpg"></li>
+                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/donate/WeChanQR.jpg"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center; width: 100%" class="social-share share-mobile" data-disabled="diandian, tencent"></div>
+        <footer class="post-footer">
+          <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="nofollow"><i class="fa fa-creative-commons" aria-hidden="true"></i> 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
+          <div class="post-tags">
+          </div>
+          <div class="post-share">
+            <div class="social-share sharehidden share-component"></div>
+            <i class="iconfont show-share icon-forward"></i>
+          </div>
+        </footer><!-- .entry-footer -->
+      </article>
+      <!-- #post-## -->
+      <div class="toc" style="background: none;"></div>
+      <section class="post-squares nextprev">
+        
+        
+          
+            <div class="post-nepre full next">
+          
+            <a href="/skyblog/2026/08/27/%E5%85%B3%E4%BA%8E-GitHub-%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B%E6%83%85/" rel="next">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
+              </div>
+              <span class="label">
+              Next Post</span>
+              <div class="info">
+                <h3>
+                关于-GitHub-的一些事情</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+      </section>
+      
+
+
+
+      <section class="author-profile">
+        <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+          <a href="" class="profile gravatar"><img src="" itemprop="image" alt="" height="70" width="70"></a>
+          <div class="meta">
+            <span class="title">Author</span>
+            <h3 itemprop="name">
+            <a href="" itemprop="url" rel="author"></a>
+            </h3>
+          </div>
+        </div>
+        <hr>
+        <p><i class="iconfont icon-write"></i></p>
+      </section>
+    </main><!-- #main -->
+  </div><!-- #primary -->
+</div>
+
+
+
+    </div>    
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            // PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+        },
+        ROOT_URL: '/skyblog/',
+        CONTENT_URL: '/skyblog/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+    <!-- <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2026 Sky<br>
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer> -->
+<footer id="colophon" class="site-footer" role="contentinfo">
+  <div class="site-info">
+    <div class="footertext">
+      <div class="img-preload">
+        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/wordpress-rotating-ball-o.svg">
+        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/disqus-preloader.svg">
+      </div>
+      <p style="color: #666666;">&copy 2018</p>
+    </div>
+    <div class="footer-device">
+    <p style="font-family: 'Ubuntu', sans-serif;">
+        <span style="color: #b9b9b9;">Theme <a href="https://github.com/honjun/hexo-theme-sakura" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Sakura</a> <i class="iconfont icon-sakura rotating" style="color: #ffc0cb;display:inline-block"></i> by <a href="https://2heng.xin/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Mashiro</a>&<a href="https://www.hojun.cn/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Hojun</a>, Powered by Hexo, Hosted by Coding Pages</a>
+        </span>
+      </p>
+    </div>
+  </div><!-- .site-info -->
+</footer>
+
+
+
+<!-- <script src="/skyblog/js/tocbot.js"></script> -->
+<script type="text/javascript" src="/skyblog/js/lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="/skyblog/js/InsightSearch.js"></script>
+<script type="text/javascript" src="/skyblog/js/jquery.fancybox.min.js"></script>
+<script type="text/javascript" src="/skyblog/js/zoom.min.js"></script>
+<script type="text/javascript" src="/skyblog/js/sakura-app.js"></script>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine@1.3.4/dist/Valine.min.js'></script>
+<script src="/skyblog/js/botui.js"></script>
+<!-- 不蒜子 网页计数器 -->
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script> -->
+<script type="text/javascript">
+/* <![CDATA[ */
+if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  var Poi = {"pjax":"0","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"close"},"windowheight":"fixed","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+} else {
+  var Poi = {"pjax":"0","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"open"},"windowheight":"auto","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+}
+/* ]]> */
+
+</script>
+<script>
+$(document).ready(function() {
+  if ($(".toc").length > 0 && document.body.clientWidth > 1200) {
+    if ($(".pattern-center").length > 0) { //有图的情况
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -400,
+          scrollSmoothOffset: -85
+      });
+    } else {
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -85,
+          scrollSmoothOffset: -85
+      });
+    }
+    var offsetTop = $('.toc').offset().top - 95;
+    window.onscroll = function() {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      if (scrollTop >= offsetTop) {
+        $('.toc').addClass('toc-fixed');
+      } else {
+        $('.toc').removeClass('toc-fixed');
+      }
+    }
+  }
+});
+</script>
+
+    <div class="openNav no-select" style="height: 50px;">
+      <div class="iconflat no-select" style="width: 50px; height: 50px;">
+        <div class="icon"></div>
+      </div>
+      <div class="site-branding search-form-submit">
+        <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+      </div>
+    </div>
+  </section>
+  <div id="mo-nav" class="">
+  <div class="m-avatar">
+    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/favicon.png">
+  </div>
+  <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">Sky</p>
+  <p style="text-align: center; word-spacing: 20px;">
+    
+      
+        <a href="https://github.com/zhixiaotx" class="fa fa-github" target="_blank" style="color: #333; margin-left:20px"></a>
+      
+        <a href="http://weibo.com/mashirozx?is_all=1" class="fa fa-weibo" target="_blank" style="color: #dd4b39; margin-left:20px"></a>
+      
+        <a href="https://wpa.qq.com/msgrd?v=3&uin=954655431&site=qq&menu=yes" class="fa fa-qq" target="_blank" style="color: #25c6fe; margin-left:20px"></a>
+      
+        <a href="mailto:liuliu19901110@gmail.com" class="fa fa-envelope" target="_blank" style="color: #dd4b39; margin-left:20px"></a>
+      
+    
+  </p>
+  <ul id="menu-new-1" class="menu">
+    
+      <li>
+        <a href="/skyblog/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-home" aria-hidden="true"></i>
+            首页
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/skyblog/archives/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-archive" aria-hidden="true"></i>
+            归档
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/skyblog/categories/%E6%8A%80%E6%9C%AF/">
+                  <i class="fa fa-code" aria-hidden="true"></i>
+                  技术
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/categories/%E7%94%9F%E6%B4%BB/">
+                  <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  生活
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/categories/%E8%B5%84%E6%BA%90/">
+                  <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                  资源
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/categories/%E9%9A%8F%E6%83%B3/">
+                  <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                  随想
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/categories/%E8%BD%AC%E8%BD%BD/">
+                  <i class="fa fa-book" aria-hidden="true"></i>
+                  转载
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/skyblog/tags/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-tags" aria-hidden="true"></i>
+            标签
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/skyblog/categories/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-folder-open" aria-hidden="true"></i>
+            分类
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="javascript:;">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-list-ul" aria-hidden="true"></i>
+            清单
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/skyblog/tags/%E6%82%A6%E8%AF%BB/">
+                  <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                  书单
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/bangumi/">
+                  <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                  番组
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/music/">
+                  <i class="fa fa-headphones" aria-hidden="true"></i>
+                  歌单
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/tags/%E5%9B%BE%E9%9B%86/">
+                  <i class="fa fa-photo" aria-hidden="true"></i>
+                  图集
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/skyblog/comment/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-pencil-square-o" aria-hidden="true"></i>
+            留言板
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/skyblog/links/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-link" aria-hidden="true"></i>
+            友人帐
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/skyblog/about/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-heart" aria-hidden="true"></i>
+            关于
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/skyblog/about/">
+                  <i class="fa fa-meetup" aria-hidden="true"></i>
+                  我？
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/theme-sakura/">
+                  <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                  主题
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/lab/">
+                  <i class="fa fa-cogs" aria-hidden="true"></i>
+                  Lab
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+  </ul>
+  <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
+</div>
+<button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<style>
+  .aplayer .aplayer-lrc {
+    height: 35px;
+  }
+  .aplayer .aplayer-lrc p{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px !important;
+  }
+  .aplayer .aplayer-lrc p.aplayer-lrc-current{
+    color: #FF1493;
+  }
+  .aplayer.aplayer-narrow .aplayer-body{
+    left: -66px !important;
+  }
+  .aplayer.aplayer-fixed .aplayer-lrc {
+    display: none;
+  }
+  .aplayer .aplayer-lrc.aplayer-lrc-hide {
+      display:none !important;
+  }
+  .aplayer.aplayer-fixed .lrc-show {
+    display: block;
+    background: rgba(255, 255, 255, 0.8);
+  }
+</style>
+<div id="aplayer" class="aplayer"></div>
+<script>
+  $(function(){
+    var cfg = {
+      server: 'netease',
+      type: 'playlist',
+      id: '19723756',
+      fixed: true,
+      autoplay: false,
+      loop: 'all',
+      order: 'random',
+      preload: 'auto',
+      volume: 0.7,
+      mutex: true
+    };
+    $.getJSON('https://api.i-meto.com/meting/api', {server: cfg.server, type: cfg.type, id: cfg.id})
+      .done(function(songs){
+        if (!songs || !songs.length) { console.log('music list empty'); return; }
+        var ap = new APlayer({
+          container: document.getElementById('aplayer'),
+          fixed: cfg.fixed,
+          autoplay: cfg.autoplay,
+          loop: cfg.loop,
+          order: cfg.order,
+          preload: cfg.preload,
+          volume: cfg.volume,
+          mutex: cfg.mutex,
+          audio: songs.map(function(s){
+            return {name: s.title, artist: s.author, url: s.url, cover: s.pic, lrc: s.lrc};
+          })
+        });
+        // 播放失败/坏链自动切下一首（网易云外链有部分 VIP/版权歌 404）
+        ap.on('error', function(){
+          try { ap.list.next(); } catch(e) {}
+        });
+        // 点击播放器切换歌词显示
+        $('body').on('click', '.aplayer', function(){
+          if ($('.aplayer-button').hasClass('aplayer-play')) {
+            $('.aplayer-lrc').removeClass('lrc-show');
+          } else {
+            $('.aplayer-lrc').addClass('lrc-show');
+          }
+        });
+      })
+      .fail(function(){ console.log('music api unavailable'); });
+  });
+</script>
+</body>
+</html>
