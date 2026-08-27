@@ -22,6 +22,7 @@
 6. [文章封面图（photos）设置](#6-文章封面图photos设置)
 7. [壁纸（首页背景图）设置](#7-壁纸首页背景图设置)
 8. [菜单 / 头像 / 音乐 / 社交配置](#8-菜单--头像--音乐--社交配置)
+    - [8.5 背景音乐详细设置（换歌单/本地音乐/疑难）](#85-背景音乐详细设置换歌单--本地音乐--疑难解答)
 9. [标签 / 分类页空白修复](#9-标签--分类页空白修复)
 10. [移动端适配](#10-移动端适配)
 11. [相对路径与子目录部署](#11-相对路径与子目录部署)
@@ -118,11 +119,14 @@ hexo-blog/
 ├── package.json               # 【依赖清单】npm install 装这里
 ├── readme.md                  # 【本文档】
 ├── .gitignore                 # Git 忽略规则（public/node_modules 不入版本）
+├── docs/                      # 项目文档（不参与部署）
+│   └── 404-custom-backup.html # 404 渐变版备份（线上 404 如需回退用它）
 ├── .github/                   # （可选）GitHub Actions CI
 │   └── workflows/
 │       └── deploy.yml         # 自动构建 + 推送 gh-pages
 │
 ├── source/                    # ★ 所有内容的源头
+│   ├── 404.html               #   404 页（渐变+樱花+按钮，自定义版）
 │   ├── _posts/                #   文章（Markdown）
 │   │   ├── hello-world.md
 │   │   ├── GitHub从入门到精通.md
@@ -236,6 +240,49 @@ npx hexo clean && npx hexo generate     # 重新生成 public/
 ```bash
 npx hexo new page comment       # 生成 source/comment/index.md
 # 编辑 front-matter 写 layout: comment 等，详见对应模板
+```
+
+### 5.5 完整文章模板（直接复制改）
+
+```markdown
+---
+title: 文章标题                  # 必填
+date: 2026-08-27 21:00:00      # 必填
+updated: 2026-08-27 21:00:00
+tags:
+  - 技术                        # 可多个
+  - Hexo
+categories:
+  - 技术                        # 建议 1 个
+photos:
+  - /img/cover/your-cover.jpg   # 封面图（可选，第一张作封面/缩略图）
+description: 一句话摘要，显示在首页列表
+mathjax: false                  # 需要公式时改 true
+---
+
+正文从这里开始，用 Markdown 写。
+
+## 二级标题
+
+- 列表项
+- **加粗**、*斜体*、`行内代码`
+
+### 代码块（自动高亮，无行号）
+
+```js
+console.log("你好");
+```
+
+![图片说明](/img/post/xxx.png)
+```
+
+**写完发布的标准流程**：
+
+```bash
+npx hexo server                 # 1. 本地预览 http://localhost:4000/skyblog/
+npx hexo clean && npx hexo generate   # 2. 重新生成 public/
+git add . && git commit -m "post: 标题" && git push origin main   # 3. 推源码
+# 4. 若配了 GitHub Actions（§13）→ 自动发布；否则走 §A.2 独立目录法推 gh-pages
 ```
 
 ---
@@ -377,6 +424,82 @@ msocial:
   github: { url: https://github.com/zhixiaotx, fa: fa-github, color: 333 }
   email:  { url: mailto:liuliu19901110@gmail.com, fa: fa-envelope, color: dd4b39 }
 ```
+
+### 8.5 背景音乐详细设置（换歌单 / 本地音乐 / 疑难解答）
+
+播放器组件：`themes/sakura/layout/_partial/aplayer.ejs`（已重写为自定义 APlayer，
+**去掉 MetingJS**，坏链自动切下一首）。数据源在 `_config.sakura.yml` 的 `aplayer:` 段。
+
+#### 8.5.1 换一个网易云歌单（最常见需求）
+
+```bash
+# 1. 浏览器打开网易云音乐网页版，找到想用的歌单
+#    https://music.163.com/#/playlist?id=19723756
+# 2. 复制地址里 `id=` 后面的数字（19723756 就是歌单 ID）
+```
+
+改 `_config.sakura.yml`：
+
+```yaml
+aplayer:
+  id: 19723756        # ★ 改成你的歌单 ID
+  server: netease     # 数据源：网易云
+  type: playlist      # 类型：歌单（不是单曲/专辑）
+  fixed: true         # 固定显示在左下角
+  autoplay: false     # 不要自动播放（浏览器会拦截）
+  loop: all
+  order: random
+  preload: auto
+  volume: 0.7
+```
+
+重新生成部署（§12）即可生效。
+
+> 想换"单曲"就把 `type` 改成 `song`、`id` 填歌曲 ID；
+> 想换"专辑"把 `type` 改成 `album`。
+
+#### 8.5.2 各歌单可播率实测（网易云外链限制）
+
+| 歌单 | ID | 实测可播率（前 12 首） |
+| --- | --- | --- |
+| 飙升榜 | `19723756` | ~70%（本项目当前使用） |
+| 热歌榜 | `3778678` | ~40% |
+| 学习纯音乐 | `486899256` | ~83% |
+| 学习白噪音 | `2451877636` | ~83% |
+| 重度失眠 | `884528449` | ~83% |
+| 治愈温柔纯音乐 | `784227484` | ~83% |
+
+> 网易云对 VIP/版权歌曲的外链全部失效（返回 404 或 size=0），
+> 所以任何歌单都有一定比例放不了。本项目播放器已做"坏链自动跳下一首"，
+> 体验优于官方 MetingJS（它会卡死在出错曲目）。
+
+#### 8.5.3 彻底稳定方案：本地音乐文件
+
+把 mp3 放到 `source/music/`，改播放器为本地列表
+（`themes/sakura/layout/_partial/aplayer.ejs` 里的 audio 数组）：
+
+```yaml
+# 例如：在 aplayer.ejs 里用本地文件
+audio:
+  - name: 歌名1
+    artist: 歌手1
+    url: /music/1.mp3
+    cover: /img/wallpaper/anime-scene.webp
+  - name: 歌名2
+    artist: 歌手2
+    url: /music/2.mp3
+    cover: /img/wallpaper/city-night.webp
+```
+
+本地文件路径以 `/` 开头会自动加 `/skyblog/` 前缀（`url_for`），
+100% 可播、无版权限制、加载快。
+
+#### 8.5.4 常见问题
+
+- **一首歌放不了卡住**：网络歌单 VIP 歌 → 换歌单或换本地音乐方案。
+- **完全没有声音/播放器不出现**：检查 `_config.sakura.yml` 的 `aplayer:` 是否被误删；
+  `api.i-meto.com` 偶发 Cloudflare 403，刷新重试。
+- **想彻底关闭音乐**：把 `aplayer:` 整段注释掉即可。
 
 ---
 
@@ -679,7 +802,9 @@ jobs:
 ### Q3. 文章封面图不显示
 
 **原因**：用了 `cover:` 字段。Sakura 用的是 **`photos:`** 数组。
-**解决**：见 §6。
+**解决**：见 §6。若路径以 `/` 开头但还裂图，通常是**缺 `/skyblog/` 子目录前缀**——
+本项目已在 `common-article.ejs`、`category-items.ejs`、`index-items.ejs` 全部用
+`url_for()` 包裹，`photos: [/img/cover/xxx.jpg]` 会自动加前缀。
 
 ### Q4. 网易云音乐播放不了
 
@@ -718,6 +843,17 @@ Get-Process node | Stop-Process -Force    # PowerShell
 # 或
 taskkill /F /IM node.exe                  # CMD
 ```
+
+### Q8. 代码块每行前面有数字（行号）想去掉
+
+**原因**：`_config.yml` 的 `highlight.line_number: true`。
+**解决**：改成 `line_number: false`（本仓库已改），重新生成即只剩代码。
+
+### Q9. 首页文章缩略图显示"猫图"
+
+**原因**：封面路径缺 `/skyblog/` 前缀 → 加载失败 → `onerror` 兜底到 CDN 的
+`image-404.png`（猫图）。本项目已在 `index-items.ejs` 修复，
+只要文章 `photos:` 写对（见 §6）就显示封面。
 
 ---
 
@@ -817,9 +953,28 @@ env -u HTTP_PROXY -u HTTPS_PROXY git -c http.proxy= -c https.proxy= \
   -c http.version=HTTP/1.1 push origin main
 ```
 
+### 🚨 8. `url_for()` 要覆盖"所有"文章列表模板
+
+Sakura 的文章卡片有 **3 套**：首页 `_widget/index-items.ejs`、
+分类/标签页 `_widget/category-items.ejs`、文章页 `_widget/common-article.ejs`。
+凡用到 `post.photos[0]` 的地方都必须 `url_for()` 包裹，漏一套就会在该处裂图
+（首页裂图会 `onerror` 兜底成 CDN 猫图 `image-404.png`）。
+
+### 🚨 9. 代码块行号开关在 `_config.yml`
+
+```yaml
+highlight:
+  line_number: false   # true = 每行前有数字；false = 只要代码
+```
+
+改了要 `hexo clean && hexo generate` 才生效。
+
 ---
 
 ## 许可证
+
+本项目代码 MIT 协议。Sakura 主题遵循其原作者协议。
+文章内容版权归原作者所有（转载文章已注明来源）。
 
 本仓库源码 MIT。Sakura 主题遵循其原作者协议。
 文章内容版权归原作者所有（转载文章已注明来源）。
