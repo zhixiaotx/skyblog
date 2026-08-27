@@ -7307,6 +7307,14 @@ to {
     padding-top:30px;
     box-shadow:0 10px 30px 0 rgba(0,0,0,.4)
 }
+/* 长代码行：块内横向滚动，不撑破页面与文章布局 */
+.entry-content pre,
+.highlight-wrap pre {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre;
+    -webkit-overflow-scrolling: touch;
+}
 .highlight .line span::-moz-selection,.line::-moz-selection {
     background:#fff;
     color:#21252b
