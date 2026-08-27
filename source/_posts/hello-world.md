@@ -2,6 +2,8 @@
 title: 你好，世界：我的博客开通啦
 date: 2026-08-26 20:00:00
 updated: 2026-08-26 20:00:00
+photos:
+  - /img/wallpaper/hammock.webp
 tags:
   - 随笔
   - Hexo

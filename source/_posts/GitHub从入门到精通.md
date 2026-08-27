@@ -2,6 +2,8 @@
 title: GitHub从入门到精通
 date: 2026-08-27 15:07:00
 updated: 2026-08-27 15:07:00
+photos:
+  - /img/wallpaper/city-night.webp
 tags:
   - 技术
   - github

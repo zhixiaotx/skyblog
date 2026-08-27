@@ -2,6 +2,8 @@
 title: 关于-GitHub-的一些事情
 date: 2026-08-27 15:07:00
 updated: 2026-08-27 15:07:00
+photos:
+  - /img/wallpaper/bookshelf.webp
 tags:
   - 技术
   - github
