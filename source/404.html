@@ -1,14 +1,113 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <title>404 - Not Found</title>
-    <link rel="icon" href="/img/favicon.png">
-    <meta name="robots" content="noindex">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - 页面走丢了 | Sky</title>
+  <link rel="icon" href="/img/favicon.png">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #fff;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .wrap {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 24px;
+    }
+    .cat {
+      width: min(420px, 80vw);
+      height: auto;
+      filter: drop-shadow(0 12px 30px rgba(0,0,0,0.4));
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .code {
+      margin-top: 20px;
+      font-size: clamp(60px, 14vw, 120px);
+      font-weight: 800; letter-spacing: 8px;
+      background: linear-gradient(135deg, #f5a623, #ffd479);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+    }
+    .msg {
+      margin-top: 12px; font-size: 14px;
+      color: rgba(255,255,255,0.7); max-width: 420px; line-height: 1.7;
+    }
+    .btn {
+      margin-top: 28px; display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+    }
+    .btn a {
+      text-decoration: none; color: #1a1a2e; font-weight: 700;
+      padding: 12px 26px; border-radius: 999px;
+      background: linear-gradient(135deg, #f5a623, #ffd479);
+      box-shadow: 0 6px 20px rgba(245,166,35,0.4);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .btn a.ghost {
+      color: #ffd479; background: transparent;
+      border: 1px solid rgba(255,212,121,0.5); box-shadow: none;
+    }
+    .btn a:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(245,166,35,0.55); }
+    .btn a.ghost:hover { background: rgba(255,212,121,0.12); }
+  </style>
 </head>
 <body>
-    <!-- 主题自带 404：加载腾讯 404 互动组件（渲染猫 + "Houston, we have a problem" + 搜索框），
-         homePageUrl 指向本站首页 -->
-    <script type="text/javascript" src="//qzonestyle.gtimg.cn/qzone/hybrid/app/404/search_children.js" charset="utf-8" homePageUrl="https://zhixiaotx.github.io/skyblog/" homePageName="返回主页"></script>
+  <div class="wrap">
+    <!-- 自带 inline SVG 橙色猫 + Houston 气泡（不依赖外部 CDN） -->
+    <svg class="cat" viewBox="0 0 420 320" xmlns="http://www.w3.org/2000/svg">
+      <!-- 气泡 -->
+      <ellipse cx="310" cy="70" rx="95" ry="48" fill="#fff" stroke="#222" stroke-width="3"/>
+      <polygon points="240,108 258,115 246,132" fill="#fff" stroke="#222" stroke-width="3" stroke-linejoin="round"/>
+      <text x="310" y="60" text-anchor="middle" font-size="20" font-weight="700" fill="#222" font-family="'Comic Sans MS', cursive">Houston,</text>
+      <text x="310" y="86" text-anchor="middle" font-size="20" font-weight="700" fill="#222" font-family="'Comic Sans MS', cursive">we have a problem</text>
+      <!-- 猫头 -->
+      <ellipse cx="155" cy="210" rx="95" ry="85" fill="#f5a623"/>
+      <!-- 左耳 -->
+      <polygon points="72,148 95,90 138,148" fill="#f5a623" stroke="#222" stroke-width="3" stroke-linejoin="round"/>
+      <polygon points="88,142 100,108 125,142" fill="#e89020"/>
+      <!-- 右耳 -->
+      <polygon points="172,148 215,90 238,148" fill="#f5a623" stroke="#222" stroke-width="3" stroke-linejoin="round"/>
+      <polygon points="185,142 210,108 222,142" fill="#e89020"/>
+      <!-- 眼睛（白底黑瞳，惊讶表情） -->
+      <ellipse cx="120" cy="200" rx="18" ry="22" fill="#fff" stroke="#222" stroke-width="2"/>
+      <ellipse cx="190" cy="200" rx="18" ry="22" fill="#fff" stroke="#222" stroke-width="2"/>
+      <ellipse cx="120" cy="205" rx="8" ry="14" fill="#222"/>
+      <ellipse cx="190" cy="205" rx="8" ry="14" fill="#222"/>
+      <circle cx="124" cy="198" r="3" fill="#fff"/>
+      <circle cx="194" cy="198" r="3" fill="#fff"/>
+      <!-- 鼻子 -->
+      <polygon points="148,235 162,235 155,247" fill="#d4736e" stroke="#222" stroke-width="2" stroke-linejoin="round"/>
+      <!-- 嘴（W 形惊讶） -->
+      <path d="M155,247 Q140,262 130,254" stroke="#222" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M155,247 Q170,262 180,254" stroke="#222" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <!-- 胡须 -->
+      <line x1="50" y1="215" x2="105" y2="222" stroke="#222" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="50" y1="230" x2="105" y2="232" stroke="#222" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="50" y1="245" x2="105" y2="240" stroke="#222" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="260" y1="215" x2="205" y2="222" stroke="#222" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="260" y1="230" x2="205" y2="232" stroke="#222" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="260" y1="245" x2="205" y2="240" stroke="#222" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- 猫的爪子（托腮，思考/惊讶状） -->
+      <ellipse cx="95" cy="280" rx="22" ry="18" fill="#f5a623" stroke="#222" stroke-width="3"/>
+      <ellipse cx="215" cy="280" rx="22" ry="18" fill="#f5a623" stroke="#222" stroke-width="3"/>
+    </svg>
+    <div class="code">404</div>
+    <p class="msg">你访问的页面可能已被移动、删除，或者从来没有存在过。<br>不如回到首页，看看别的风景吧～</p>
+    <div class="btn">
+      <a href="/skyblog/">回到首页</a>
+      <a class="ghost" href="/skyblog/archives/">浏览文章</a>
+    </div>
+  </div>
 </body>
 </html>
