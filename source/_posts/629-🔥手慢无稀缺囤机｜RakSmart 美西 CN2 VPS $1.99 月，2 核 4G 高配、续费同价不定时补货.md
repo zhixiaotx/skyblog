@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/629/cover.webp
 categories:
   - "VPS推荐"
-source_url: https://aixmb.com/629.html
 ---
 
 做海外 WordPress 博客、独立站的站长看过来📢
@@ -71,8 +70,3 @@ WordPress 多博客、外贸独立站、静态工具站、轻量爬虫、Linux �
 进入 VPS 分类找到大陆优化套餐，系统推荐 CentOS7.6，普通建站无需额外购买高防 IP。
 
 2 核 4G CN2 优化线路低价机型非常稀缺，长期海外建站刚需别错过，库存实时变动，看到有货抓紧入手！
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/629.html)，版权归原作者所有。
-

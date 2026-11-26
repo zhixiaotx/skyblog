@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/524/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/524.html
 ---
 
 你有没有遇到过这些烦恼？
@@ -128,8 +127,3 @@ serverless-qrcode-hub 虽然是一个小项目，但解决的是很多人都会�
 ![Ai星码博客](/img/aixmb/524/01.webp)
 
 ![Ai星码博客](/img/aixmb/524/02.webp)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/524.html)，版权归原作者所有。
-

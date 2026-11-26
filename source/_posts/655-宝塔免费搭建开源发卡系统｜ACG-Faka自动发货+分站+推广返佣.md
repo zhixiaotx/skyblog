@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/655/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/655.html
 ---
 
 如果你想搭建一个属于自己的**在线发卡平台、数字商品商城、卡密销售网站**，但又不想花几百上千元购买商业源码，那么今天这个开源项目值得了解一下。
@@ -119,17 +118,11 @@ source_url: https://aixmb.com/655.html
 
 ```
 location ~* ^/(runtime|kernel|config|vendor)/                { return 404; }
-
 location ~  /\.(?!well-known)                                { return 404; }
-
 location ~* \.(log|sql|sqlite|db|db-wal|db-shm|bak|old|save|orig|swp|swo|tmp|ini|lock)$  { return 404; }
-
 location ~* (~|composer\.(json|lock)|package(-lock)?\.json)$ { return 404; }
-
 location / {
-
     try_files $uri $uri/ /index.php?s=$uri&$args;
-
 }
 ```
 
@@ -137,25 +130,15 @@ location / {
 
 ```
 <rules>
-
 	<rule name="acg_rewrite" stopProcessing="true">
-
 		<match url="^(.*)$"/>
-
 		<conditions logicalGrouping="MatchAll">
-
 			<add input="{HTTP_HOST}" pattern="^(.*)$"/>
-
 			<add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true"/>
-
 			<add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true"/>
-
 		</conditions>
-
 		<action type="Rewrite" url="index.php?s={R:1}"/>
-
 	</rule>
-
 </rules>
 ```
 
@@ -168,8 +151,3 @@ location / {
 **源码GitHub ：https://github.com/lizhipay/acg-faka**
 
 **源码国内网盘下载：https://pan.quark.cn/s/bdc7d8e78d1a**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/655.html)，版权归原作者所有。
-

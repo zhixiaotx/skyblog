@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/762/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/762.html
 ---
 
 不知道大家有没有这种困扰：平日里脑海源源不断迸发各类灵感，看到优质文章想要收藏留存、工作要点需要及时记下、学习途中整理知识框架，可记录的数据总是四散各处。  
@@ -78,135 +77,68 @@ source_url: https://aixmb.com/762.html
 
    ```
    CREATE TABLE tags (
-
      id INTEGER PRIMARY KEY AUTOINCREMENT,
-
      name TEXT NOT NULL UNIQUE
-
    );
-
-   
 
    CREATE TABLE notes (
-
      id INTEGER PRIMARY KEY,
-
      content TEXT NOT NULL,
-
      files TEXT DEFAULT '[]',
-
      created_at INTEGER NOT NULL,
-
      updated_at INTEGER NOT NULL,
-
      is_pinned BOOLEAN DEFAULT 0,
-
      is_favorited INTEGER DEFAULT 0 NOT NULL,
-
      is_archived INTEGER DEFAULT 0 NOT NULL,
-
      pics TEXT,
-
      videos TEXT DEFAULT '[]'
-
    );
-
-   
 
    CREATE TABLE note_tags (
-
      note_id INTEGER NOT NULL,
-
      tag_id INTEGER NOT NULL,
-
      PRIMARY KEY (note_id, tag_id),
-
      FOREIGN KEY (note_id) REFERENCES notes(id) ON DELETE CASCADE,
-
      FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE
-
    );
-
-   
-
-   
 
    CREATE TABLE nodes (
-
      id TEXT PRIMARY KEY,
-
      type TEXT NOT NULL,
-
      title TEXT NOT NULL,
-
      content TEXT,
-
      parent_id TEXT,
-
      created_at INTEGER NOT NULL,
-
      updated_at INTEGER NOT NULL,
-
      FOREIGN KEY (parent_id) REFERENCES nodes(id) ON DELETE CASCADE
-
    );
-
    -- =============================================
-
    -- Section 2: Full-Text Search Virtual Table
-
    -- (This is the only FTS-related statement you need)
-
    -- =============================================
-
    --
-
    CREATE VIRTUAL TABLE notes_fts USING fts5(
-
      content,
-
      files,
-
      content='notes',
-
      content_rowid='id'
-
    );
 
-   
-
-   
-
    -- =============================================
-
    -- Section 3: Triggers to keep FTS in sync
-
    -- =============================================
-
-   
 
    CREATE TRIGGER notes_after_insert AFTER INSERT ON notes BEGIN
-
      INSERT INTO notes_fts(rowid, content, files) VALUES (new.id, new.content, new.files);
-
    END;
-
-   
 
    CREATE TRIGGER notes_after_delete AFTER DELETE ON notes BEGIN
-
      INSERT INTO notes_fts(notes_fts, rowid, content, files) VALUES ('delete', old.id, old.content, old.files);
-
    END;
 
-   
-
    CREATE TRIGGER notes_after_update AFTER UPDATE ON notes BEGIN
-
      INSERT INTO notes_fts(notes_fts, rowid, content, files) VALUES ('delete', old.id, old.content, old.files);
-
      INSERT INTO notes_fts(rowid, content, files) VALUES (new.id, new.content, new.files);
-
    END;
    ```
 2. **创建 KV 命名空间 (notes-kv)**进入 **Workers & Pages -> KV -> Create a namespace**。  
@@ -263,9 +195,7 @@ source_url: https://aixmb.com/762.html
 
 ```
 DROP TRIGGER IF EXISTS notes_after_insert;
-
 DROP TRIGGER IF EXISTS notes_after_delete;
-
 DROP TRIGGER IF EXISTS notes_after_update;
 ```
 
@@ -279,15 +209,10 @@ DROP TABLE IF EXISTS notes_fts;
 
 ```
 CREATE VIRTUAL TABLE notes_fts USING fts5(
-
   content,
-
   files,
-
   content='notes',
-
   content_rowid='id'
-
 );
 ```
 
@@ -302,27 +227,16 @@ INSERT INTO notes_fts(rowid, content, files) SELECT id, content, files FROM note
 
 ```
 CREATE TRIGGER notes_after_insert AFTER INSERT ON notes BEGIN
-
   INSERT INTO notes_fts(rowid, content, files) VALUES (new.id, new.content, new.files);
-
 END;
-
-
 
 CREATE TRIGGER notes_after_delete AFTER DELETE ON notes BEGIN
-
   INSERT INTO notes_fts(notes_fts, rowid, content, files) VALUES ('delete', old.id, old.content, old.files);
-
 END;
 
-
-
 CREATE TRIGGER notes_after_update AFTER UPDATE ON notes BEGIN
-
   INSERT INTO notes_fts(notes_fts, rowid, content, files) VALUES ('delete', old.id, old.content, old.files);
-
   INSERT INTO notes_fts(rowid, content, files) VALUES (new.id, new.content, new.files);
-
 END;
 ```
 
@@ -335,8 +249,3 @@ END;
 ![Ai星码博客](/img/aixmb/762/03.webp)
 
 ### **🔗项目地址：[https://github.com/souvenp/memos-worker](https://github.com/souvenp/memos-worker)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/762.html)，版权归原作者所有。
-

@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1145/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/1145.html
 ---
 
 平时和朋友、团队或者小圈子聊天，你是不是也遇到过这些问题？
@@ -302,8 +301,3 @@ github工作流配置：
 ![Ai星码博客](/img/aixmb/1145/05.png)
 
 ### **🔗项目地址:[点击进入](https://github.com/aozorae/Edgechat)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1145.html)，版权归原作者所有。
-

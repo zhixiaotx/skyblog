@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1033/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/1033.html
 ---
 
 上期给大家分享了 **Bark**，主要解决的是 **iPhone 苹果端的消息推送**。
@@ -153,8 +152,3 @@ Gotify 不只是一个简单的推送工具，还提供：
 # 🖼️相关截图 ![Ai星码博客](/img/aixmb/1033/01.webp)
 
 ### **🔗项目地址：[https://gotify.net](https://gotify.net)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1033.html)，版权归原作者所有。
-

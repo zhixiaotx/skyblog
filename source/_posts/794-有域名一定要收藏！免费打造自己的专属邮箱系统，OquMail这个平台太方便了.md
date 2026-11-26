@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/794/cover.webp
 categories:
   - "免费资源"
-source_url: https://aixmb.com/794.html
 ---
 
 很多站长、开发者都会遇到一个问题：
@@ -256,8 +255,3 @@ OquMail 通过简单配置，
 ### **🔗项目地址：** [https://oqumail.com](https://oqumail.com/)
 
 ### 美国地址生成器：[https://address.aixmb.cn](https://address.aixmb.cn)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/794.html)，版权归原作者所有。
-

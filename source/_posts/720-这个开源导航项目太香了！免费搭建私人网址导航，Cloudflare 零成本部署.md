@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/720/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/720.html
 ---
 
 不知道大家有没有这种感觉👇
@@ -242,8 +241,3 @@ iori-nav 给我的感觉就是：
 ---
 
 ### **🔗****项目地址：**[https://github.com/jy02739244/iori-nav](https://github.com/jy02739244/iori-nav)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/720.html)，版权归原作者所有。
-

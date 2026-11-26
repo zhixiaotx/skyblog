@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/843/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/843.html
 ---
 
 浏览器收藏夹越来越乱，常用网站找半天？
@@ -200,8 +199,3 @@ Workers → 域和路由 → 添加自定义域
 ### **🔗项目地址:[https://github.com/lbjxr/CF-Navs](https://github.com/lbjxr/CF-Navs)**
 
 ### **🔗备用地址:[https://github.com/aixmbcom/CF-Navs](https://github.com/aixmbcom/CF-Navs)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/843.html)，版权归原作者所有。
-

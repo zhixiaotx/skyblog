@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/901/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/901.html
 ---
 
 很多人做网站、开发项目、测试表单时，经常会遇到一个小问题：
@@ -214,8 +213,3 @@ source_url: https://aixmb.com/901.html
 **博主演示站：[https://address.aixmb.cn](https://address.aixmb.cn)**
 
 **🔗源码地址:[https://pan.quark.cn/s/3dadc5122e79](https://pan.quark.cn/s/3dadc5122e79)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/901.html)，版权归原作者所有。
-

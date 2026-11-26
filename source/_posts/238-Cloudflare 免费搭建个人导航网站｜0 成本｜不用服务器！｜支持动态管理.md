@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/238/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/238.html
 ---
 
 这款 **NaviHive** 用 Cloudflare Workers 做导航站，**不花钱、全球加速、支持拖拽分组和访客模式**， 个人网址收藏，管理学习资源，导航站，团队共享常用工具链接内容创作者的资源汇总主页免费搭建自己的网站入口中心
@@ -49,17 +48,11 @@ D1 数据库：点击”创建新数据库”，命名为navigation-db
 
 ```
 CREATE TABLE IF NOT EXISTS groups (
-
     id INTEGER PRIMARY KEY AUTOINCREMENT, 
-
     name TEXT NOT NULL, 
-
     order_num INTEGER NOT NULL, 
-
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-
 );
 ```
 
@@ -67,29 +60,17 @@ CREATE TABLE IF NOT EXISTS groups (
 
 ```
 CREATE TABLE IF NOT EXISTS sites (
-
     id INTEGER PRIMARY KEY AUTOINCREMENT, 
-
     group_id INTEGER NOT NULL, 
-
     name TEXT NOT NULL, 
-
     url TEXT NOT NULL, 
-
     icon TEXT, 
-
     description TEXT, 
-
     notes TEXT, 
-
     order_num INTEGER NOT NULL, 
-
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-
     FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE
-
 );
 ```
 
@@ -97,15 +78,10 @@ CREATE TABLE IF NOT EXISTS sites (
 
 ```
 CREATE TABLE IF NOT EXISTS configs (
-
     key TEXT PRIMARY KEY,
-
     value TEXT NOT NULL,
-
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-
 );
 ```
 
@@ -122,8 +98,3 @@ INSERT INTO configs (key, value) VALUES ('DB_INITIALIZED', 'true');
 如果SQL命令执行成功，您将看到”**查询成功**“的提示**信息**
 
 至此，**数据库初始化完成**，您可以访问您的导航站首页并使用配置的**管理员账号登录**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/238.html)，版权归原作者所有。
-

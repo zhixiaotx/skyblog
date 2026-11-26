@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1084/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/1084.html
 ---
 
 平时注册一些网站、测试程序、接收测试邮件的时候，很多人都不太愿意直接使用自己的常用邮箱。
@@ -285,8 +284,3 @@ source_url: https://aixmb.com/1084.html
 ### **博主临时邮箱：[https://email.aixmb.cn](https://email.aixmb.cn)**
 
 ### **🔗项目地址:[https://github.com/dreamhunter2333/cloudflare_temp_email](https://github.com/dreamhunter2333/cloudflare_temp_email)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1084.html)，版权归原作者所有。
-

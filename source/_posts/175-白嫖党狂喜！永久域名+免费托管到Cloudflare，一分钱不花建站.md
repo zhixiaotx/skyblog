@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/175/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/175.html
 ---
 
 很多人一直想做自己的网站，但一上来就被劝退了。
@@ -151,8 +150,3 @@ https://my.dnshe.com
 等待1-30分钟左右，已经生效。以后域名解析就在你的cloudflare上解析即可，不再需要打开域名平台。cloudflare还有免费的十年SSL证书➕全球CDN加速服务。
 
 ![Ai星码博客](/img/aixmb/175/14.webp)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/175.html)，版权归原作者所有。
-

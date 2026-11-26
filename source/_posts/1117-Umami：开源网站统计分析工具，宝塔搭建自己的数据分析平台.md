@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1117/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/1117.html
 ---
 
 你有没有遇到过这些问题？
@@ -382,77 +381,41 @@ Umami 官方本身也提供 Docker 镜像和 Docker Compose 部署方式，因�
 
 ```
 ---
-
 services:
-
   umami:
-
     image: ghcr.io/umami-software/umami:latest
-
     ports:
-
       - "3000:3000"
-
     environment:
-
       DATABASE_URL: postgresql://umami:您的数据库密码@db:5432/umami
-
       APP_SECRET: 生成一串64位的随机十六进制密钥
-
       # Required for two-factor authentication, generate with: openssl rand -hex 32
-
       TWO_FACTOR_ENCRYPTION_KEY: 再生成一串64位的随机十六进制密钥
-
     depends_on:
-
       db:
-
         condition: service_healthy
-
     init: true
-
     restart: always
-
     healthcheck:
-
       test: ["CMD-SHELL", "curl http://localhost:3000/api/heartbeat"]
-
       interval: 5s
-
       timeout: 5s
-
       retries: 5
-
   db:
-
     image: postgres:15-alpine
-
     environment:
-
       POSTGRES_DB: umami
-
       POSTGRES_USER: umami
-
       POSTGRES_PASSWORD: 您的数据库密码
-
     volumes:
-
       - umami-db-data:/var/lib/postgresql/data
-
     restart: always
-
     healthcheck:
-
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
-
       interval: 5s
-
       timeout: 5s
-
       retries: 5
-
 volumes:
-
   umami-db-data:
 ```
 
@@ -475,8 +438,3 @@ openssl rand -hex 32
 ![Ai星码博客](/img/aixmb/1117/02.webp)
 
 ### **🔗项目地址:[https://github.com/umami-software/umami](https://github.com/umami-software/umami)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1117.html)，版权归原作者所有。
-

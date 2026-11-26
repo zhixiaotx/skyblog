@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/592/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/592.html
 ---
 
 每个月都有各种订阅自动扣费？
@@ -106,8 +105,3 @@ source_url: https://aixmb.com/592.html
 **通知推送效果图：**
 
 ![Ai星码博客](/img/aixmb/592/04.webp)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/592.html)，版权归原作者所有。
-

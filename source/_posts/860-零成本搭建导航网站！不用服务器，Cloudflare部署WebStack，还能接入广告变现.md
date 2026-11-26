@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/860/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/860.html
 ---
 
 你有没有这种感觉？
@@ -269,8 +268,3 @@ Cloudflare 自动更新网站
 ![Ai星码博客](/img/aixmb/860/01.gif)
 
 ### **🔗项目地址:[https://github.com/WebStackPage/WebStackPage.github.io](https://github.com/WebStackPage/WebStackPage.github.io)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/860.html)，版权归原作者所有。
-

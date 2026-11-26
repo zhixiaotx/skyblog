@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/754/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/754.html
 ---
 
 你有没有遇到过这样的烦恼？
@@ -346,8 +345,3 @@ Squoosh 就是这样一个工具：
 ![Ai星码博客](/img/aixmb/754/02.webp)
 
 **项目地址：[https://github.com/GoogleChromeLabs/squoosh](https://github.com/GoogleChromeLabs/squoosh)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/754.html)，版权归原作者所有。
-

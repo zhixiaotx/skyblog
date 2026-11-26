@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1019/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/1019.html
 ---
 
 很多人自己搭建网站、博客、API或者服务器后，最怕遇到一个问题：
@@ -149,8 +148,3 @@ Uptime Kuma 最大的特点其实就一句话：
 ![Ai星码博客](/img/aixmb/1019/02.webp)
 
 ### **🔗项目地址:[https://github.com/louislam/uptime-kuma](https://github.com/louislam/uptime-kuma)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1019.html)，版权归原作者所有。
-

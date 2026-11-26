@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/985/cover.webp
 categories:
   - "免费资源"
-source_url: https://aixmb.com/985.html
 ---
 
 还在为购买虚拟主机、服务器和域名发愁吗？
@@ -155,8 +154,3 @@ Byet Host免费虚拟主机的主要特点可以概括为：
 ![Ai星码博客](/img/aixmb/985/03.webp)
 
 ### **🔗项目地址:[https://byet.host](https://byet.host)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/985.html)，版权归原作者所有。
-

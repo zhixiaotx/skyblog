@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/476/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/476.html
 ---
 
 还在用第三方短链接平台吗？
@@ -256,8 +255,3 @@ https://github.com/miantiao-me/Sink
 **通过访问自定义域名打开网页，进入仪表盘进行输入密码后台设置**
 
 ![Ai星码博客](/img/aixmb/476/01.webp)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/476.html)，版权归原作者所有。
-

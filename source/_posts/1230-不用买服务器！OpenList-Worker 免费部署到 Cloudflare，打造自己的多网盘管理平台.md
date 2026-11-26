@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1230/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/1230.html
 ---
 
 你是不是也有这样的烦恼？🤔
@@ -173,8 +172,3 @@ OpenList-Worker 的核心价值，就是将多种网盘和存储服务整合到�
 ![Ai星码博客](/img/aixmb/1230/02.webp)
 
 ## 🔗 GitHub 地址：[点击进入](https://github.com/OpenListTeam/OpenList-Worker)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1230.html)，版权归原作者所有。
-

@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1340/cover.png
 categories:
   - "未分类"
-source_url: https://aixmb.com/1340.html
 ---
 
 想搭建一个属于自己的发卡商城，却被服务器费用、程序安装、支付接口和订单管理这些问题劝退了？
@@ -333,8 +332,3 @@ https://github.com/34892002/cffk
 ![Ai星码博客](/img/aixmb/1340/02.png)
 
 ## **项目地址：[https://github.com/34892002/cffk](https://github.com/34892002/cffk)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1340.html)，版权归原作者所有。
-

@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1173/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/1173.html
 ---
 
 之前分享过一个开源项目：QR Studio，一个可以在线生成二维码、制作个性化二维码，还能扫描和解析二维码的工具。
@@ -146,8 +145,3 @@ QR Studio 的另一个优势是项目比较轻量。
 ### **演示站：[https://qrcode.aixmb.cn](https://qrcode.aixmb.cn)**
 
 ### **🔗项目地址:[点击进入](https://github.com/aixmbcom/QRstudio)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1173.html)，版权归原作者所有。
-

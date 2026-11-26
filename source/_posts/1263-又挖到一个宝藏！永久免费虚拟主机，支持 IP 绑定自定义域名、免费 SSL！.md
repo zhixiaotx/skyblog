@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1263/cover.webp
 categories:
   - "免费资源"
-source_url: https://aixmb.com/1263.html
 ---
 
 想搭建一个属于自己的网站，却不想每个月花钱购买服务器？
@@ -195,8 +194,3 @@ x10Hosting 免费版提供 DirectAdmin 控制面板，可以通过网页管理�
 ![Ai星码博客](/img/aixmb/1263/02.webp)
 
 ### **🔗官方网站：[https://x10hosting.com](https://x10hosting.com)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1263.html)，版权归原作者所有。
-

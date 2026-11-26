@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/197/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/197.html
 ---
 
 很多人都有一个想法：
@@ -179,8 +178,3 @@ https://github.com/CH563/shot-easy-website
 11.点击**了解更多**，就可以拿到**记录值**了。最后到你**域名平台添加解析**即可
 
 ![Ai星码博客](/img/aixmb/197/20.webp)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/197.html)，版权归原作者所有。
-

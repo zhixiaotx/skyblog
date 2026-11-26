@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/609/cover.webp
 categories:
   - "免费资源"
-source_url: https://aixmb.com/609.html
 ---
 
 对于喜欢折腾网站、API、机器人、开源项目的开发者来说，域名和运行环境一直都是刚需。
@@ -168,8 +167,3 @@ KataBump 的优势：
 KataBump 值得收藏体验！🔥
 
 ### 申请地址：[https://dashboard.katabump.com](https://dashboard.katabump.com)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/609.html)，版权归原作者所有。
-

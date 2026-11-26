@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1002/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/1002.html
 ---
 
 平时查 IP、看网络出口、测试 DNS、检测浏览器指纹，往往需要打开好几个网站。
@@ -156,8 +155,3 @@ IP查询 + 全球Ping + DNS/CDN检测 + 浏览器指纹 + AI网站连通性检�
 ![Ai星码博客](/img/aixmb/1002/03.webp)
 
 ### **🔗项目地址:**[https://github.com/zhihui-hu/one-ip](https://github.com/zhihui-hu/one-ip)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1002.html)，版权归原作者所有。
-

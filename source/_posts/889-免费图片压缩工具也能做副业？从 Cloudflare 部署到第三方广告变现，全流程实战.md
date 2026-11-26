@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/889/cover.webp
 categories:
   - "免费资源"
-source_url: https://aixmb.com/889.html
 ---
 
 还在为图片太大、格式不兼容发愁？📷
@@ -120,8 +119,3 @@ source_url: https://aixmb.com/889.html
 ### **🔗项目地址:[https://github.com/aixmbcom/image-kixtools](https://github.com/aixmbcom/image-kixtools)**
 
 ### **🔗广告平台:[https://beta.publishers.adsterra.com/signup](https://beta.publishers.adsterra.com/signup)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/889.html)，版权归原作者所有。
-

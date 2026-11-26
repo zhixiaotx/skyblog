@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/69/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/69.html
 ---
 
 如果你做过网站、写过代码、甚至只是偶尔搞点数据处理，你一定遇到过这种情况：
@@ -315,8 +314,3 @@ https://github.com/CorentinTh/it-tools
 10.自定义已经托管在Cloudflare的域名即可。
 
 ![Ai星码博客](/img/aixmb/69/14.webp)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/69.html)，版权归原作者所有。
-

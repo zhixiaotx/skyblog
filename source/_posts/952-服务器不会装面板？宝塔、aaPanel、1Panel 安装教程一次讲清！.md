@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/952/cover.webp
 categories:
   - "免费资源"
-source_url: https://aixmb.com/952.html
 ---
 
 很多刚接触服务器的朋友，都会遇到一个问题：
@@ -172,8 +171,3 @@ Linux 命令不会用，文件不知道放哪里，网站环境不会配置，PH
 ### aaPanel：[https://www.aapanel.com/new/download.html?from=home](https://www.aapanel.com/new/download.html?from=home)
 
 ### 1Panel：[https://1panel.cn/docs/v2/installation/online_installation](https://1panel.cn/docs/v2/installation/online_installation)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/952.html)，版权归原作者所有。
-

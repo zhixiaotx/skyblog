@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/506/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/506.html
 ---
 
 很多人都想拥有一个属于自己的博客：
@@ -213,8 +212,3 @@ Rin 目前支持账号密码登录与 Github OAuth 登录，可二选一或同�
 如果您想使用 GitHub 账号登录，请参考[高级配置](https://docs.openrin.org./guide/deploy.html#github-oauth-%E9%85%8D%E7%BD%AE)部分添加 OAuth 配置。
 
 > **提示**: 账号密码登录和 GitHub OAuth 登录可以同时启用，用户可以在登录页面自由选择登录方式。
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/506.html)，版权归原作者所有。
-
