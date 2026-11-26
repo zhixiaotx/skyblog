@@ -1274,14 +1274,16 @@ curl -s "https://zhixiaotx.github.io/skyblog/2026/11/25/文章标题/?t=$(date +
 ```html
 <p style="color: #666666;"></p>
 ...
-<span style="color: #b9b9b9;">© 2026 <a href="<%- url_for('/') %>">Sky</a> · 基于 <a href="https://hexo.io/">Hexo</a> + <a href="https://github.com/honjun/hexo-theme-sakura">Sakura</a> 搭建 · 托管于 <a href="https://pages.github.com/">GitHub Pages</a>
+<span style="color: #b9b9b9;">© 2026 <a href="<%- url_for('/') %>">Sky</a> · 基于 <a href="https://hexo.io/">Hexo</a> + <a href="https://github.com/honjun/hexo-theme-sakura">Sakura</a> <i class="iconfont icon-sakura rotating" style="color: #ffc0cb;display:inline-block"></i> 搭建 · 托管于 <a href="https://pages.github.com/">GitHub Pages</a>
 </span>
 ```
 
-页脚显示：**© 2026 Sky · 基于 Hexo + Sakura 搭建 · 托管于 GitHub Pages**
+页脚显示：**© 2026 Sky · 基于 Hexo + Sakura 🌸 搭建 · 托管于 GitHub Pages**
 
-其中 **Sky** 是回到首页的链接：`url_for('/')` 渲染成 `/skyblog/`，子目录部署也不会错。
-（用 `url_for('/')` 而不是写死 `/`，否则部署到 `/skyblog/` 子目录时点回 404。）
+- **Sky** 是回到首页的链接：`url_for('/')` 渲染成 `/skyblog/`，子目录部署也不会错
+  （用 `url_for('/')` 而不是写死 `/`，否则部署到 `/skyblog/` 子目录时点回 404）
+- `Sakura` 后面那个旋转的小花花是主题自带的图标字体：
+  `<i class="iconfont icon-sakura rotating" style="color:#ffc0cb;display:inline-block"></i>`，改文案时别删掉
 
 ### 19.3 想自己再改
 
