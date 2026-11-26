@@ -1,0 +1,7 @@
+<% if (theme.music && theme.music.enable !== false) { %>
+<!-- 音乐播放器：myhkw.cn 免插件版（换歌单后同步改 _config.sakura.yml 里的 music.id / music.key） -->
+<script type="text/javascript" id="myhk"
+  src="https://myhkw.cn/api/player/<%= theme.music.id %>"
+  key="<%= theme.music.key || theme.music.id %>"
+  m="<%= theme.music.m || '1' %>"></script>
+<% } %>

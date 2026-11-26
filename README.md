@@ -38,6 +38,7 @@
 17. [赞赏（"赏"）二维码：换成自己的收款码](#17-赞赏赏二维码换成自己的收款码)
 18. [批量导入外部博客文章（84 篇实战）](#18-批量导入外部博客文章84-篇实战)
 19. [页脚署名 / 版权文字怎么改](#19-页脚署名--版权文字怎么改)
+20. [音乐播放器（myhkw 免插件版）](#20-音乐播放器myhkw-免插件版)
 
 ---
 
@@ -1293,6 +1294,82 @@ curl -s "https://zhixiaotx.github.io/skyblog/2026/11/25/文章标题/?t=$(date +
 
 > 注意：年份是硬编码的，跨年要手动改；也可以写成
 > `<%- date(new Date(), 'YYYY') %>` 自动取当前年。
+
+---
+
+## 20. 音乐播放器（myhkw 免插件版）
+
+站点用的是 myhkw.cn 提供的**免插件**播放器：只要一行 `<script>`，不用装 Hexo 插件、不用改 `package.json`。
+
+### 20.1 官方给的原始代码
+
+```html
+<script type="text/javascript" id="myhk" src="https://myhkw.cn/api/player/178355703190" key="178355703190" m="1"></script>
+```
+
+后台要求：**插到网页源码 `</body>` 之前**；若播放器不加载，再在它前面补一行 jQuery。
+
+### 20.2 本项目落地方式
+
+| 环节 | 位置 |
+| --- | --- |
+| 模板片段 | `themes/sakura/layout/_partial/music.ejs` |
+| 引入位置 | `themes/sakura/layout/layout.ejs` 第 24 行（正好在 `</body>` 之前，符合官方要求） |
+| 配置 | `_config.sakura.yml` 的 `music:` 段 |
+
+`music.ejs` 内容：
+
+```ejs
+<% if (theme.music && theme.music.enable !== false) { %>
+<script type="text/javascript" id="myhk"
+  src="https://myhkw.cn/api/player/<%= theme.music.id %>"
+  key="<%= theme.music.key || theme.music.id %>"
+  m="<%= theme.music.m || '1' %>"></script>
+<% } %>
+```
+
+`_config.sakura.yml`：
+
+```yaml
+music:
+  enable: true
+  id: "178355703190"
+  key: "178355703190"
+  m: "1"
+```
+
+**换歌单**：去 myhkw.cn 后台重新生成 → 把新的 `id` / `key` 填进这里即可，模板不用动。
+**临时关掉**：`enable: false`。
+
+### 20.3 两个注意点
+
+1. **旧播放器已删除**：原先的 `_partial/aplayer.ejs`（meting API + APlayer）已移除并替换为本方案，
+   避免两个播放器同时出现、也避免 meting 接口失效导致页面报错。
+2. **不需要额外加载 jQuery**：主题的 `js/lib.min.js` 已内置 jQuery（已确认），
+   只有在换主题/裁剪脚本后播放器不出现时，才在 `music.ejs` 的 script 前加：
+
+   ```html
+   <script type="text/javascript" src="https://myhkw.cn/player/js/jquery.min.js"></script>
+   ```
+
+### 20.4 只在首页显示（可选）
+
+把 `layout.ejs` 第 24 行改成：
+
+```ejs
+<% if (is_home()) { %><%- partial('_partial/music') %><% } %>
+```
+
+### 20.5 自检
+
+```bash
+# 播放器脚本接口可用（返回 application/javascript 即正常）
+curl -I "https://myhkw.cn/api/player/178355703190"
+
+# 构建产物里应有 myhk 脚本，且不再有旧 APlayer/meting 残留
+grep -c "myhkw.cn" public/index.html      # ≥1
+grep -c "meting\|APlayer.min.js" public/index.html   # 0
+```
 
 ---
 
