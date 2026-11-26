@@ -887,80 +887,13 @@ $(document).ready(function() {
   <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
 </div>
 <button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
-<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
-<style>
-  .aplayer .aplayer-lrc {
-    height: 35px;
-  }
-  .aplayer .aplayer-lrc p{
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 18px !important;
-  }
-  .aplayer .aplayer-lrc p.aplayer-lrc-current{
-    color: #FF1493;
-  }
-  .aplayer.aplayer-narrow .aplayer-body{
-    left: -66px !important;
-  }
-  .aplayer.aplayer-fixed .aplayer-lrc {
-    display: none;
-  }
-  .aplayer .aplayer-lrc.aplayer-lrc-hide {
-      display:none !important;
-  }
-  .aplayer.aplayer-fixed .lrc-show {
-    display: block;
-    background: rgba(255, 255, 255, 0.8);
-  }
-</style>
-<div id="aplayer" class="aplayer"></div>
-<script>
-  $(function(){
-    var cfg = {
-      server: 'netease',
-      type: 'playlist',
-      id: '19723756',
-      fixed: true,
-      autoplay: false,
-      loop: 'all',
-      order: 'random',
-      preload: 'auto',
-      volume: 0.7,
-      mutex: true
-    };
-    $.getJSON('https://api.i-meto.com/meting/api', {server: cfg.server, type: cfg.type, id: cfg.id})
-      .done(function(songs){
-        if (!songs || !songs.length) { console.log('music list empty'); return; }
-        var ap = new APlayer({
-          container: document.getElementById('aplayer'),
-          fixed: cfg.fixed,
-          autoplay: cfg.autoplay,
-          loop: cfg.loop,
-          order: cfg.order,
-          preload: cfg.preload,
-          volume: cfg.volume,
-          mutex: cfg.mutex,
-          audio: songs.map(function(s){
-            return {name: s.title, artist: s.author, url: s.url, cover: s.pic, lrc: s.lrc};
-          })
-        });
-        // 播放失败/坏链自动切下一首（网易云外链有部分 VIP/版权歌 404）
-        ap.on('error', function(){
-          try { ap.list.next(); } catch(e) {}
-        });
-        // 点击播放器切换歌词显示
-        $('body').on('click', '.aplayer', function(){
-          if ($('.aplayer-button').hasClass('aplayer-play')) {
-            $('.aplayer-lrc').removeClass('lrc-show');
-          } else {
-            $('.aplayer-lrc').addClass('lrc-show');
-          }
-        });
-      })
-      .fail(function(){ console.log('music api unavailable'); });
-  });
-</script>
+  
+<!-- 音乐播放器：myhkw.cn 免插件版（换歌单后同步改 _config.sakura.yml 里的 music.id / music.key） -->
+<script type="text/javascript" id="myhk"
+  src="https://myhkw.cn/api/player/178355703190"
+  key="178355703190"
+  m="1"></script>
+
+
 </body>
 </html>

@@ -447,6 +447,7 @@
 <li><a href="#%E7%AC%AC-14-%E6%AD%A5%E6%8D%A2%E6%8E%89%E8%B5%8F%E7%9A%84%E8%B5%9E%E8%B5%8F%E4%BA%8C%E7%BB%B4%E7%A0%81">第 14 步：换掉”赏”的赞赏二维码</a></li>
 <li><a href="#%E7%AC%AC-15-%E6%AD%A5%E6%89%B9%E9%87%8F%E6%90%AC%E8%BF%90%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2%E7%9A%84-84-%E7%AF%87%E6%96%87%E7%AB%A0%E5%AE%9E%E6%88%98">第 15 步：批量搬运一个博客的 84 篇文章（实战）</a></li>
 <li><a href="#%E7%AC%AC-16-%E6%AD%A5%E6%94%B9%E9%A1%B5%E8%84%9A%E7%9A%84%E7%BD%B2%E5%90%8D--%E7%89%88%E6%9D%83%E6%96%87%E5%AD%97">第 16 步：改页脚的署名 &#x2F; 版权文字</a></li>
+<li><a href="#%E7%AC%AC-17-%E6%AD%A5%E5%8A%A0%E4%B8%80%E4%B8%AA%E5%85%8D%E6%8F%92%E4%BB%B6%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8">第 17 步：加一个免插件音乐播放器</a></li>
 <li><a href="#%E9%99%84%E5%BD%95-a%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5">附录 A：命令速查</a></li>
 <li><a href="#%E9%99%84%E5%BD%95-b%E8%A1%80%E6%B3%AA%E9%81%BF%E5%9D%91%E6%B8%85%E5%8D%95">附录 B：血泪避坑清单</a></li>
 </ul>
@@ -997,6 +998,45 @@
 </ul>
 <p>改完 <code>npx hexo clean &amp;&amp; npx hexo generate</code> + 部署即可。</p>
 <hr>
+<h2 id="第-17-步：加一个免插件音乐播放器"><a href="#第-17-步：加一个免插件音乐播放器" class="headerlink" title="第 17 步：加一个免插件音乐播放器"></a>第 17 步：加一个免插件音乐播放器</h2><p>用 myhkw.cn 的免插件播放器，一行 <code>&lt;script&gt;</code> 就能挂上背景音乐，不用装 Hexo 插件、不用改 <code>package.json</code>。</p>
+<h3 id="17-1-官方给的原始代码"><a href="#17-1-官方给的原始代码" class="headerlink" title="17.1 官方给的原始代码"></a>17.1 官方给的原始代码</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">id</span>=<span class="string">&quot;myhk&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://myhkw.cn/api/player/178355703190&quot;</span> <span class="attr">key</span>=<span class="string">&quot;178355703190&quot;</span> <span class="attr">m</span>=<span class="string">&quot;1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>后台要求：<strong>插到网页源码 <code>&lt;/body&gt;</code> 之前</strong>。</p>
+<h3 id="17-2-放进-Sakura-主题"><a href="#17-2-放进-Sakura-主题" class="headerlink" title="17.2 放进 Sakura 主题"></a>17.2 放进 Sakura 主题</h3><p>Sakura 的 <code>layout.ejs</code> 里正好有一行 <code>&lt;/body&gt;</code> 之前的引入位，所以这么放：</p>
+<table>
+<thead>
+<tr>
+<th>环节</th>
+<th>位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>片段</td>
+<td><code>themes/sakura/layout/_partial/music.ejs</code></td>
+</tr>
+<tr>
+<td>引入</td>
+<td><code>themes/sakura/layout/layout.ejs</code> 第 24 行 <code>&lt;%- partial(&#39;_partial/music&#39;) %&gt;</code></td>
+</tr>
+<tr>
+<td>配置</td>
+<td><code>_config.sakura.yml</code> 的 <code>music:</code> 段</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;% if (theme.music &amp;&amp; theme.music.enable !== false) &#123; %&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; id=&quot;myhk&quot;</span><br><span class="line">  src=&quot;https://myhkw.cn/api/player/&lt;%= theme.music.id %&gt;&quot;</span><br><span class="line">  key=&quot;&lt;%= theme.music.key || theme.music.id %&gt;&quot;</span><br><span class="line">  m=&quot;&lt;%= theme.music.m || &#x27;1&#x27; %&gt;&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">music:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">id:</span> <span class="string">&quot;178355703190&quot;</span></span><br><span class="line">  <span class="attr">key:</span> <span class="string">&quot;178355703190&quot;</span></span><br><span class="line">  <span class="attr">m:</span> <span class="string">&quot;1&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>换歌单：后台重新生成后只改 <code>id</code> &#x2F; <code>key</code>；临时关闭：<code>enable: false</code>。</p>
+<h3 id="17-3-两个坑"><a href="#17-3-两个坑" class="headerlink" title="17.3 两个坑"></a>17.3 两个坑</h3><ol>
+<li><strong>别放两个播放器</strong>：主题原本的 <code>_partial/aplayer.ejs</code>（meting + APlayer）已删掉，<br>否则两个播放器同屏、而且 meting 接口失效还会报错。</li>
+<li><strong>jQuery</strong>：Sakura 的 <code>js/lib.min.js</code> 已内置 jQuery，不用额外引；<br>只有当播放器不出现时，才在 script 前补<br><code>&lt;script src=&quot;https://myhkw.cn/player/js/jquery.min.js&quot;&gt;&lt;/script&gt;</code>。</li>
+</ol>
+<h3 id="17-4-只在首页播放"><a href="#17-4-只在首页播放" class="headerlink" title="17.4 只在首页播放"></a>17.4 只在首页播放</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;% if (is_home()) &#123; %&gt;&lt;%- partial(&#x27;_partial/music&#x27;) %&gt;&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="17-5-自检"><a href="#17-5-自检" class="headerlink" title="17.5 自检"></a>17.5 自检</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -I <span class="string">&quot;https://myhkw.cn/api/player/178355703190&quot;</span>   <span class="comment"># 200 application/javascript</span></span><br><span class="line">grep -c <span class="string">&quot;myhkw.cn&quot;</span> public/index.html                 <span class="comment"># ≥1</span></span><br><span class="line">grep -c <span class="string">&quot;meting\|APlayer.min.js&quot;</span> public/index.html   <span class="comment"># 0</span></span><br></pre></td></tr></table></figure>
+
+<hr>
 <h2 id="附录-A：命令速查"><a href="#附录-A：命令速查" class="headerlink" title="附录 A：命令速查"></a>附录 A：命令速查</h2><table>
 <thead>
 <tr>
@@ -1108,15 +1148,15 @@
           
             <div class="post-nepre half next">
           
-            <a href="/skyblog/2026/08/27/%E5%85%B3%E4%BA%8E-GitHub-%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B%E6%83%85/" rel="next">
+            <a href="/skyblog/2026/08/27/GitHub%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="/skyblog/img/wallpaper/bookshelf.webp" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="/skyblog/img/wallpaper/city-night.webp" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                关于-GitHub-的一些事情</h3>
+                GitHub从入门到精通</h3>
                 <hr>
               </div>
             </a>
@@ -1476,80 +1516,13 @@ $(document).ready(function() {
   <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
 </div>
 <button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
-<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
-<style>
-  .aplayer .aplayer-lrc {
-    height: 35px;
-  }
-  .aplayer .aplayer-lrc p{
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 18px !important;
-  }
-  .aplayer .aplayer-lrc p.aplayer-lrc-current{
-    color: #FF1493;
-  }
-  .aplayer.aplayer-narrow .aplayer-body{
-    left: -66px !important;
-  }
-  .aplayer.aplayer-fixed .aplayer-lrc {
-    display: none;
-  }
-  .aplayer .aplayer-lrc.aplayer-lrc-hide {
-      display:none !important;
-  }
-  .aplayer.aplayer-fixed .lrc-show {
-    display: block;
-    background: rgba(255, 255, 255, 0.8);
-  }
-</style>
-<div id="aplayer" class="aplayer"></div>
-<script>
-  $(function(){
-    var cfg = {
-      server: 'netease',
-      type: 'playlist',
-      id: '19723756',
-      fixed: true,
-      autoplay: false,
-      loop: 'all',
-      order: 'random',
-      preload: 'auto',
-      volume: 0.7,
-      mutex: true
-    };
-    $.getJSON('https://api.i-meto.com/meting/api', {server: cfg.server, type: cfg.type, id: cfg.id})
-      .done(function(songs){
-        if (!songs || !songs.length) { console.log('music list empty'); return; }
-        var ap = new APlayer({
-          container: document.getElementById('aplayer'),
-          fixed: cfg.fixed,
-          autoplay: cfg.autoplay,
-          loop: cfg.loop,
-          order: cfg.order,
-          preload: cfg.preload,
-          volume: cfg.volume,
-          mutex: cfg.mutex,
-          audio: songs.map(function(s){
-            return {name: s.title, artist: s.author, url: s.url, cover: s.pic, lrc: s.lrc};
-          })
-        });
-        // 播放失败/坏链自动切下一首（网易云外链有部分 VIP/版权歌 404）
-        ap.on('error', function(){
-          try { ap.list.next(); } catch(e) {}
-        });
-        // 点击播放器切换歌词显示
-        $('body').on('click', '.aplayer', function(){
-          if ($('.aplayer-button').hasClass('aplayer-play')) {
-            $('.aplayer-lrc').removeClass('lrc-show');
-          } else {
-            $('.aplayer-lrc').addClass('lrc-show');
-          }
-        });
-      })
-      .fail(function(){ console.log('music api unavailable'); });
-  });
-</script>
+  
+<!-- 音乐播放器：myhkw.cn 免插件版（换歌单后同步改 _config.sakura.yml 里的 music.id / music.key） -->
+<script type="text/javascript" id="myhk"
+  src="https://myhkw.cn/api/player/178355703190"
+  key="178355703190"
+  m="1"></script>
+
+
 </body>
 </html>

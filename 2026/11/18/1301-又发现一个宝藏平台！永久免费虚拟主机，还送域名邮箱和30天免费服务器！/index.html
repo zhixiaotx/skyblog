@@ -505,11 +505,11 @@
 <p>1Free.eu 的免费套餐支持创建域名邮箱，页面显示每个域名最多可以创建10个邮箱账户。</p>
 <p>例如，你可以创建：</p>
 <ul>
-<li><a href="mailto:&#x61;&#x64;&#109;&#105;&#x6e;&#x40;&#x79;&#x6f;&#117;&#x72;&#100;&#x6f;&#x6d;&#x61;&#105;&#x6e;&#x2e;&#99;&#x6f;&#x6d;">admin@yourdomain.com</a></li>
-<li><a href="mailto:&#105;&#110;&#102;&#111;&#64;&#121;&#x6f;&#x75;&#x72;&#100;&#x6f;&#x6d;&#97;&#105;&#x6e;&#46;&#x63;&#x6f;&#109;">info@yourdomain.com</a></li>
-<li><a href="mailto:&#x63;&#111;&#x6e;&#116;&#x61;&#99;&#116;&#64;&#x79;&#x6f;&#x75;&#114;&#x64;&#x6f;&#109;&#97;&#105;&#110;&#46;&#99;&#x6f;&#109;">contact@yourdomain.com</a></li>
-<li><a href="mailto:&#115;&#117;&#112;&#x70;&#111;&#x72;&#116;&#x40;&#121;&#111;&#117;&#x72;&#x64;&#111;&#x6d;&#x61;&#105;&#x6e;&#x2e;&#x63;&#x6f;&#109;">support@yourdomain.com</a></li>
-<li><a href="mailto:&#x77;&#x65;&#x62;&#x6d;&#x61;&#x73;&#x74;&#x65;&#114;&#64;&#121;&#x6f;&#117;&#114;&#100;&#111;&#x6d;&#x61;&#x69;&#x6e;&#46;&#99;&#111;&#109;">webmaster@yourdomain.com</a></li>
+<li><a href="mailto:&#97;&#x64;&#x6d;&#x69;&#110;&#x40;&#x79;&#x6f;&#117;&#114;&#x64;&#111;&#109;&#x61;&#105;&#x6e;&#46;&#x63;&#x6f;&#x6d;">admin@yourdomain.com</a></li>
+<li><a href="mailto:&#x69;&#110;&#102;&#x6f;&#x40;&#121;&#x6f;&#117;&#x72;&#x64;&#111;&#109;&#97;&#105;&#110;&#x2e;&#99;&#111;&#x6d;">info@yourdomain.com</a></li>
+<li><a href="mailto:&#99;&#x6f;&#110;&#116;&#97;&#99;&#116;&#64;&#121;&#111;&#117;&#114;&#x64;&#x6f;&#109;&#97;&#105;&#x6e;&#x2e;&#99;&#111;&#109;">contact@yourdomain.com</a></li>
+<li><a href="mailto:&#x73;&#117;&#x70;&#x70;&#111;&#x72;&#116;&#64;&#121;&#111;&#x75;&#114;&#100;&#111;&#x6d;&#x61;&#x69;&#110;&#46;&#x63;&#111;&#x6d;">support@yourdomain.com</a></li>
+<li><a href="mailto:&#x77;&#101;&#x62;&#x6d;&#97;&#115;&#x74;&#101;&#x72;&#x40;&#121;&#x6f;&#117;&#x72;&#100;&#x6f;&#x6d;&#x61;&#105;&#110;&#x2e;&#99;&#x6f;&#109;">webmaster@yourdomain.com</a></li>
 </ul>
 <p>不同邮箱可以承担不同用途。</p>
 <p>比如 admin 用来接收网站管理通知，contact 用来接收访客留言，support 用来处理用户问题。</p>
@@ -986,80 +986,13 @@ $(document).ready(function() {
   <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
 </div>
 <button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
-<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
-<style>
-  .aplayer .aplayer-lrc {
-    height: 35px;
-  }
-  .aplayer .aplayer-lrc p{
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 18px !important;
-  }
-  .aplayer .aplayer-lrc p.aplayer-lrc-current{
-    color: #FF1493;
-  }
-  .aplayer.aplayer-narrow .aplayer-body{
-    left: -66px !important;
-  }
-  .aplayer.aplayer-fixed .aplayer-lrc {
-    display: none;
-  }
-  .aplayer .aplayer-lrc.aplayer-lrc-hide {
-      display:none !important;
-  }
-  .aplayer.aplayer-fixed .lrc-show {
-    display: block;
-    background: rgba(255, 255, 255, 0.8);
-  }
-</style>
-<div id="aplayer" class="aplayer"></div>
-<script>
-  $(function(){
-    var cfg = {
-      server: 'netease',
-      type: 'playlist',
-      id: '19723756',
-      fixed: true,
-      autoplay: false,
-      loop: 'all',
-      order: 'random',
-      preload: 'auto',
-      volume: 0.7,
-      mutex: true
-    };
-    $.getJSON('https://api.i-meto.com/meting/api', {server: cfg.server, type: cfg.type, id: cfg.id})
-      .done(function(songs){
-        if (!songs || !songs.length) { console.log('music list empty'); return; }
-        var ap = new APlayer({
-          container: document.getElementById('aplayer'),
-          fixed: cfg.fixed,
-          autoplay: cfg.autoplay,
-          loop: cfg.loop,
-          order: cfg.order,
-          preload: cfg.preload,
-          volume: cfg.volume,
-          mutex: cfg.mutex,
-          audio: songs.map(function(s){
-            return {name: s.title, artist: s.author, url: s.url, cover: s.pic, lrc: s.lrc};
-          })
-        });
-        // 播放失败/坏链自动切下一首（网易云外链有部分 VIP/版权歌 404）
-        ap.on('error', function(){
-          try { ap.list.next(); } catch(e) {}
-        });
-        // 点击播放器切换歌词显示
-        $('body').on('click', '.aplayer', function(){
-          if ($('.aplayer-button').hasClass('aplayer-play')) {
-            $('.aplayer-lrc').removeClass('lrc-show');
-          } else {
-            $('.aplayer-lrc').addClass('lrc-show');
-          }
-        });
-      })
-      .fail(function(){ console.log('music api unavailable'); });
-  });
-</script>
+  
+<!-- 音乐播放器：myhkw.cn 免插件版（换歌单后同步改 _config.sakura.yml 里的 music.id / music.key） -->
+<script type="text/javascript" id="myhk"
+  src="https://myhkw.cn/api/player/178355703190"
+  key="178355703190"
+  m="1"></script>
+
+
 </body>
 </html>
