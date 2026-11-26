@@ -65,6 +65,12 @@ msocial:
   qq: {url: https://im.qq.com/, fa: fa-qq, color: 25c6fe}
   email: {url: mailto:liuliu19901110@gmail.com, fa: fa-envelope, color: dd4b39}
 
+# 头部背景视频：已停用（留空后 sakura-app.js 不会再加载 Unbroken.mp4）
+# 想恢复背景视频：url 填视频目录、name 填文件名（多个用逗号隔开），并去掉 headertop.ejs 里 video-container 的 display:none
+movies:
+  url: ""
+  name: ""
+
 # 音乐播放器（myhkw.cn 免插件版）
 # 在 https://myhkw.cn 后台换歌单后，把新的 id / key 填到这里即可（m 保持 1）
 music:

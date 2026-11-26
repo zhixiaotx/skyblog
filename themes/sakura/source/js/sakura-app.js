@@ -1163,6 +1163,7 @@ var home = location.href,
       $('#banner_wave_2').removeClass('banner_wave_hide')
       s.pause()
     }, liveplay: function () {
+      if (!s) return
       if (s.oncanplay != undefined && $('.haslive').length > 0) {
         if ($('.videolive').length > 0) {
           Siren.splay()
@@ -1176,6 +1177,8 @@ var home = location.href,
         }).html('已暂停 ...')
       }
     }, addsource: function () {
+      // movies 未配置（本项目已停用背景视频）时直接返回，避免加载并播放 mp4
+      if (!Poi.movies || !Poi.movies.name) return
       $('.video-stu').html('正在载入视频 ...').css({
         'bottom': '0px'
       })

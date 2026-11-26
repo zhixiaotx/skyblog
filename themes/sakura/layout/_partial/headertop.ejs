@@ -49,15 +49,11 @@
       </div>
     </div>
   </figure>
-  <div id="video-container" style="">
-    <video style="object-fit: fill" id="bgvideo" class="video" video-name="" src="" width="auto" preload="auto">
+  <%# 头部背景视频已停用：只保留一个空 video（preload=none、不加播放按钮），
+     避免主题 sakura-app.js 里 $('#bgvideo')[0] 取不到元素而报错 %>
+  <div id="video-container" style="display:none">
+    <video style="object-fit: fill" id="bgvideo" class="video" video-name="" src="" width="auto" preload="none">
     </video>
-    <div id="video-btn" class="loadvideo videolive">
-    </div>
-    <div id="video-add">
-    </div>
-    <div class="video-stu">
-    </div>
   </div>
   <div class="headertop-down faa-float animated" onclick="headertop_down()">
     <span>

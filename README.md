@@ -42,6 +42,7 @@
 21. [首页头像与头像下方的社交链接](#21-首页头像与头像下方的社交链接)
 22. [导航栏站名左边加头像](#22-导航栏站名左边加头像)
 23. [去掉标题后面的 ¶ 符号](#23-去掉标题后面的--符号)
+24. [关掉头部背景视频（不自动播放）](#24-关掉头部背景视频不自动播放)
 
 ---
 
@@ -1570,6 +1571,68 @@ grep -o 'site-logo-avatar[^>]*' public/index.html | head -1
 grep -c '00B6' public/css/style.css     # 应为 0
 grep -o 'h2:after {[^}]*}' public/css/style.css | head -2   # 应看到 content:none
 ```
+
+---
+
+## 24. 关掉头部背景视频（不自动播放）
+
+**现象**：打开首页或任意文章，头部会自动加载并播放背景视频（`Unbroken.mp4`），
+中间还会出现「正在载入视频 ...」的提示、右侧有个播放按钮。
+
+### 24.1 它从哪来
+
+| 环节 | 位置 |
+| --- | --- |
+| 视频地址配置 | `themes/sakura/_config.yml` 的 `movies: {url, name}` |
+| 注入到页面 | `themes/sakura/layout/_partial/footer.ejs` 第 47-51 行 → `var Poi.movies = {url, name, live}`（桌面端 `live:"open"`） |
+| 播放逻辑 | `themes/sakura/source/js/sakura-app.js`：`Siren.addsource()` 把 `Poi.movies.url/name` 写进 `#bgvideo` 的 `src` → `Siren.splay()` → `s.play()` |
+| DOM | `themes/sakura/layout/_partial/headertop.ejs` 的 `#video-container`（含 `#video-btn`、`.video-stu`） |
+
+也就是说：**这不是文章里的视频，是主题自带的"电影背景"功能**，跟 Markdown 内容无关。
+
+### 24.2 本项目的关停改动（三处）
+
+1. `_config.sakura.yml` 里把视频清空：
+
+   ```yaml
+   movies:
+     url: ""
+     name: ""
+   ```
+
+2. `headertop.ejs` 第 52-57 行：`#video-container` 加 `display:none`，
+   `preload="auto"` 改 `preload="none"`，并删掉 `#video-btn` / `#video-add` / `.video-stu`
+   —— 只保留一个空的 `<video id="bgvideo">`，否则 `sakura-app.js` 里 `$('#bgvideo')[0]` 取不到会报错
+
+3. `sakura-app.js` 加卫语句：
+
+   ```js
+   addsource: function () {
+     if (!Poi.movies || !Poi.movies.name) return
+     ...
+   }
+   liveplay: function () {
+     if (!s) return
+     ...
+   }
+   ```
+
+**效果**：浏览器不再请求 `Unbroken.mp4`，头部只显示壁纸大图，也不会出现「正在载入视频」。
+
+### 24.3 想恢复背景视频
+
+把 `url`（视频所在目录）和 `name`（文件名，多个用逗号分隔）填回去，
+再去掉 `headertop.ejs` 里 `#video-container` 的 `display:none`、把 `preload` 改回 `auto` 即可。
+
+### 24.4 自检
+
+```bash
+grep -o '"movies":{[^}]*}' public/index.html     # 应为 url/name 空
+grep -c 'preload="none"' public/index.html       # ≥1
+grep -c 'id="video-btn"' public/index.html       # 0
+```
+
+> 注意：左下角那个是**音乐播放器**（myhkw），不是视频；它的播放开关在 myhkw.cn 后台设置里。
 
 ---
 
