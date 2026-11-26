@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1181/cover.webp
 categories:
   - "免费资源"
-source_url: https://aixmb.com/1181.html
 ---
 
 想搭建个人博客、网站或者在线工具，又不想花钱购买域名？🤔 今天分享一个值得收藏的免费子域名平台：**LovieMe**！
@@ -124,8 +123,3 @@ LovieMe主要负责子域名和DNS管理，网站本身仍然需要部署在相�
 ![Ai星码博客](/img/aixmb/1181/03.webp)
 
 ### **🔗 官方网站：**[点击进入](https://www.lovie.me)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1181.html)，版权归原作者所有。
-

@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/788/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/788.html
 ---
 
 很多站长都有一个痛点：
@@ -417,8 +416,3 @@ UDP
 **第四步**：绑定自定义域名，后台管理与设置**访问后台地址/admin,** 默认用户名**admin**，默认密码是刚才**API_SECRET**的值。
 
 ### **🔗项目地址：[https://github.com/huilang-me/CF-Server-Monitor](https://github.com/huilang-me/CF-Server-Monitor)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/788.html)，版权归原作者所有。
-

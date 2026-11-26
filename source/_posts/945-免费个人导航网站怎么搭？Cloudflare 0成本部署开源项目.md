@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/945/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/945.html
 ---
 
 平时收藏的网站越来越多，是不是经常遇到这种情况？
@@ -152,8 +151,3 @@ AI 工具、在线工具、开发工具混在一起……
 ![Ai星码博客](/img/aixmb/945/02.webp)
 
 ### **🔗项目地址:[https://github.com/lineagett/cf-workers-nav](https://github.com/lineagett/cf-workers-nav)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/945.html)，版权归原作者所有。
-

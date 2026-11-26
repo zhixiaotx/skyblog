@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/408/cover.webp
 categories:
   - "免费资源"
-source_url: https://aixmb.com/408.html
 ---
 
 ## **网站速度慢，可能不是服务器的问题，而是缺少 CDN**
@@ -211,8 +210,3 @@ Cloudflare 解决全球访问。
 一个域名、一台服务器、一个免费 CDN，
 
 就能搭建一个高速稳定的网站。
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/408.html)，版权归原作者所有。
-

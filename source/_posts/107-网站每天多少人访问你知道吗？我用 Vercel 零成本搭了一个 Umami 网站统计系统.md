@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/107/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/107.html
 ---
 
 很多人搭好了网站，却不知道：
@@ -171,8 +170,3 @@ https://vercel.com/
 **13.自定义国内访问域名**
 
 ![Ai星码博客](/img/aixmb/107/20.webp)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/107.html)，版权归原作者所有。
-

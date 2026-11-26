@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/43/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/43.html
 ---
 
 在日常办公、学习、内容运营中，PDF几乎是绕不开的格式：  
@@ -284,8 +283,3 @@ https://netlify.com/
 9.如后要自定义域名点击域名管理，绑定解析自定义域名即可。
 
 ![Ai星码博客](/img/aixmb/43/10.webp)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/43.html)，版权归原作者所有。
-

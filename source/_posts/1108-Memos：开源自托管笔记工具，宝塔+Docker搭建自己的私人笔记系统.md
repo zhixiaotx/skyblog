@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1108/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/1108.html
 ---
 
 你有没有遇到过这种情况？
@@ -382,8 +381,3 @@ Memos 给我的感觉就是：
 ![Ai星码博客](/img/aixmb/1108/03.webp)
 
 ### **🔗项目地址:[https://github.com/usememos/memos](https://github.com/usememos/memos)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1108.html)，版权归原作者所有。
-

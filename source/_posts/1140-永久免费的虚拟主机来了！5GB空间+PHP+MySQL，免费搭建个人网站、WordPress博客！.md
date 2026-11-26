@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1140/cover.webp
 categories:
   - "免费资源"
-source_url: https://aixmb.com/1140.html
 ---
 
 很多刚开始学习建站的小伙伴，都会遇到一个共同的问题：
@@ -324,8 +323,3 @@ InfinityFree 是一个非常适合新手入门的免费虚拟主机平台。
 ![Ai星码博客](/img/aixmb/1140/01.webp)
 
 ### **🔗领取地址:[https://dash.infinityfree.com](https://dash.infinityfree.com)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1140.html)，版权归原作者所有。
-

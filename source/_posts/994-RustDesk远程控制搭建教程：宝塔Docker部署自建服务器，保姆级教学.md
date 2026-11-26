@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/994/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/994.html
 ---
 
 还在使用第三方远程控制软件？担心连接不稳定、功能受限，或者不想把远程连接完全交给平台？
@@ -139,8 +138,3 @@ RustDesk是一款功能完整的开源远程桌面工具，支持跨平台远程
 ![Ai星码博客](/img/aixmb/994/02.webp)
 
 ### **🔗项目地址:[https://github.com/rustdesk/rustdesk](https://github.com/rustdesk/rustdesk)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/994.html)，版权归原作者所有。
-

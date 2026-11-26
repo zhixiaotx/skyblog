@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1280/cover.webp
 categories:
   - "免费资源"
-source_url: https://aixmb.com/1280.html
 ---
 
 想搭建个人网站、WordPress 博客，却不想每个月花钱购买服务器？
@@ -149,8 +148,3 @@ Free-Hosting.org 提供免费的子域名，例如：yourname.yzz.me
 ![Ai星码博客](/img/aixmb/1280/02.webp)
 
 ## 👉 官方地址：[https://free-hosting.org](https://free-hosting.org/)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1280.html)，版权归原作者所有。
-

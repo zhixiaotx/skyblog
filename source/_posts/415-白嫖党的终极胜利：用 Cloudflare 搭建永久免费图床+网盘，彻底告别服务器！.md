@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/415/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/415.html
 ---
 
 你现在用的图床，是不是还停留在这些阶段：
@@ -311,8 +310,3 @@ Cloudflare 自带：
 搭建完成！现在你已经拥有一套支持拖拽上传、运行稳定、权限可控的专属图床系统，一切数据都掌握在自己手里。访问域名，输入自定义的**密码**进入即可。
 
 ![Ai星码博客](/img/aixmb/415/01.webp)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/415.html)，版权归原作者所有。
-

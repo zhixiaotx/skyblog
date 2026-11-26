@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/680/cover.webp
 categories:
   - "免费资源"
-source_url: https://aixmb.com/680.html
 ---
 
 如果你正在寻找免费域名、短链接、个人主页、在线表单、邮件转发、网站流量分析等服务，那么可以了解一下 DigitalPlat FreeDomain。
@@ -180,8 +179,3 @@ DigitalPlat FreeDomain 不仅仅是一个免费域名项目，还提供了短链
 👉 **项目开源地址： [https://github.com/DigitalPlatDev/FreeDomain](https://github.com/DigitalPlatDev/FreeDomain)**
 
 👉**美国地址生成器：**[**https://address.aixmb.cn**](https://address.aixmb.cn)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/680.html)，版权归原作者所有。
-

@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1171/cover.webp
 categories:
   - "开源项目"
-source_url: https://aixmb.com/1171.html
 ---
 
 每天刷新闻，是不是总要打开好几个平台？想看看今天有什么热门话题，又不想在各种网站之间来回切换？🤔
@@ -210,8 +209,3 @@ Cloudflare Pages 配置
 ![Ai星码博客](/img/aixmb/1171/01.png)
 
 ### **🔗项目地址:[点击进入](https://github.com/newsnext/newsnow)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1171.html)，版权归原作者所有。
-

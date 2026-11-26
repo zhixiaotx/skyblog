@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/378/cover.webp
 categories:
   - "VPS推荐"
-source_url: https://aixmb.com/378.html
 ---
 
 介绍：Spaceship 是海外老牌域名商 **Namecheap 旗下子品牌**，一站式建站服务平台，主打**低价域名注册、虚拟主机、VPS 云服务器、企业邮箱**，面向全球站长、开发者、个人博主，是目前国内技术圈热门的海外域名服务商。
@@ -123,8 +122,3 @@ DNS 解析速度国内友好，一键接入 Cloudflare 代理，自带域名批�
 3. 按实时美元汇率换算，到手合计约 46 元人民币，平均一年仅 4 块 6 毛钱。
 
 ![Ai星码博客](/img/aixmb/378/03.webp)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/378.html)，版权归原作者所有。
-

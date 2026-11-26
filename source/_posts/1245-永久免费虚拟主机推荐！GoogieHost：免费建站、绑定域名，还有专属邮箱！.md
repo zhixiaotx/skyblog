@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1245/cover.webp
 categories:
   - "免费资源"
-source_url: https://aixmb.com/1245.html
 ---
 
 想拥有一个属于自己的网站，却不想每个月花钱购买服务器？
@@ -398,8 +397,3 @@ GoogieHost 免费套餐提供的存储空间、月流量、邮箱数量、数据
 ### **虚拟机申请地址：[https://googiehost.com](https://client.googiehost.com/aff.php?aff=19953)**
 
 ### **美国地址生成器：[https://address.aixmb.cn](https://address.aixmb.cn)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1245.html)，版权归原作者所有。
-

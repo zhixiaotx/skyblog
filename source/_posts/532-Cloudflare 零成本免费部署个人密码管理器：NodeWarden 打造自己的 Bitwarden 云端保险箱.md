@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/532/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/532.html
 ---
 
 📧 邮箱  
@@ -156,8 +155,3 @@ NodeWarden 让自建密码管理器变得更加简单。
 10.登陆选择自托管，填写域名即可。使用方法和客户端均与Bitwarden相同
 
 ![Ai星码博客](/img/aixmb/532/14.webp)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/532.html)，版权归原作者所有。
-

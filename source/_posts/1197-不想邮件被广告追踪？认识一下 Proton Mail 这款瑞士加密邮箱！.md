@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1197/cover.webp
 categories:
   - "AI工具"
-source_url: https://aixmb.com/1197.html
 ---
 
 📧 你有没有想过，平时使用的邮箱，到底有多重视你的隐私？
@@ -115,8 +114,3 @@ Proton Mail 支持通过网页和移动应用使用，也提供桌面应用。
 ![Ai星码博客](/img/aixmb/1197/01.webp)
 
 ### **🔗项目地址:****[点击进入](https://mail.proton.me/)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1197.html)，版权归原作者所有。
-

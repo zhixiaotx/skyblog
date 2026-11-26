@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1012/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/1012.html
 ---
 
 平时写笔记、整理资料，是不是经常遇到这些问题？
@@ -145,8 +144,3 @@ Inkstone部署教程、Cloudflare零成本部署、Markdown笔记系统、开源
 ![Ai星码博客](/img/aixmb/1012/02.webp)
 
 ### **🔗项目地址:[https://github.com/shuaiplus/inkstone](https://github.com/shuaiplus/inkstone)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1012.html)，版权归原作者所有。
-

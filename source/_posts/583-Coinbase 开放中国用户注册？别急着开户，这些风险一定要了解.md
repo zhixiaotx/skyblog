@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/583/cover.webp
 categories:
   - "web3资讯"
-source_url: https://aixmb.com/583.html
 ---
 
 最近，加密货币社区出现一个热门话题：
@@ -270,8 +269,3 @@ Coinbase 出现中国地区注册入口，确实引起了不少关注。
 加密市场机会很多，但风险同样存在。
 
 理性了解规则，小额体验，不盲目投入，才是长期使用海外交易平台更稳妥的方式。
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/583.html)，版权归原作者所有。
-

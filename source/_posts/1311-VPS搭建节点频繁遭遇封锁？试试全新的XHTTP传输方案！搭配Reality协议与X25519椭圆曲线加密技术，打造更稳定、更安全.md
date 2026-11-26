@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1311/cover.webp
 categories:
   - "VPS推荐"
-source_url: https://aixmb.com/1311.html
 ---
 
 **一、准备工作**
@@ -83,8 +82,3 @@ www.apple.com
 ## **2026cloudcone黑五活动12.24刀年：[点击进入](https://app.cloudcone.com.cn/vps/548/create?token=bf-26-stor-vps-1&amp;ref=774)**
 
 ## Racknerd黑色星期五活动地址：[Racknerd](https://my.racknerd.com/index.php?rp=%2Fstore%2Fblack-friday-2026&amp;language=chinese)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1311.html)，版权归原作者所有。
-

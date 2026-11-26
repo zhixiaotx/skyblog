@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1060/cover.webp
 categories:
   - "免费资源"
-source_url: https://aixmb.com/1060.html
 ---
 
 想搭一个自己的 **WordPress 博客**，但又不想一开始就花钱买服务器？
@@ -242,8 +241,3 @@ MyPlace 还提供比较熟悉的 **cPanel 控制面板**。
 ![Ai星码博客](/img/aixmb/1060/01.webp)
 
 ### **🔗领取地址:[https://my-place.us](https://my-place.us)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1060.html)，版权归原作者所有。
-

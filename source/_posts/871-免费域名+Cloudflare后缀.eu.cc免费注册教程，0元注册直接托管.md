@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/871/cover.webp
 categories:
   - "免费资源"
-source_url: https://aixmb.com/871.html
 ---
 
 如果你最近刚好想折腾个人博客、导航站、项目演示站，或者只是想给自己的小项目弄一个好记的域名，那么今天这个可以留意一下。
@@ -146,8 +145,3 @@ ai.eu.cc
 ### **🔗项目地址:[https://www.gname.net](https://www.gname.net)**
 
 ### 美国地址生成器：[https://address.aixmb.cn](https://address.aixmb.cn)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/871.html)，版权归原作者所有。
-

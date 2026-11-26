@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/735/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/735.html
 ---
 
 很多人都有这样的烦恼：
@@ -215,8 +214,3 @@ Cloudflare R2 本身很强大，
 ![Ai星码博客](/img/aixmb/735/01.webp)
 
 ### **🔗****项目地址：**[https://github.com/ljxi/Cloudflare-R2-oss](https://github.com/ljxi/Cloudflare-R2-oss)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/735.html)，版权归原作者所有。
-

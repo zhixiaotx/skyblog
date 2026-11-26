@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1130/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/1130.html
 ---
 
 > 视频教程：我已经录制了 **QR Studio 保姆级搭建教程**，手把手教你如何部署属于自己的在线二维码生成工具。
@@ -229,8 +228,3 @@ QR Studio 是一个非常轻量级的开源二维码工具。
 ![Ai星码博客](/img/aixmb/1130/03.webp)
 
 ### **🔗项目地址:[点击进入](https://github.com/aixmbcom/qr-studio)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1130.html)，版权归原作者所有。
-

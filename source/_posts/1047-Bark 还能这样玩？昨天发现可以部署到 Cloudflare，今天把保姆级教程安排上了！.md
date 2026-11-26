@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/1047/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/1047.html
 ---
 
 上期给大家分享了 **Bark 服务器搭建保姆级教程**。
@@ -204,8 +203,3 @@ Cloudflare 的免费方案确实方便，但一定要注意**免费额度和使�
 ![Ai星码博客](/img/aixmb/1047/01.webp)
 
 ### **🔗项目地址：[https://bark.day.app](https://bark.day.app)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/1047.html)，版权归原作者所有。
-

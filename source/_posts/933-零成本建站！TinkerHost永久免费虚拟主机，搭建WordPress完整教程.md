@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/933/cover.webp
 categories:
   - "免费资源"
-source_url: https://aixmb.com/933.html
 ---
 
 想搭一个自己的 WordPress 博客，但一想到：
@@ -268,8 +267,3 @@ Puock 是一款专门为 WordPress 打造的高颜值自适应主题，支持**�
 **puock主题下载：[https://github.com/Licoy/wordpress-theme-puock](https://github.com/Licoy/wordpress-theme-puock)**
 
 **国内网盘下载：[https://pan.quark.cn/s/e001cf45331a](https://pan.quark.cn/s/e001cf45331a)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/933.html)，版权归原作者所有。
-

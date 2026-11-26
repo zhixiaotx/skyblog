@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/661/cover.webp
 categories:
   - "免费资源"
-source_url: https://aixmb.com/661.html
 ---
 
 还在寻找稳定可用的海外免费虚拟主机？今天给大家分享 **HyperPHP**，一款主打高性能的永久免费 PHP 虚拟主机，适合搭建个人博客、导航站、小型演示站点。
@@ -90,8 +89,3 @@ source_url: https://aixmb.com/661.html
 **puock主题下载：[https://github.com/Licoy/wordpress-theme-puock](https://github.com/Licoy/wordpress-theme-puock)**
 
 **国内网盘下载：[https://pan.quark.cn/s/e001cf45331a](https://pan.quark.cn/s/e001cf45331a)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/661.html)，版权归原作者所有。
-

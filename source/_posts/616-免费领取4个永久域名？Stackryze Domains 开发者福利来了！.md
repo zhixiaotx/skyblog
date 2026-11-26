@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/616/cover.webp
 categories:
   - "免费资源"
-source_url: https://aixmb.com/616.html
 ---
 
 对于喜欢搭建网站、测试项目、部署工具的小伙伴来说，一个免费域名一直都是非常实用的资源。
@@ -133,8 +132,3 @@ Stackryze Domains 是一个非常适合开发者收藏的免费域名项目：
 ### 领取链接：[https://domain.stackryze.com](https://domain.stackryze.com)
 
 **美国地址生成器：[https://address.aixmb.cn](https://address.aixmb.cn)**
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/616.html)，版权归原作者所有。
-

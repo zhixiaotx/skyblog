@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/446/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/446.html
 ---
 
 建站这件事，困扰过非常多新手站长。
@@ -143,8 +142,3 @@ https://wasmer.io
 **11.等待上传完启用即可完全，尽情写你的博客吧。**
 
 ![Ai星码博客](/img/aixmb/446/17.webp)
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/446.html)，版权归原作者所有。
-

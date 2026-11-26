@@ -6,7 +6,6 @@ photos:
   - /img/aixmb/641/cover.webp
 categories:
   - "网站搭建"
-source_url: https://aixmb.com/641.html
 ---
 
 注册各种网站时，经常会遇到需要填写邮箱的情况。面对大量营销邮件、垃圾邮件，甚至一些不太信任的网站，使用自己的常用邮箱反而容易带来隐私泄露问题。
@@ -65,8 +64,3 @@ source_url: https://aixmb.com/641.html
 ⁠Cloud Mail GitHub 开源项目：https://github.com/maillab/cloud-mail
 
 官方教程： https://doc.skymail.ink/guide/dashboard.html
-
----
-
-> 本文转载整理自 [Ai星码博客](https://aixmb.com/641.html)，版权归原作者所有。
-
