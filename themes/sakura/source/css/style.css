@@ -2101,7 +2101,7 @@ i.iconfont.hotpost {
     padding-left:16px
 }
 .entry-content h2:after {
-    content:"\00B6";
+    content:none;
     position:absolute;
     color:#ff6d6d;
     font-family:'Merriweather Sans',Helvetica,Tahoma,Arial,'PingFang SC','Hiragino Sans GB','Microsoft Yahei','WenQuanYi Micro Hei',sans-serif;
@@ -2109,7 +2109,7 @@ i.iconfont.hotpost {
     font-size:1.03em
 }
 .serif .entry-content h2:after {
-    content:"\00B6";
+    content:none;
     position:absolute;
     color:#ff6d6d;
     font-family:'Merriweather Sans',Helvetica,Tahoma,Arial,'PingFang SC','Hiragino Sans GB','Microsoft Yahei','WenQuanYi Micro Hei',sans-serif;

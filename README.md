@@ -41,6 +41,7 @@
 20. [音乐播放器（myhkw 免插件版）](#20-音乐播放器myhkw-免插件版)
 21. [首页头像与头像下方的社交链接](#21-首页头像与头像下方的社交链接)
 22. [导航栏站名左边加头像](#22-导航栏站名左边加头像)
+23. [去掉标题后面的 ¶ 符号](#23-去掉标题后面的--符号)
 
 ---
 
@@ -1524,6 +1525,50 @@ grep -o 'img/custom/wechat[^"]*' public/index.html   # 应为 wechat.webp 与 we
 ```bash
 grep -o 'site-logo-avatar[^>]*' public/index.html | head -1
 # 期望看到 src="/skyblog/img/favicon.png"
+```
+
+---
+
+## 23. 去掉标题后面的 ¶ 符号
+
+每篇文章的 `<h2>` 标题末尾都会多出一个红色 `¶`（如「十二、项目地址 ¶」「最后总结 ¶」）。
+
+**它不是正文内容**：Markdown 源文件里搜不到这个字符（`grep ¶ source/_posts/*.md` = 0），
+是主题 CSS 的伪元素画出来的：
+
+```css
+.entry-content h2:after {
+    content:"\00B6";   /* ¶ */
+    position:absolute;
+    color:#ff6d6d;
+    ...
+}
+.serif .entry-content h2:after { content:"\00B6"; ... }   /* 衬线字体的另一份 */
+```
+
+所以改文章没用，只能改样式。
+
+### 23.1 位置与改法
+
+| 环节 | 文件 / 行 |
+| --- | --- |
+| 规则 | `themes/sakura/source/css/style.css` 第 2103-2118 行（两条：普通 + `.serif` 变体） |
+| 改法 | 把 `content:"\00B6";` 改成 `content:none;` |
+
+本项目已把两处都改成 `content:none`，生成后的 `public/css/style.css` 里 `00B6` 出现次数为 0。
+
+### 23.2 顺带说明
+
+- 同一份 CSS 里 `<h3>` 后面还有个 `#`（`.entry-content h3:after { content:"#" }`），
+  这次没动；不想要的话同样改成 `content:none`
+- 这些样式是**纯 CSS 文件**（不是 `.styl`），直接改 `themes/sakura/source/css/style.css` 即可，
+  不用管 stylus 编译
+
+### 23.3 自检
+
+```bash
+grep -c '00B6' public/css/style.css     # 应为 0
+grep -o 'h2:after {[^}]*}' public/css/style.css | head -2   # 应看到 content:none
 ```
 
 ---
