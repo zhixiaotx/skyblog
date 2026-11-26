@@ -19,8 +19,8 @@
         <div class="reward-open">赏
           <div class="reward-main">
             <ul class="reward-row">
-              <li class="alipay-code"><img src="<%- (theme.cdn || '') + theme.donate.alipay%>"></li>
-              <li class="wechat-code"><img src="<%- (theme.cdn || '') + theme.donate.wechat%>"></li>
+              <li class="alipay-code"><img src="<%- /^https?:\/\//.test(theme.donate.alipay) ? theme.donate.alipay : url_for(theme.donate.alipay) %>"></li>
+              <li class="wechat-code"><img src="<%- /^https?:\/\//.test(theme.donate.wechat) ? theme.donate.wechat : url_for(theme.donate.wechat) %>"></li>
             </ul>
           </div>
         </div>

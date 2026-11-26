@@ -65,3 +65,11 @@ aplayer:
 valine: false
 waline:
   enable: false
+
+# 赞赏二维码（文章末尾“赏”弹窗 / 打赏页）
+# 图片实际文件在 source/img/custom/donate/ 下；
+# 模板已改为 /img/... 路径走 url_for（自动补 /skyblog/ 前缀），不再拼 cdn，换图只换文件即可
+donate:
+  alipay: /img/custom/donate/AliPayQR.webp   # 支付宝
+  wechat: /img/custom/donate/WeChanQR.webp   # 微信（文章页弹窗）
+  wechatSQ: /img/custom/donate/WeChanSQ.webp # 微信（打赏页）

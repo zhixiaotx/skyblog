@@ -35,6 +35,8 @@
 14. [常见问题与排错](#14-常见问题与排错)
 15. [命令速查（CMD/PowerShell/Git Bash 都可）](#15-命令速查cmdpowershellgit-bash-都可)
 16. [避坑清单（必读）](#16-避坑清单必读)
+17. [赞赏（"赏"）二维码：换成自己的收款码](#17-赞赏赏二维码换成自己的收款码)
+18. [批量导入外部博客文章（84 篇实战）](#18-批量导入外部博客文章84-篇实战)
 
 ---
 
@@ -1036,6 +1038,218 @@ highlight:
 `package-lock.json` 和 `yarn.lock` 同时在仓库里，Cloudflare/CI 会优先用
 `yarn.lock` → Yarn 4 → `YN0028` 报错。**只用一种包管理器**，本项目用 npm
 （见 §12.B.4）。
+
+---
+
+## 17. 赞赏（"赏"）二维码：换成自己的收款码
+
+文章页/独立页底部那个红色 **赏** 按钮，点开弹出的两张图（支付宝、微信）就是赞赏码。
+它**不是**文章内容，而是主题模板 + 主题配置渲染出来的。
+
+### 17.1 相关位置一览
+
+| 环节 | 文件 | 说明 |
+| --- | --- | --- |
+| 图片文件 | `source/img/custom/donate/AliPayQR.jpg`、`WeChanQR.jpg`、`WeChanSQ.jpg` | 目录不存在就自己建；文件名可改，但要和配置一致 |
+| 路径配置（主题默认） | `themes/sakura/_config.yml` → `donate:` | 见 17.2 |
+| 路径配置（站点覆盖，推荐改这里） | `_config.sakura.yml` | 同名字段优先级更高 |
+| 渲染模板 | `themes/sakura/layout/_widget/common-article.ejs`（文章页）第 47-56 行、`common-page.ejs`（独立页）第 18-26 行 | 真正拼出 `<img src>` 的地方 |
+| 打赏独立页 | `themes/sakura/layout/donate.ejs` 第 63-65 行 | 同一套 QR 变量 |
+
+主题默认值：
+
+```yaml
+donate:
+  paypal: https://www.paypal.me/hojuncn
+  alipay: /img/custom/donate/AliPayQR.jpg   # 支付宝
+  wechat: /img/custom/donate/WeChanQR.jpg   # 微信（文章页弹窗用这张）
+  wechatSQ: /img/custom/donate/WeChanSQ.jpg # 微信（打赏页用这张）
+```
+
+### 17.2 关键坑：CDN 前缀会盖掉本地图（本项目已修复）
+
+模板里写的是：
+
+```ejs
+<img src="<%- (theme.cdn || '') + theme.donate.alipay %>">
+```
+
+而 `_config.sakura.yml` 里有 `cdn: https://cdn.jsdelivr.net/gh/honjun/cdn@1.6`，
+于是线上实际加载的是：
+
+```
+https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/donate/AliPayQR.jpg
+```
+
+——**这是 Sakura 原作者 honjun 的收款码**，你往 `source/img/custom/donate/` 放新图也不会被用到。
+
+> 2026-11-26 本项目已修复：三处模板改成 `url_for()`，并把收款码换成自己的（见 17.5）。
+
+### 17.3 换成自己收款码（推荐做法）
+
+1. 准备两张正方形收款码，放进 `hexo-blog/source/img/custom/donate/`：
+   ```
+   source/img/custom/donate/AliPayQR.jpg     # 支付宝
+   source/img/custom/donate/WeChanQR.jpg     # 微信
+   source/img/custom/donate/WeChanSQ.jpg     # 微信（打赏页，可选）
+   ```
+2. 把模板里的 CDN 拼接改成 `url_for()`（`common-article.ejs`、`common-page.ejs`、`donate.ejs` 三处一起改）：
+
+   ```ejs
+   <!-- 改前 -->
+   <li class="alipay-code"><img src="<%- (theme.cdn || '') + theme.donate.alipay%>"></li>
+   <li class="wechat-code"><img src="<%- (theme.cdn || '') + theme.donate.wechat%>"></li>
+
+   <!-- 改后：http(s):// 完整外链直接用，/img/... 本地路径自动加 /skyblog/ 前缀 -->
+   <li class="alipay-code"><img src="<%- /^https?:\/\//.test(theme.donate.alipay) ? theme.donate.alipay : url_for(theme.donate.alipay) %>"></li>
+   <li class="wechat-code"><img src="<%- /^https?:\/\//.test(theme.donate.wechat) ? theme.donate.wechat : url_for(theme.donate.wechat) %>"></li>
+   ```
+
+3. 在 `_config.sakura.yml` 里显式声明（方便以后换图，不用动主题）：
+
+   ```yaml
+   donate:
+     alipay: /img/custom/donate/AliPayQR.jpg
+     wechat: /img/custom/donate/WeChanQR.jpg
+     wechatSQ: /img/custom/donate/WeChanSQ.jpg
+   ```
+
+4. 重新生成并预览：
+
+   ```bash
+   npx hexo clean && npx hexo generate
+   npx hexo server        # 打开任意文章，点"赏"看弹窗图片是否换成自己的
+   ```
+
+### 17.4 想彻底不显示"赏"
+
+把 `themes/sakura/layout/_widget/common-article.ejs` 第 47-56 行整块
+`<div class="single-reward"> … </div>` 删掉或注释（`common-page.ejs` 同样处理）。
+
+### 17.5 本项目现状（2026-11-26 已换成自己的收款码）
+
+| 改动项 | 内容 |
+| --- | --- |
+| 图片文件 | `source/img/custom/donate/AliPayQR.webp`（支付宝）、`WeChanQR.webp`（微信·文章页）、`WeChanSQ.webp`（微信·打赏页） |
+| 站点配置 | `_config.sakura.yml` 新增 `donate:` 段，三个键指向上面三张图 |
+| 模板 | `common-article.ejs`、`common-page.ejs`、`donate.ejs` 三处改为 `url_for()`（完整外链直用，`/img/...` 自动补 `/skyblog/` 前缀） |
+| 构建结果 | 文章页输出 `<img src="/skyblog/img/custom/donate/AliPayQR.webp">` |
+
+以后换码只做一件事：**替换 `source/img/custom/donate/` 里的图片文件**（保持文件名），
+然后 `hexo clean && hexo generate` + 部署即可，不用再动模板和配置。
+
+---
+
+## 18. 批量导入外部博客文章（84 篇实战）
+
+2026-11-26 把 `https://aixmb.com/`（WordPress + 子比主题）全站 **84 篇**文章搬进本博客，
+下面是完整可复用的做法。
+
+### 18.1 优先用 WordPress REST API，而不是爬 HTML
+
+| 方式 | 结果 |
+| --- | --- |
+| 抓文章页 HTML | 正文在 `.article-content`，图片是 `data-src` 懒加载，正则容易截断 |
+| `wp-json` 接口 | 一次拿到标题/时间/分类/正文 HTML/特色图，最省事 |
+
+```bash
+# 先确认接口可用（返回 JSON 即可）
+curl "https://aixmb.com/wp-json/wp/v2/posts?per_page=1&_embed=1"
+```
+
+- 正文 HTML：`content.rendered`
+- 发布时间：`date`（站点本地时间，直接写进 front-matter）
+- 分类/标签：`_embedded['wp:term']`
+- 封面：`_embedded['wp:featuredmedia'][0].source_url`
+
+### 18.2 转换流程（8 步）
+
+1. 分页拉全量：`/wp-json/wp/v2/posts?per_page=100&page=N&_embed=1`
+2. 清洗 HTML：删 `script/ins/style/noscript`、广告容器 `div[id^="container-"]`
+3. 剔除「视频讲解」区块：原站结构是 `h2 视频讲解：` + `h2 YouTube：链接` + `h2 哔哩哔哩：链接`，
+   按"标题行 + 紧跟的链接行"成组删除；正文里正常提到 YouTube 的句子不会被误删
+4. 图片本地化：取 `data-src`（跳过 `thumbnail-lg.svg` 占位图），存到 `source/img/aixmb/<文章ID>/01.png…`，
+   正文改写成 `/img/aixmb/<ID>/01.png`
+5. HTML → Markdown：`markdownify`（`heading_style="ATX"`、`bullets="-"`）
+6. 封面：特色图下载为 `cover.*`，写进 front-matter 的 `photos:`
+7. 站内跳转还原：`https://站点/?golink=<base64>` 解码成真实外链（本次还原 111 处）
+8. 写 front-matter：`title / date / updated / photos / categories`（原站没标签就留空）
+
+### 18.3 产物形态
+
+```
+source/_posts/84 篇 Markdown       文件名 <文章ID>-<标题>.md（带 ID 防重名）
+source/img/aixmb/<ID>/cover.*      84 张封面
+source/img/aixmb/<ID>/01..NN.*     358 张正文图
+```
+
+front-matter 示例：
+
+```yaml
+---
+title: "不用买服务器！Cloudflare 免费部署开源发卡系统…"
+date: 2026-11-25 16:53:27
+updated: 2026-11-25 18:32:17
+photos:
+  - /img/aixmb/1340/cover.png
+categories:
+  - "未分类"
+---
+```
+
+### 18.4 发布前三项校验
+
+```bash
+# ① 图片引用是否都落地
+python check_imgs.py        # 扫 md/HTML 里 /img/aixmb/* 引用，核对文件是否存在
+
+# ② 构建
+npx hexo clean && npx hexo generate
+
+# ③ 敏感图排查
+#    二维码/收款码 → OpenCV QRCodeDetector 多尺度（0.5/0.8/1/1.6/2.4 倍 + 大图分块）
+#    联系方式类   → 用 OpenCV 把正文图拼成联系表，人眼过一遍
+```
+
+> 本次 443 张图（84 封面 + 358 正文 + 1）经二维码检测 + 联系表目视，
+> 未发现二维码/收款码/微信号/手机号类图片，因此全部保留。
+
+### 18.5 转载文章的处理约定
+
+- 正文不保留"本文转载整理自 … 版权归原作者所有"之类尾巴（本次 84 篇已统一删除）
+- 图片全部本地化，原站挂掉也不裂图
+- 原站短链/跳转链还原成真实地址，读者点开直达
+
+### 18.6 部署踩坑复盘：gh-pages 被推成源码
+
+**现象**：线上文章还是旧内容；`gh-pages` 分支根目录出现 `_config.yml`、`source/` 等源码文件。
+
+**原因**：`.deploy_git` 里丢了 `.git`，`hexo deploy` 的 git 命令回退到父仓库，
+把**整个源码目录**提交并强推到了 `gh-pages`（也就是 §16 第 1 条的实际复现）。
+
+**修复（临时目录 + 产物覆盖 + 强推）**：
+
+```bash
+rm -rf .deploy_git deploy_tmp
+npx hexo clean && npx hexo generate
+
+# 克隆产物分支到临时目录（不要放在 hexo-blog 里面，避免再次被父仓库 .git 接管）
+git clone --depth 1 -b gh-pages https://github.com/zhixiaotx/skyblog.git /tmp/skyblog_pages
+cd /tmp/skyblog_pages
+find . -maxdepth 1 ! -name .git ! -name . -exec rm -rf {} +
+cp -r /path/to/hexo-blog/public/* .
+touch .nojekyll
+
+git add -A
+git commit -m "Site updated: $(date +'%Y-%m-%d %H:%M')"
+git push -f origin gh-pages
+```
+
+**验证**：等 1~2 分钟，用带时间戳的地址绕过缓存，确认新内容已上线：
+
+```bash
+curl -s "https://zhixiaotx.github.io/skyblog/2026/11/25/文章标题/?t=$(date +%s)" | grep -c "关键内容"
+```
 
 ---
 
