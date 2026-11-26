@@ -444,6 +444,8 @@
 <li><a href="#%E7%AC%AC-11-%E6%AD%A5github-actions-%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2">第 11 步：GitHub Actions 自动部署</a></li>
 <li><a href="#%E7%AC%AC-12-%E6%AD%A5%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%80%82%E9%85%8D">第 12 步：移动端适配</a></li>
 <li><a href="#%E7%AC%AC-13-%E6%AD%A5%E6%97%A5%E5%B8%B8%E7%BB%B4%E6%8A%A4%E5%86%99%E6%96%87%E7%AB%A0%E6%94%B9%E5%A3%81%E7%BA%B8%E6%8D%A2%E5%B0%81%E9%9D%A2">第 13 步：日常维护（写文章、改壁纸、换封面）</a></li>
+<li><a href="#%E7%AC%AC-14-%E6%AD%A5%E6%8D%A2%E6%8E%89%E8%B5%8F%E7%9A%84%E8%B5%9E%E8%B5%8F%E4%BA%8C%E7%BB%B4%E7%A0%81">第 14 步：换掉”赏”的赞赏二维码</a></li>
+<li><a href="#%E7%AC%AC-15-%E6%AD%A5%E6%89%B9%E9%87%8F%E6%90%AC%E8%BF%90%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2%E7%9A%84-84-%E7%AF%87%E6%96%87%E7%AB%A0%E5%AE%9E%E6%88%98">第 15 步：批量搬运一个博客的 84 篇文章（实战）</a></li>
 <li><a href="#%E9%99%84%E5%BD%95-a%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5">附录 A：命令速查</a></li>
 <li><a href="#%E9%99%84%E5%BD%95-b%E8%A1%80%E6%B3%AA%E9%81%BF%E5%9D%91%E6%B8%85%E5%8D%95">附录 B：血泪避坑清单</a></li>
 </ul>
@@ -887,6 +889,76 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git push origin main</span><br></pre></td></tr></table></figure>
 
 <hr>
+<h2 id="第-14-步：换掉”赏”的赞赏二维码"><a href="#第-14-步：换掉”赏”的赞赏二维码" class="headerlink" title="第 14 步：换掉”赏”的赞赏二维码"></a>第 14 步：换掉”赏”的赞赏二维码</h2><p>每篇文章末尾那个红色 <strong>赏</strong> 按钮，点开会弹出两张图（支付宝 &#x2F; 微信）。<br>很多同学以为是文章里插的图，其实是<strong>主题模板 + 主题配置</strong>渲染的。</p>
+<h3 id="14-1-三个位置"><a href="#14-1-三个位置" class="headerlink" title="14.1 三个位置"></a>14.1 三个位置</h3><table>
+<thead>
+<tr>
+<th>环节</th>
+<th>文件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>图片文件</td>
+<td><code>source/img/custom/donate/AliPayQR.jpg</code>、<code>WeChanQR.jpg</code>、<code>WeChanSQ.jpg</code>（目录不存在就新建）</td>
+</tr>
+<tr>
+<td>路径配置</td>
+<td><code>themes/sakura/_config.yml</code> 的 <code>donate:</code>，或站点覆盖 <code>_config.sakura.yml</code> 里同名段</td>
+</tr>
+<tr>
+<td>渲染模板</td>
+<td><code>themes/sakura/layout/_widget/common-article.ejs</code>（文章页第 47-56 行）、<code>common-page.ejs</code>（独立页）、<code>donate.ejs</code>（打赏页第 63-65 行）</td>
+</tr>
+</tbody></table>
+<h3 id="14-2-关键坑：只换本地图不会生效（本项目已修复）"><a href="#14-2-关键坑：只换本地图不会生效（本项目已修复）" class="headerlink" title="14.2 关键坑：只换本地图不会生效（本项目已修复）"></a>14.2 关键坑：只换本地图不会生效（本项目已修复）</h3><p>模板里写的是 <code>(theme.cdn || &#39;&#39;) + theme.donate.alipay</code>，而 <code>_config.sakura.yml</code> 设了<br><code>cdn: https://cdn.jsdelivr.net/gh/honjun/cdn@1.6</code>，所以线上实际加载的是<br><code>https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/donate/AliPayQR.jpg</code><br>——<strong>原作者 honjun 的收款码</strong>。往 <code>source/img/custom/donate/</code> 放图没用。</p>
+<blockquote>
+<p>2026-11-26 本项目已修复：三处模板改为 <code>url_for()</code>，收款码也换成了自己的（见 14.4）。</p>
+</blockquote>
+<h3 id="14-3-正确改法（三步）"><a href="#14-3-正确改法（三步）" class="headerlink" title="14.3 正确改法（三步）"></a>14.3 正确改法（三步）</h3><ol>
+<li><p>两张正方形收款码放到 <code>source/img/custom/donate/</code>，命名 <code>AliPayQR.jpg</code>、<code>WeChanQR.jpg</code></p>
+</li>
+<li><p>模板里把那两行改成走 <code>url_for()</code>（三处模板都改）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- 改前 --&gt;</span><br><span class="line">&lt;li class=&quot;alipay-code&quot;&gt;&lt;img src=&quot;&lt;%- (theme.cdn || &#x27;&#x27;) + theme.donate.alipay%&gt;&quot;&gt;&lt;/li&gt;</span><br><span class="line">&lt;li class=&quot;wechat-code&quot;&gt;&lt;img src=&quot;&lt;%- (theme.cdn || &#x27;&#x27;) + theme.donate.wechat%&gt;&quot;&gt;&lt;/li&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 改后：完整外链直接用，/img/... 本地路径自动补 /skyblog/ 前缀 --&gt;</span><br><span class="line">&lt;li class=&quot;alipay-code&quot;&gt;&lt;img src=&quot;&lt;%- /^https?:\/\//.test(theme.donate.alipay) ? theme.donate.alipay : url_for(theme.donate.alipay) %&gt;&quot;&gt;&lt;/li&gt;</span><br><span class="line">&lt;li class=&quot;wechat-code&quot;&gt;&lt;img src=&quot;&lt;%- /^https?:\/\//.test(theme.donate.wechat) ? theme.donate.wechat : url_for(theme.donate.wechat) %&gt;&quot;&gt;&lt;/li&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>_config.sakura.yml</code> 里显式写一遍路径（以后换图只换文件，不动主题）：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">donate:</span></span><br><span class="line">  <span class="attr">alipay:</span> <span class="string">/img/custom/donate/AliPayQR.jpg</span></span><br><span class="line">  <span class="attr">wechat:</span> <span class="string">/img/custom/donate/WeChanQR.jpg</span></span><br><span class="line">  <span class="attr">wechatSQ:</span> <span class="string">/img/custom/donate/WeChanSQ.jpg</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>改完 <code>npx hexo clean &amp;&amp; npx hexo generate</code>，本地 <code>npx hexo server</code> 打开任意文章点”赏”验证。</p>
+<blockquote>
+<p>不想显示”赏”：把 <code>common-article.ejs</code> 里第 47-56 行整块 <code>single-reward</code> 删掉即可。</p>
+</blockquote>
+<h3 id="14-4-本项目现状（2026-11-26-已换成自己的收款码）"><a href="#14-4-本项目现状（2026-11-26-已换成自己的收款码）" class="headerlink" title="14.4 本项目现状（2026-11-26 已换成自己的收款码）"></a>14.4 本项目现状（2026-11-26 已换成自己的收款码）</h3><ul>
+<li>图片：<code>source/img/custom/donate/</code> 下放 <code>AliPayQR.webp</code>（支付宝）、<code>WeChanQR.webp</code>（微信·文章页）、<code>WeChanSQ.webp</code>（微信·打赏页）</li>
+<li>配置：<code>_config.sakura.yml</code> 的 <code>donate:</code> 三个键指向上面三张图</li>
+<li>模板：<code>common-article.ejs</code>、<code>common-page.ejs</code>、<code>donate.ejs</code> 共三处已改为 <code>url_for()</code></li>
+<li>构建结果：<code>&lt;img src=&quot;/skyblog/img/custom/donate/AliPayQR.webp&quot;&gt;</code></li>
+</ul>
+<p><strong>换码只需替换这三个图片文件</strong>（文件名保持不变），再 <code>hexo clean &amp;&amp; hexo generate</code> + 部署。</p>
+<hr>
+<h2 id="第-15-步：批量搬运一个博客的-84-篇文章（实战）"><a href="#第-15-步：批量搬运一个博客的-84-篇文章（实战）" class="headerlink" title="第 15 步：批量搬运一个博客的 84 篇文章（实战）"></a>第 15 步：批量搬运一个博客的 84 篇文章（实战）</h2><p>2026-11-26 把 <code>https://aixmb.com/</code>（WordPress + 子比主题）全站 84 篇搬进本博客，<br>换别的 WordPress 站点也能照做。</p>
+<h3 id="15-1-走接口，别硬爬-HTML"><a href="#15-1-走接口，别硬爬-HTML" class="headerlink" title="15.1 走接口，别硬爬 HTML"></a>15.1 走接口，别硬爬 HTML</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 有 JSON 返回就说明接口开着</span></span><br><span class="line">curl <span class="string">&quot;https://aixmb.com/wp-json/wp/v2/posts?per_page=1&amp;_embed=1&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>一次就能拿到：<code>title</code>、<code>date</code>、<code>content.rendered</code>（正文 HTML）、<br><code>_embedded[&#39;wp:term&#39;]</code>（分类&#x2F;标签）、<code>_embedded[&#39;wp:featuredmedia&#39;][0].source_url</code>（封面）。<br>比解析文章页省事得多（原站正文图片是 <code>data-src</code> 懒加载，正则很容易截断）。</p>
+<h3 id="15-2-处理流程"><a href="#15-2-处理流程" class="headerlink" title="15.2 处理流程"></a>15.2 处理流程</h3><ol>
+<li>分页拉全量：<code>?per_page=100&amp;page=N&amp;_embed=1</code></li>
+<li>清洗 HTML：删 <code>script/ins/style/noscript</code>、广告 <code>div[id^=&quot;container-&quot;]</code></li>
+<li>删「视频讲解」区块：原站是 <code>h2 视频讲解：</code> + <code>h2 YouTube：链接</code> + <code>h2 哔哩哔哩：链接</code>，成组删除</li>
+<li>图片本地化：取 <code>data-src</code>（跳过 <code>thumbnail-lg.svg</code> 占位图）→ <code>source/img/aixmb/&lt;文章ID&gt;/01.png…</code></li>
+<li>HTML 转 Markdown：<code>markdownify</code>（<code>heading_style=&quot;ATX&quot;</code>、<code>bullets=&quot;-&quot;</code>）</li>
+<li>封面写进 front-matter 的 <code>photos:</code>，正文图片写成 <code>/img/aixmb/&lt;ID&gt;/01.png</code></li>
+<li>站内跳转 <code>?golink=&lt;base64&gt;</code> 解码成真实外链（本次 111 处）</li>
+<li>文件名用 <code>&lt;文章ID&gt;-&lt;标题&gt;.md</code> 防重名</li>
+</ol>
+<h3 id="15-3-产物"><a href="#15-3-产物" class="headerlink" title="15.3 产物"></a>15.3 产物</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">source/_posts/84 篇 md</span><br><span class="line">source/img/aixmb/&lt;ID&gt;/cover.*    84 张封面</span><br><span class="line">source/img/aixmb/&lt;ID&gt;/01..NN.*   358 张正文图</span><br></pre></td></tr></table></figure>
+
+<h3 id="15-4-发布前必做的校验"><a href="#15-4-发布前必做的校验" class="headerlink" title="15.4 发布前必做的校验"></a>15.4 发布前必做的校验</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ① 引用图是否都在</span></span><br><span class="line">python check_imgs.py</span><br><span class="line"><span class="comment"># ② 构建</span></span><br><span class="line">npx hexo clean &amp;&amp; npx hexo generate</span><br><span class="line"><span class="comment"># ③ 敏感图排查：二维码用 OpenCV QRCodeDetector 多尺度扫；联系方式类拼联系表人眼看</span></span><br></pre></td></tr></table></figure>
+
+<p>本次 443 张图（84 封面 + 358 正文 + 1）二维码检测 0 命中，联系表目视也无联系方式，<br>因此全部保留。</p>
+<h3 id="15-5-顺带踩的部署坑"><a href="#15-5-顺带踩的部署坑" class="headerlink" title="15.5 顺带踩的部署坑"></a>15.5 顺带踩的部署坑</h3><p><code>hexo deploy</code> 时 <code>.deploy_git</code> 丢了 <code>.git</code>，git 命令回退到父仓库，<br>把<strong>源码</strong>推上了 <code>gh-pages</code>，线上不更新。修复姿势：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf .deploy_git deploy_tmp &amp;&amp; npx hexo clean &amp;&amp; npx hexo generate</span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> --depth 1 -b gh-pages https://github.com/zhixiaotx/skyblog.git /tmp/skyblog_pages</span><br><span class="line"><span class="built_in">cd</span> /tmp/skyblog_pages</span><br><span class="line">find . -maxdepth 1 ! -name .git ! -name . -<span class="built_in">exec</span> <span class="built_in">rm</span> -rf &#123;&#125; +</span><br><span class="line"><span class="built_in">cp</span> -r /path/to/hexo-blog/public/* .</span><br><span class="line"><span class="built_in">touch</span> .nojekyll</span><br><span class="line">git add -A &amp;&amp; git commit -m <span class="string">&quot;Site updated: <span class="subst">$(date +&#x27;%Y-%m-%d %H:%M&#x27;)</span>&quot;</span></span><br><span class="line">git push -f origin gh-pages</span><br></pre></td></tr></table></figure>
+
+<p>等 1~2 分钟，用 <code>?t=$(date +%s)</code> 绕过缓存确认线上已更新。</p>
+<hr>
 <h2 id="附录-A：命令速查"><a href="#附录-A：命令速查" class="headerlink" title="附录 A：命令速查"></a>附录 A：命令速查</h2><table>
 <thead>
 <tr>
@@ -957,8 +1029,8 @@
           <div class="reward-open">赏
             <div class="reward-main">
               <ul class="reward-row">
-                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/donate/AliPayQR.jpg"></li>
-                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/donate/WeChanQR.jpg"></li>
+                <li class="alipay-code"><img src="/skyblog/img/custom/donate/AliPayQR.webp"></li>
+                <li class="wechat-code"><img src="/skyblog/img/custom/donate/WeChanQR.webp"></li>
               </ul>
             </div>
           </div>
@@ -998,15 +1070,15 @@
           
             <div class="post-nepre half next">
           
-            <a href="/skyblog/2026/08/27/%E5%85%B3%E4%BA%8E-GitHub-%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B%E6%83%85/" rel="next">
+            <a href="/skyblog/2026/08/27/GitHub%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="/skyblog/img/wallpaper/bookshelf.webp" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="/skyblog/img/wallpaper/city-night.webp" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                关于-GitHub-的一些事情</h3>
+                GitHub从入门到精通</h3>
                 <hr>
               </div>
             </a>
@@ -1041,7 +1113,7 @@
     <div class="ins-search-mask"></div>
     <div class="ins-search-container">
         <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
+            <input type="text" class="ins-search-input" placeholder="Type something..."/>
             <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="ins-section-wrapper">
@@ -1053,10 +1125,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: '文章',
-            // PAGES: '页面',
-            CATEGORIES: '分类',
-            TAGS: '标签',
+            POSTS: 'Posts',
+            // PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
         },
         ROOT_URL: '/skyblog/',
         CONTENT_URL: '/skyblog/content.json',
