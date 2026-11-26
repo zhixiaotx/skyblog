@@ -29,7 +29,8 @@
                     <img src="<%- (theme.cdn || '') + theme.social[i].img%>">
                   </a>
                   <div class="wechatInner">
-                    <img src="<%- (theme.cdn || '') + theme.social[i].qrcode%>">
+                    <% var _qr = theme.social[i].qrcode; %>
+                    <img src="<%- /^https?:\/\//.test(_qr) ? _qr : url_for(_qr) %>">
                   </div>
                 </li>
               <% } else { %>

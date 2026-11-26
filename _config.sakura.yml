@@ -21,10 +21,10 @@ social:
   wangyiyun: {url: https://music.163.com/, img: /img/social/wangyiyun.png}
   zhihu: {url: https://www.zhihu.com/, img: /img/social/zhihu.png}
   email: {url: mailto:liuliu19901110@gmail.com, img: /img/social/email.svg}
-  wechat: {url: https://weixin.qq.com/, img: /img/social/wechat.png}
-  wechat2: {url: https://mp.weixin.qq.com/, img: /img/social/wechat.png}
-  # 想恢复“悬停弹二维码”：给对应项加 qrcode 字段（注意 qrcode 同样会拼 CDN 前缀，建议填完整外链）
-  # wechat: {url: /#, img: /img/social/wechat.png, qrcode: https://example.com/wechat-qr.png}
+  wechat: {url: https://weixin.qq.com/, img: /img/social/wechat.png, qrcode: /img/custom/wechat.webp}
+  wechat2: {url: https://mp.weixin.qq.com/, img: /img/social/wechat.png, qrcode: /img/custom/wechat-mp.webp}
+  # 二维码换图：直接替换 source/img/custom/wechat.webp 与 wechat-mp.webp（文件名不变）
+  # 也可以把 qrcode 写成完整外链，例如 qrcode: https://example.com/my-wechat-qr.png
 
 url: https://zhixiaotx.github.io/skyblog
 description: 基于 Hexo + Sakura 搭建的二次元技术博客

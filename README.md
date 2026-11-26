@@ -1427,16 +1427,42 @@ social:
    `https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/github.png`。
    想用自己的图标：要么 `img` 写成完整外链，要么把模板这几处改成 `url_for()` 并把图片放进 `source/img/social/`。
 
-### 21.4 手机端
+### 21.4 微信 / 公众号的悬停二维码
+
+`wechat`（微信）和 `wechat2`（公众号）两个图标带 `qrcode` 字段，鼠标悬停会弹出二维码。
+
+| 环节 | 位置 |
+| --- | --- |
+| 配置 | `_config.sakura.yml` 的 `social.wechat.qrcode` / `social.wechat2.qrcode` |
+| 图片 | `source/img/custom/wechat.webp`、`source/img/custom/wechat-mp.webp` |
+| 模板 | `headertop.ejs` 第 31-34 行（已改为 `url_for()`，本地图才能生效） |
+
+```yaml
+wechat: {url: https://weixin.qq.com/, img: /img/social/wechat.png, qrcode: /img/custom/wechat.webp}
+wechat2: {url: https://mp.weixin.qq.com/, img: /img/social/wechat.png, qrcode: /img/custom/wechat-mp.webp}
+```
+
+换二维码只有两种做法：
+
+1. **替换文件**（推荐）：把新二维码覆盖到 `source/img/custom/wechat.webp` 和 `wechat-mp.webp`，文件名保持不变
+2. **改配置**：把 `qrcode` 改成完整外链，例如 `qrcode: https://example.com/my-qr.png`
+
+> 注意：`qrcode` 原来走的是 `(theme.cdn || '') + qrcode`，写本地路径会拼成 jsdelivr 上原作者的图；
+> 本项目已把这处改成 `url_for()`，所以 `/img/...` 本地路径能正常工作。
+> 主题自带的图标 `img:` 仍然走 CDN，两处行为不一样，别混。
+>
+> 当前这两张图是**临时占位**（复用微信赞赏码），换成你自己的微信/公众号码即可。
+
+### 21.5 手机端
 
 移动端用的是 `msocial:`（Font Awesome 图标，不需要图片），同样受深合并影响。
 本项目当前为 github / 微博 / QQ / 邮箱，链接同样是各平台官方地址，改 `_config.sakura.yml` 的 `msocial:` 即可。
 
-### 21.5 自检
+### 21.6 自检
 
 ```bash
-grep -c "img/social/" public/index.html        # 当前项目应为 7
-grep -o 'href="https://[^"]*"' public/index.html | head -7   # 逐个核对链接
+grep -c "img/social/" public/index.html          # 当前项目应为 7
+grep -o 'img/custom/wechat[^"]*' public/index.html   # 应为 wechat.webp 与 wechat-mp.webp
 ```
 
 ---
