@@ -3,10 +3,10 @@
     <div class="site-branding">
       <span class="site-title">
         <span class="logolink moe-mashiro">
-          <a href="<%- url_for('/') %>">
+          <a href="<%- url_for('/') %>" style="display:inline-flex;align-items:center;gap:8px;float:left">
             <% var _navAvatar = theme.avatar || ''; %>
             <% var _navAvatarSrc = /^https?:\/\//.test(_navAvatar) || _navAvatar.indexOf('//') === 0 ? _navAvatar : (_navAvatar.indexOf('/') === 0 ? url_for(_navAvatar) : url_for((theme.cdn || '') + _navAvatar)); %>
-            <img class="site-logo-avatar" src="<%- _navAvatarSrc %>" alt="<%= theme.siteName %>" style="width:30px;height:30px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px;box-shadow:0 0 4px rgba(0,0,0,.15)">
+            <img class="site-logo-avatar" src="<%- _navAvatarSrc %>" alt="<%= theme.siteName %>" style="width:30px;height:30px;border-radius:50%;object-fit:cover;margin:0;flex:0 0 auto;opacity:1;box-shadow:0 0 4px rgba(0,0,0,.15)">
             <span class="sakurasono"><%= theme.prefixName %></span>
             <span class="shironeko"><%= theme.siteName %></span>
           </a>

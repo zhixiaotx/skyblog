@@ -1484,15 +1484,20 @@ grep -o 'img/custom/wechat[^"]*' public/index.html   # 应为 wechat.webp 与 we
 ### 22.2 现在的写法
 
 ```ejs
-<a href="<%- url_for('/') %>">
+<a href="<%- url_for('/') %>" style="display:inline-flex;align-items:center;gap:8px;float:left">
   <% var _navAvatar = theme.avatar || ''; %>
   <% var _navAvatarSrc = /^https?:\/\//.test(_navAvatar) || _navAvatar.indexOf('//') === 0 ? _navAvatar : (_navAvatar.indexOf('/') === 0 ? url_for(_navAvatar) : url_for((theme.cdn || '') + _navAvatar)); %>
   <img class="site-logo-avatar" src="<%- _navAvatarSrc %>" alt="<%= theme.siteName %>"
-       style="width:30px;height:30px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px;box-shadow:0 0 4px rgba(0,0,0,.15)">
+       style="width:30px;height:30px;border-radius:50%;object-fit:cover;margin:0;flex:0 0 auto;opacity:1;box-shadow:0 0 4px rgba(0,0,0,.15)">
   <span class="sakurasono"><%= theme.prefixName %></span>
   <span class="shironeko"><%= theme.siteName %></span>
 </a>
 ```
+
+**为什么用 `inline-flex` 而不是 `vertical-align:middle`**：导航栏的 `.logolink a` 设了
+`height:56px; line-height:56px`，同时主题还有一条 `.site-title img { height:40px; margin-top:17px; opacity:.75 }`
+会把头像顶偏、变淡。改成父级 `display:inline-flex; align-items:center` 后由 flex 居中对齐，
+再用内联 `margin:0`、`opacity:1` 覆盖掉主题的旧规则，头像和「Sky」就齐平了。
 
 三种 `avatar` 写法都兼容：
 
@@ -1510,8 +1515,9 @@ grep -o 'img/custom/wechat[^"]*' public/index.html   # 应为 wechat.webp 与 we
 
 ### 22.4 想调大小 / 去掉
 
-- 大小：改 `width:30px;height:30px`（建议 24–36px，导航栏高约 50px，太大可能撑开）
-- 去掉：把 `<img ...>` 那一行删掉即可，其余不用动
+- 大小：改 `width:30px;height:30px`（建议 24–36px；容器是 `inline-flex`，会随高度自动居中）
+- 间距：改父级 `<a>` 的 `gap:8px`
+- 去掉：把 `<img ...>` 那一行删掉；父级的 `inline-flex` 留着也不影响原来的文字 logo
 
 ### 22.5 自检
 
