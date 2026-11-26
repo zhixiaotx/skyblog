@@ -184,10 +184,10 @@
     <div class="site-branding">
       <span class="site-title">
         <span class="logolink moe-mashiro">
-          <a href="/skyblog/">
+          <a href="/skyblog/" style="display:inline-flex;align-items:center;gap:8px;float:left">
             
             
-            <img class="site-logo-avatar" src="/skyblog/img/favicon.png" alt="Sky" style="width:30px;height:30px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px;box-shadow:0 0 4px rgba(0,0,0,.15)">
+            <img class="site-logo-avatar" src="/skyblog/img/favicon.png" alt="Sky" style="width:30px;height:30px;border-radius:50%;object-fit:cover;margin:0;flex:0 0 auto;opacity:1;box-shadow:0 0 4px rgba(0,0,0,.15)">
             <span class="sakurasono"></span>
             <span class="shironeko">Sky</span>
           </a>
@@ -1136,8 +1136,9 @@
 <td>内联在 <code>&lt;img&gt;</code> 上，改 <code>width/height/border-radius/margin-right</code></td>
 </tr>
 </tbody></table>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;a href=&quot;&lt;%- url_for(&#x27;/&#x27;) %&gt;&quot;&gt;</span><br><span class="line">  &lt;% var _navAvatar = theme.avatar || &#x27;&#x27;; %&gt;</span><br><span class="line">  &lt;% var _navAvatarSrc = /^https?:\/\//.test(_navAvatar) || _navAvatar.indexOf(&#x27;//&#x27;) === 0 ? _navAvatar : (_navAvatar.indexOf(&#x27;/&#x27;) === 0 ? url_for(_navAvatar) : url_for((theme.cdn || &#x27;&#x27;) + _navAvatar)); %&gt;</span><br><span class="line">  &lt;img class=&quot;site-logo-avatar&quot; src=&quot;&lt;%- _navAvatarSrc %&gt;&quot; alt=&quot;&lt;%= theme.siteName %&gt;&quot;</span><br><span class="line">       style=&quot;width:30px;height:30px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px;box-shadow:0 0 4px rgba(0,0,0,.15)&quot;&gt;</span><br><span class="line">  &lt;span class=&quot;sakurasono&quot;&gt;&lt;%= theme.prefixName %&gt;&lt;/span&gt;</span><br><span class="line">  &lt;span class=&quot;shironeko&quot;&gt;&lt;%= theme.siteName %&gt;&lt;/span&gt;</span><br><span class="line">&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;a href=&quot;&lt;%- url_for(&#x27;/&#x27;) %&gt;&quot; style=&quot;display:inline-flex;align-items:center;gap:8px;float:left&quot;&gt;</span><br><span class="line">  &lt;% var _navAvatar = theme.avatar || &#x27;&#x27;; %&gt;</span><br><span class="line">  &lt;% var _navAvatarSrc = /^https?:\/\//.test(_navAvatar) || _navAvatar.indexOf(&#x27;//&#x27;) === 0 ? _navAvatar : (_navAvatar.indexOf(&#x27;/&#x27;) === 0 ? url_for(_navAvatar) : url_for((theme.cdn || &#x27;&#x27;) + _navAvatar)); %&gt;</span><br><span class="line">  &lt;img class=&quot;site-logo-avatar&quot; src=&quot;&lt;%- _navAvatarSrc %&gt;&quot; alt=&quot;&lt;%= theme.siteName %&gt;&quot;</span><br><span class="line">       style=&quot;width:30px;height:30px;border-radius:50%;object-fit:cover;margin:0;flex:0 0 auto;opacity:1;box-shadow:0 0 4px rgba(0,0,0,.15)&quot;&gt;</span><br><span class="line">  &lt;span class=&quot;sakurasono&quot;&gt;&lt;%= theme.prefixName %&gt;&lt;/span&gt;</span><br><span class="line">  &lt;span class=&quot;shironeko&quot;&gt;&lt;%= theme.siteName %&gt;&lt;/span&gt;</span><br><span class="line">&lt;/a&gt;</span><br></pre></td></tr></table></figure>
 
+<p><strong>对齐要点</strong>：<code>.logolink a</code> 是 <code>height:56px;line-height:56px</code>，主题还有<br><code>.site-title img { height:40px;margin-top:17px;opacity:.75 }</code>，直接把 <code>img</code> 塞进去会偏上、发灰。<br>所以父级改 <code>display:inline-flex;align-items:center</code>，再用内联 <code>margin:0;opacity:1</code> 覆盖旧规则，<br>头像与文字才会严格同一水平线。</p>
 <h3 id="19-2-想用另一张图-调大小"><a href="#19-2-想用另一张图-调大小" class="headerlink" title="19.2 想用另一张图 &#x2F; 调大小"></a>19.2 想用另一张图 &#x2F; 调大小</h3><ul>
 <li>用另一张图：把 <code>src</code> 换成 <code>&lt;%- url_for(&#39;/img/custom/logo.png&#39;) %&gt;</code></li>
 <li>调大小：改 <code>width:30px;height:30px</code>，建议 24–36px（导航栏高约 50px，太大会撑开）</li>
@@ -1300,7 +1301,7 @@
     <div class="ins-search-mask"></div>
     <div class="ins-search-container">
         <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Type something..."/>
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
             <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="ins-section-wrapper">
@@ -1312,10 +1313,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
-            // PAGES: 'Pages',
-            CATEGORIES: 'Categories',
-            TAGS: 'Tags',
+            POSTS: '文章',
+            // PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
         },
         ROOT_URL: '/skyblog/',
         CONTENT_URL: '/skyblog/content.json',

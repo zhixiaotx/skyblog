@@ -184,10 +184,10 @@
     <div class="site-branding">
       <span class="site-title">
         <span class="logolink moe-mashiro">
-          <a href="/skyblog/">
+          <a href="/skyblog/" style="display:inline-flex;align-items:center;gap:8px;float:left">
             
             
-            <img class="site-logo-avatar" src="/skyblog/img/favicon.png" alt="Sky" style="width:30px;height:30px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px;box-shadow:0 0 4px rgba(0,0,0,.15)">
+            <img class="site-logo-avatar" src="/skyblog/img/favicon.png" alt="Sky" style="width:30px;height:30px;border-radius:50%;object-fit:cover;margin:0;flex:0 0 auto;opacity:1;box-shadow:0 0 4px rgba(0,0,0,.15)">
             <span class="sakurasono"></span>
             <span class="shironeko">Sky</span>
           </a>
@@ -465,8 +465,8 @@
 <p>邮件服务器：mail.oqumail.com</p>
 <p>端口：993</p>
 <p>如果你的应用要求安全类型，<strong>选择SSL或TLS</strong>。</p>
-<p>你的域名邮箱：<a href="mailto:&#88;&#x58;&#x58;&#x40;&#x58;&#x58;&#88;&#x2e;&#x63;&#111;&#x6d;">XXX@XXX.com</a></p>
-<p>每个人的全地址，例如：<a href="mailto:&#115;&#x61;&#108;&#x65;&#115;&#64;&#121;&#111;&#117;&#x72;&#99;&#x6f;&#x6d;&#112;&#97;&#110;&#121;&#x2e;&#99;&#111;&#109;">sales@yourcompany.com</a></p>
+<p>你的域名邮箱：<a href="mailto:&#x58;&#x58;&#x58;&#x40;&#88;&#x58;&#x58;&#46;&#x63;&#x6f;&#109;">XXX@XXX.com</a></p>
+<p>每个人的全地址，例如：<a href="mailto:&#x73;&#97;&#108;&#x65;&#115;&#64;&#121;&#111;&#x75;&#x72;&#99;&#111;&#x6d;&#112;&#97;&#110;&#x79;&#46;&#x63;&#x6f;&#109;">sales@yourcompany.com</a></p>
 <p>密码：邮箱创建时设置的密码</p>
 <h3 id="发送邮件"><a href="#发送邮件" class="headerlink" title="发送邮件"></a>发送邮件</h3><p>回复和新消息——你的应用称为“发信”或“SMTP”。</p>
 <p>邮件服务器：mail.oqumail.com</p>
@@ -613,7 +613,7 @@
     <div class="ins-search-mask"></div>
     <div class="ins-search-container">
         <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Type something..."/>
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
             <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="ins-section-wrapper">
@@ -625,10 +625,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
-            // PAGES: 'Pages',
-            CATEGORIES: 'Categories',
-            TAGS: 'Tags',
+            POSTS: '文章',
+            // PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
         },
         ROOT_URL: '/skyblog/',
         CONTENT_URL: '/skyblog/content.json',
