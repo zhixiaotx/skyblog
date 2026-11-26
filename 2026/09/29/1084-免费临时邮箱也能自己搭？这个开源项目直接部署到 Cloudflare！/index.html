@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  
+  <title itemprop="name">免费临时邮箱也能自己搭？这个开源项目直接部署到 Cloudflare！ | 我的技术博客</title>
+  
+    <link rel="shortcut icon" href="/skyblog/img/favicon.png">
+  
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+SerifMerriweather|Merriweather+Sans|Source+Code+Pro|Ubuntu:400,700|Noto+Serif+SC" media="all">
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="stylesheet" id="saukra_css-css" href="/skyblog/css/style.css" type="text/css" media="all">
+  <link rel="stylesheet" href="/skyblog/css/lib.min.css" media="all">
+  <link rel="stylesheet" href="/skyblog/css/font.css" media="all">
+  <link rel="stylesheet" href="/skyblog/css/insight.css" media="all">
+  <link rel="stylesheet" href="/skyblog/css/jquery.fancybox.min.css" media="all">
+  <link rel="stylesheet" href="/skyblog/css/zoom.css" media="all">
+  <link rel="stylesheet" type="text/css" href="/skyblog/css/sharejs.css">
+<!--   <link rel="stylesheet" id="saukra_css-css" href="https://2heng.xin/wp-content/cache/autoptimize/css/autoptimize_ad42a61f4c7d4bdd9f91afcff6b5dda5.css
+" type="text/css" media="all"> -->
+  <script>
+  /*Initial Variables*/
+  var mashiro_option = new Object();
+  var mashiro_global = new Object();
+  mashiro_option.NProgressON = true;
+  /* 
+   * 邮箱信息之类的东西可以填在这里，这些js变量基本都作用于sakura-app.js
+   * 这样的设置仅是为了方便在基于PHP开发的主题中设置js变量，既然移植到了Node上，我想或许可以精简这一逻辑吧
+   */
+  mashiro_option.email_domain = "";
+  mashiro_option.email_name = "";
+  mashiro_option.cookie_version_control = "";
+  mashiro_option.qzone_autocomplete = false;
+  mashiro_option.site_name = "Sky";
+  mashiro_option.author_name = "Sky";
+  mashiro_option.site_url = "https://zhixiaotx.github.io/skyblog";
+  mashiro_option.v_appId = "GyC3NzMvd0hT9Yyd2hYIC0MN-gzGzoHsz";
+  mashiro_option.v_appKey = "mgOpfzbkHYqU92CV4IDlAUHQ";
+  mashiro_option.mathjax = "0";
+  mashiro_option.qq_api_url = "https://api.mashiro.top/qqinfo/"; 
+  mashiro_option.qq_avatar_api_url = "https://api.mashiro.top/qqinfo/";
+
+  // mashiro_option.jsdelivr_css_src = "https://cdn.jsdelivr.net/gh/moezx/cdn@3.4.5/css/lib.min.css";
+  // mashiro_option.float_player_on = true;
+
+  /*End of Initial Variables*/
+  </script>
+  <script type="text/javascript">
+  
+  var bg = "/skyblog/img/wallpaper/anime-scene.webp,/skyblog/img/wallpaper/china-city.webp,/skyblog/img/wallpaper/night-clouds.webp,/skyblog/img/wallpaper/city-night.webp,/skyblog/img/wallpaper/beach-sailboat.webp,/skyblog/img/wallpaper/country-cottage.webp,/skyblog/img/wallpaper/hammock.webp,/skyblog/img/wallpaper/bookshelf.webp".split(",");
+  var bgindex = Math.floor(Math.random()*bg.length);
+  if (!!window.ActiveXObject || "ActiveXObject" in window) { //is IE?
+    alert('朋友，IE浏览器未适配哦~');
+  }
+  </script>
+  <style type="text/css">
+  .hljs-ln{border-collapse:collapse}.hljs-ln td{padding:0}.hljs-ln-n:before{content:attr(data-line-number)}
+  </style>
+  <style type="text/css">.site-top .lower nav{display:block !important;}.author-profile i,.post-like a,.post-share .show-share,.sub-text,.we-info a,span.sitename,.post-more i:hover,#pagination a:hover,.post-content a:hover,.float-content i:hover{color:#FE9600}.feature i,.download,.navigator i:hover,.links ul li:before,.ar-time i,span.ar-circle,.object,.comment .comment-reply-link,.siren-checkbox-radio:checked + .siren-checkbox-radioInput:after{background:#FE9600}::-webkit-scrollbar-thumb{background:#FE9600}.download,.navigator i:hover,.link-title,.links ul li:hover,#pagination a:hover,.comment-respond input[type='submit']:hover{border-color:#FE9600}.entry-content a:hover,.site-info a:hover,.comment h4 a,#comments-navi a.prev,#comments-navi a.next,.comment h4 a:hover,.site-top ul li a:hover,.entry-title a:hover,#archives-temp h3,span.page-numbers.current,.sorry li a:hover,.site-title a:hover,i.iconfont.js-toggle-search.iconsearch:hover,.comment-respond input[type='submit']:hover{color:#FE9600}.comments .comments-main{display:block !important;}.comments .comments-hidden{display:none !important;}background-position:center center;background-attachment:inherit;}
+  </style>
+<meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/skyblog/atom.xml" title="我的技术博客" type="application/atom+xml">
+</head>
+
+<body class="page-template page-template-user page-template-page-analytics page-template-userpage-analytics-php page page-id-1297 chinese-font serif isWebKit">
+  <div class="scrollbar" id="bar">
+  </div>
+  <a href="#" class="cd-top faa-float animated"></a>
+  <section id="main-container">
+    <div class="headertop ">
+  <div id="banner_wave_1"></div>
+  <div id="banner_wave_2"></div>
+  <figure id="centerbg" class="centerbg">
+    <div class="focusinfo no-select">
+      <div class="header-tou">
+        <a href="https://zhixiaotx.github.io/skyblog">
+          
+          
+          <img src="/skyblog/img/favicon.png">
+          
+        </a>
+      </div>
+      <div class="header-info">
+        <p>基于 Hexo + Sakura 搭建的二次元技术博客</p>
+        <div class="top-social_v2">
+          <li id="bg-pre">
+            <img class="flipx" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
+          
+            
+              
+                <li>
+                  <a href="https://github.com/" target="_blank" class="social-github" title="github">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/github.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="sina">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/sina.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="wangyiyun">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/wangyiyun.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="zhihu">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/zhihu.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="email">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/email.svg">
+                  </a>
+                </li>
+              
+            
+              
+                <li class="wechat">
+                  <a href="/#">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/wechat.png">
+                  </a>
+                  <div class="wechatInner">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/wechat.jpg">
+                  </div>
+                </li>
+              
+            
+              
+                <li class="wechat">
+                  <a href="/#">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/wechat.png">
+                  </a>
+                  <div class="wechatInner">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/wechat.jpg">
+                  </div>
+                </li>
+              
+            
+          
+          <li id="bg-next">
+            <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
+        </div>
+      </div>
+    </div>
+  </figure>
+  <div id="video-container" style="">
+    <video style="object-fit: fill" id="bgvideo" class="video" video-name="" src="" width="auto" preload="auto">
+    </video>
+    <div id="video-btn" class="loadvideo videolive">
+    </div>
+    <div id="video-add">
+    </div>
+    <div class="video-stu">
+    </div>
+  </div>
+  <div class="headertop-down faa-float animated" onclick="headertop_down()">
+    <span>
+      <i class="fa fa-chevron-down" aria-hidden="true">
+      </i>
+    </span>
+  </div>
+</div>
+    <div id="page" class="site wrapper">
+      <header class="site-header no-select gizle sabit" role="banner">
+  <div class="site-top">
+    <div class="site-branding">
+      <span class="site-title">
+        <span class="logolink moe-mashiro">
+          <a href="/skyblog/">
+            <span class="sakurasono"></span>
+            <span class="shironeko">Sky</span>
+          </a>
+        </span>
+      </span>
+    </div>
+    <div class="searchbox search-form-submit">
+      <i class="iconfont js-toggle-search iconsearch icon-search">
+      </i>
+    </div>
+    <div id="show-nav" class="showNav mobile-fit">
+      <div class="line line1">
+      </div>
+      <div class="line line2">
+      </div>
+      <div class="line line3">
+      </div>
+    </div>
+    <div class="lower-cantiner">
+      <div class="lower">
+        <nav class="mobile-fit-control hide">
+          <ul id="menu-new" class="menu">
+            
+              <li>
+                <a href="/skyblog/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-home" aria-hidden="true"></i>
+                    首页
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/skyblog/archives/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-archive" aria-hidden="true"></i>
+                    归档
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/skyblog/categories/%E6%8A%80%E6%9C%AF/">
+                          <i class="fa fa-code" aria-hidden="true"></i>
+                          技术
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/categories/%E7%94%9F%E6%B4%BB/">
+                          <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                          生活
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/categories/%E8%B5%84%E6%BA%90/">
+                          <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                          资源
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/categories/%E9%9A%8F%E6%83%B3/">
+                          <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                          随想
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/categories/%E8%BD%AC%E8%BD%BD/">
+                          <i class="fa fa-book" aria-hidden="true"></i>
+                          转载
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/skyblog/tags/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-tags" aria-hidden="true"></i>
+                    标签
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/skyblog/categories/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-folder-open" aria-hidden="true"></i>
+                    分类
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="javascript:;">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-list-ul" aria-hidden="true"></i>
+                    清单
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/skyblog/tags/%E6%82%A6%E8%AF%BB/">
+                          <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                          书单
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/bangumi/">
+                          <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                          番组
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/music/">
+                          <i class="fa fa-headphones" aria-hidden="true"></i>
+                          歌单
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/tags/%E5%9B%BE%E9%9B%86/">
+                          <i class="fa fa-photo" aria-hidden="true"></i>
+                          图集
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/skyblog/comment/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-pencil-square-o" aria-hidden="true"></i>
+                    留言板
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/skyblog/links/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-link" aria-hidden="true"></i>
+                    友人帐
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/skyblog/about/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-heart" aria-hidden="true"></i>
+                    关于
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/skyblog/about/">
+                          <i class="fa fa-meetup" aria-hidden="true"></i>
+                          我？
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/theme-sakura/">
+                          <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                          主题
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/lab/">
+                          <i class="fa fa-cogs" aria-hidden="true"></i>
+                          Lab
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <link rel="stylesheet" type="text/css" href="/skyblog/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<div class="pattern-center-blank"></div>
+
+  <div class="pattern-center single-center">
+    <!-- 有配图默认渲染第一张 -->
+    <div class="pattern-attachment-img lazyload" style="background-image: url(/skyblog/img/aixmb/1084/cover.webp);" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="/skyblog/img/aixmb/1084/cover.webp">
+    </div>
+    <header class="pattern-header single-header">
+      <h1 class="entry-title">
+      免费临时邮箱也能自己搭？这个开源项目直接部署到 Cloudflare！</h1>
+      <p class="entry-census">
+        <span>
+          <a href="">
+            <img src="">
+          </a>
+        </span>
+        <span>
+          <a href=""></a>
+        </span>
+        <span class="bull">
+        ·</span>
+        2026-9-29<span class="bull">
+        ·</span>
+      <span id="busuanzi_value_page_pv"></span>次阅读</p>
+    </header>
+  </div>
+
+<div id="content" class="site-content">
+  <div id="primary" class="content-area">
+    <main id="main" class="site-main" role="main">
+      <article id="post-1" class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+        <div class="toc"></div>
+        <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
+        
+        <div class="entry-content">
+          <p>平时注册一些网站、测试程序、接收测试邮件的时候，很多人都不太愿意直接使用自己的常用邮箱。</p>
+<p>原因很简单：</p>
+<p><strong>怕垃圾邮件、怕泄露主邮箱、测试邮箱不方便管理。</strong></p>
+<p>所以临时邮箱一直都有比较明确的使用场景。</p>
+<p>今天分享一个我最近比较关注的开源项目：<strong>Cloudflare Temp Email</strong>。</p>
+<p>它可以自己搭建一个完整的临时邮箱服务，支持收邮件、发邮件、附件、邮件转发、Telegram 推送、Webhook、AI 邮件识别等功能。</p>
+<p>更重要的是，它本身就是围绕 <strong>Cloudflare Workers、Pages、D1、KV、Email Routing</strong> 这套体系设计的，非常适合喜欢折腾 Cloudflare 的朋友。项目 README 目前也明确将它定位为基于 Cloudflare 免费服务构建的临时邮件服务。</p>
+<hr>
+<h2 id="😩-为什么需要一个临时邮箱？"><a href="#😩-为什么需要一个临时邮箱？" class="headerlink" title="😩 为什么需要一个临时邮箱？"></a>😩 为什么需要一个临时邮箱？</h2><p>相信很多人都遇到过这种情况：</p>
+<p>注册一个网站，只是想体验一下。</p>
+<p>结果：</p>
+<p>📩 每天收到一堆营销邮件<br>📩 邮箱被各种网站记录<br>📩 测试程序需要反复注册邮箱<br>📩 开发邮件功能时没有测试环境<br>📩 接收验证码的时候不想暴露自己的常用邮箱</p>
+<p>如果只是偶尔使用，第三方临时邮箱当然可以。</p>
+<p>但如果你本身就喜欢自己搭建工具站，那么完全可以考虑：</p>
+<p><strong>自己搭一个临时邮箱服务。</strong></p>
+<p>域名自己控制，网站自己部署，功能也可以自己调整。</p>
+<hr>
+<h1 id="🚀-Cloudflare-Temp-Email-是什么？"><a href="#🚀-Cloudflare-Temp-Email-是什么？" class="headerlink" title="🚀 Cloudflare Temp Email 是什么？"></a>🚀 Cloudflare Temp Email 是什么？</h1><p><strong>Cloudflare Temp Email</strong> 是一个开源的临时邮箱项目。</p>
+<p>它不是单纯做一个“随机邮箱地址生成器”，而是把<strong>邮箱创建、收件、邮件解析、用户管理、管理员后台、邮件发送、附件、转发、Webhook 等功能</strong>都整合到了一起。</p>
+<p>项目采用 Vue 3 + Vite + TypeScript 构建前端，后端使用 Cloudflare Workers，数据库使用 Cloudflare D1，同时结合 Cloudflare Email Routing 接收邮件，邮件解析部分使用 Rust WASM。</p>
+<p>简单理解就是：</p>
+<p><strong>Cloudflare + 域名 + 临时邮箱系统 &#x3D; 自己的在线邮箱工具站。</strong></p>
+<hr>
+<h1 id="📬-到底能干什么？"><a href="#📬-到底能干什么？" class="headerlink" title="📬 到底能干什么？"></a>📬 到底能干什么？</h1><p>这个项目功能还是比较丰富的。</p>
+<h3 id="📩-1-临时邮箱收件"><a href="#📩-1-临时邮箱收件" class="headerlink" title="📩 1. 临时邮箱收件"></a>📩 1. 临时邮箱收件</h3><p>这是最基础也是最核心的功能。</p>
+<p>用户可以创建邮箱地址，然后通过网页查看收到的邮件。</p>
+<p>对于网站测试、开发测试、临时收件等场景都比较方便。</p>
+<hr>
+<h3 id="🔐-2-邮箱地址密码"><a href="#🔐-2-邮箱地址密码" class="headerlink" title="🔐 2. 邮箱地址密码"></a>🔐 2. 邮箱地址密码</h3><p>项目支持给邮箱地址设置独立密码。</p>
+<p>这样相比简单的“谁知道地址谁就能看”的临时邮箱，安全控制会更加完善。</p>
+<p>同时项目还提供用户注册、登录、邮箱绑定等功能，可以管理多个邮箱地址。</p>
+<hr>
+<h3 id="🤖-3-AI-自动识别邮件"><a href="#🤖-3-AI-自动识别邮件" class="headerlink" title="🤖 3. AI 自动识别邮件"></a>🤖 3. AI 自动识别邮件</h3><p>这个功能就比较有意思了。</p>
+<p>项目支持使用 <strong>Cloudflare Workers AI</strong> 对邮件内容进行识别，可以自动提取：</p>
+<p>🔢 验证码<br>🔗 认证链接<br>🌐 服务链接<br>📌 其他重要信息</p>
+<p>对于临时邮箱来说，这个功能非常实用。</p>
+<p>收到一封很长的验证邮件，不需要自己慢慢翻，直接找关键内容即可。</p>
+<p>项目近期版本还加入了在没有 Workers AI 配置时使用内置正则提取验证码的能力。</p>
+<hr>
+<h3 id="📎-4-支持邮件附件"><a href="#📎-4-支持邮件附件" class="headerlink" title="📎 4. 支持邮件附件"></a>📎 4. 支持邮件附件</h3><p>收到邮件不只是看文字。</p>
+<p>项目支持查看邮件附件，而且支持显示图片附件。</p>
+<p>同时还可以使用 S3 兼容存储保存和删除附件。</p>
+<p>对于测试注册、程序邮件、系统通知等场景都比较方便。</p>
+<hr>
+<h3 id="↪️-5-邮件转发"><a href="#↪️-5-邮件转发" class="headerlink" title="↪️ 5. 邮件转发"></a>↪️ 5. 邮件转发</h3><p>如果临时邮箱收到重要邮件，还可以进一步配置邮件转发。</p>
+<p>项目支持全局转发地址。</p>
+<p>这样可以把临时邮箱和自己的其他邮箱服务连接起来。</p>
+<hr>
+<h3 id="📤-6-支持发送邮件"><a href="#📤-6-支持发送邮件" class="headerlink" title="📤 6. 支持发送邮件"></a>📤 6. 支持发送邮件</h3><p>它也不只是“只能收不能发”。</p>
+<p>项目支持邮件发送，并可以通过：</p>
+<ul>
+<li>SMTP</li>
+<li>Resend</li>
+<li>Cloudflare Email Sending 等方式</li>
+</ul>
+<p>完成发信能力，具体使用哪种方式取决于你的部署配置。项目当前文档同时支持 SMTP、Resend 等发送方式。</p>
+<hr>
+<h1 id="🤖-Telegram、Webhook-也能接"><a href="#🤖-Telegram、Webhook-也能接" class="headerlink" title="🤖 Telegram、Webhook 也能接"></a>🤖 Telegram、Webhook 也能接</h1><p>如果你平时有服务器、网站监控或者自动化需求，这部分功能就比较实用了。</p>
+<p>项目支持：</p>
+<p>📱 Telegram Bot<br>🔔 Telegram 推送<br>🔗 Webhook<br>📨 消息推送<br>📡 SMTP &#x2F; IMAP</p>
+<p>例如收到新邮件后，可以通过 Telegram 推送通知。</p>
+<p>也可以利用 Webhook 把邮件事件连接到自己的其他系统。</p>
+<p>项目还提供 SMTP Proxy Server，可以提供 SMTP 发信和 IMAP 查看邮件的能力。</p>
+<hr>
+<h1 id="🌍-多语言-移动端"><a href="#🌍-多语言-移动端" class="headerlink" title="🌍 多语言 + 移动端"></a>🌍 多语言 + 移动端</h1><p>对于想把它做成公开工具站的人来说，多语言也是一个不错的功能。</p>
+<p>项目支持多语言界面，当前版本的前端已经支持包括中文、英文、日语、德语、西班牙语、葡萄牙语等语言。</p>
+<p>另外还有一个社区客户端 <strong>CloudMail</strong>，可以用于 Android 端的邮箱和管理操作。</p>
+<p>也就是说，它不仅仅适合自己部署着玩。</p>
+<p>如果后面真的准备运营成一个在线工具网站，扩展空间还是比较大的。</p>
+<hr>
+<h1 id="🛡️-防滥用功能也考虑到了"><a href="#🛡️-防滥用功能也考虑到了" class="headerlink" title="🛡️ 防滥用功能也考虑到了"></a>🛡️ 防滥用功能也考虑到了</h1><p>临时邮箱这种服务比较容易被滥用，所以如果准备公开运营，安全和限制功能非常重要。</p>
+<p>项目提供了：</p>
+<p>🛡️ Cloudflare Turnstile<br>🚦 API 限流<br>🚫 IP 黑名单<br>✅ IP 白名单<br>📩 垃圾邮件检测<br>⚙️ 黑名单 &#x2F; 白名单<br>🧹 邮件定时清理</p>
+<p>近期版本还增加了更细的 IP 白名单、限流 API 和邮箱清理策略等功能。</p>
+<p>对于个人使用和小型工具站来说，这些功能能够减少很多后期维护压力。</p>
+<hr>
+<h1 id="☁️-最大亮点：Cloudflare-零成本部署"><a href="#☁️-最大亮点：Cloudflare-零成本部署" class="headerlink" title="☁️ 最大亮点：Cloudflare 零成本部署"></a>☁️ 最大亮点：Cloudflare 零成本部署</h1><p>我觉得这个项目最适合拿来做教程的地方，就是它的架构非常适合 Cloudflare。</p>
+<p>官方架构主要包括：</p>
+<p><strong>Cloudflare Pages</strong><br>负责前端。</p>
+<p><strong>Cloudflare Workers</strong><br>负责后端 API。</p>
+<p><strong>Cloudflare D1</strong><br>负责数据库。</p>
+<p><strong>Cloudflare KV</strong><br>用于相关数据存储。</p>
+<p><strong>Cloudflare Email Routing</strong><br>负责邮件接收。</p>
+<p>整体就是一套 Cloudflare 生态。</p>
+<p>所以不需要像传统邮箱项目那样，一上来就购买服务器、配置 Linux、安装各种邮件组件。</p>
+<p>对于想研究：</p>
+<p>☁️ Cloudflare<br>💻 Workers<br>📧 邮箱系统<br>🛠️ 在线工具<br>🚀 开源项目</p>
+<p>的人来说，非常适合拿来练手。</p>
+<p>不过要注意，<strong>“零成本”是建立在 Cloudflare 免费资源额度、相关服务规则以及其他依赖服务限制之内</strong>，并不代表无限资源、无限邮件发送。项目本身也有部分功能需要额外的服务配置。</p>
+<hr>
+<h1 id="💰-还能不能做成一个副业项目？"><a href="#💰-还能不能做成一个副业项目？" class="headerlink" title="💰 还能不能做成一个副业项目？"></a>💰 还能不能做成一个副业项目？</h1><p>如果你只是部署出来自己使用，那就是一个实用工具。</p>
+<p>但如果你进一步把它做成一个网站，就可以考虑另一种玩法：</p>
+<h3 id="免费临时邮箱-→-SEO-→-用户访问-→-广告变现"><a href="#免费临时邮箱-→-SEO-→-用户访问-→-广告变现" class="headerlink" title="免费临时邮箱 → SEO → 用户访问 → 广告变现"></a><strong>免费临时邮箱 → SEO → 用户访问 → 广告变现</strong></h3><p>例如网站可以围绕这些关键词进行内容建设：</p>
+<p>🔎 临时邮箱<br>📧 免费临时邮箱<br>📩 临时邮箱接收邮件<br>🔐 一次性邮箱<br>📨 在线临时邮箱<br>📱 临时邮箱验证码<br>🌐 临时邮箱地址<br>💻 免费邮箱工具</p>
+<p>然后把网站做成一个真正的<strong>在线临时邮箱工具站</strong>。</p>
+<hr>
+<h1 id="📢-页面还能接入广告"><a href="#📢-页面还能接入广告" class="headerlink" title="📢 页面还能接入广告"></a>📢 页面还能接入广告</h1><p>这个项目官方 README 已经提供了 <strong>Google Ads 集成支持</strong>。</p>
+<p>所以从项目能力上来说，可以进一步研究广告变现。</p>
+<p>比如：</p>
+<p>📌 首页工具区域<br>📌 邮箱列表页面<br>📌 使用说明区域<br>📌 SEO文章页面<br>📌 工具周边内容</p>
+<p>当然，广告能不能获得收益，最终还是取决于网站访问量、用户来源、广告平台审核、广告展示情况等，并不是部署完成就一定有收入。</p>
+<p>而且临时邮箱属于容易被滥用的工具，做公开网站的时候，<strong>一定要遵守广告平台和相关服务的规则，同时做好反滥用措施</strong>。</p>
+<h1 id="🖼️相关截图"><a href="#🖼️相关截图" class="headerlink" title="🖼️相关截图"></a>🖼️相关截图</h1><p><img src="/skyblog/img/aixmb/1084/01.webp" alt="Ai星码博客"></p>
+<p><img src="/skyblog/img/aixmb/1084/02.webp" alt="Ai星码博客"></p>
+<h3 id="博主临时邮箱：https-email-aixmb-cn"><a href="#博主临时邮箱：https-email-aixmb-cn" class="headerlink" title="博主临时邮箱：https://email.aixmb.cn"></a><strong>博主临时邮箱：<a target="_blank" rel="noopener" href="https://email.aixmb.cn/">https://email.aixmb.cn</a></strong></h3><h3 id="🔗项目地址-https-github-com-dreamhunter2333-cloudflare-temp-email"><a href="#🔗项目地址-https-github-com-dreamhunter2333-cloudflare-temp-email" class="headerlink" title="🔗项目地址:https://github.com/dreamhunter2333/cloudflare_temp_email"></a><strong>🔗项目地址:<a target="_blank" rel="noopener" href="https://github.com/dreamhunter2333/cloudflare_temp_email">https://github.com/dreamhunter2333/cloudflare_temp_email</a></strong></h3>
+        </div>
+        <!-- .entry-content -->
+        <div class="single-reward">
+          <div class="reward-open">赏
+            <div class="reward-main">
+              <ul class="reward-row">
+                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/donate/AliPayQR.jpg"></li>
+                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/donate/WeChanQR.jpg"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center; width: 100%" class="social-share share-mobile" data-disabled="diandian, tencent"></div>
+        <footer class="post-footer">
+          <div class="post-tags">
+          </div>
+          <div class="post-share">
+            <div class="social-share sharehidden share-component"></div>
+            <i class="iconfont show-share icon-forward"></i>
+          </div>
+        </footer><!-- .entry-footer -->
+      </article>
+      <!-- #post-## -->
+      <div class="toc" style="background: none;"></div>
+      <section class="post-squares nextprev">
+        
+          
+            <div class="post-nepre half previous">
+          
+            <a href="/skyblog/2026/10/05/1091-%F0%9F%9A%80%E9%98%BF%E9%87%8C%E4%BA%91%E5%9B%BD%E5%86%85%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9D%A5%E4%BA%86%EF%BC%812%E6%A0%B82G+3M%E5%B8%A6%E5%AE%BD%EF%BC%8C%E8%BF%9E%E7%BB%AD4%E5%B9%B4%E6%AF%8F%E5%B9%B499%E5%85%83/" rel="prev">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="/skyblog/img/aixmb/1091/cover.webp" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)">
+              </div>
+              <span class="label">
+              Previous Post</span>
+              <div class="info">
+                <h3>
+                🚀阿里云国内服务器来了！2核2G+3M带宽，连续4年每年99元</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+        
+          
+            <div class="post-nepre half next">
+          
+            <a href="/skyblog/2026/09/28/1074-%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90IP%E5%BD%92%E5%B1%9E%E5%9C%B0%E6%9F%A5%E8%AF%A2%E5%B7%A5%E5%85%B7%EF%BC%8CCloudflare%E9%9B%B6%E6%88%90%E6%9C%AC%E9%83%A8%E7%BD%B2%EF%BC%8C%E8%BF%98%E8%83%BD%E5%81%9A%E6%88%90%E8%87%AA%E5%B7%B1%E7%9A%84%E5%89%AF%E4%B8%9A%E7%BD%91%E7%AB%99/" rel="next">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="/skyblog/img/aixmb/1074/cover.webp" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)">
+              </div>
+              <span class="label">
+              Next Post</span>
+              <div class="info">
+                <h3>
+                一个开源IP归属地查询工具，Cloudflare零成本部署，还能做成自己的副业网站</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+      </section>
+      
+
+
+
+      <section class="author-profile">
+        <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+          <a href="" class="profile gravatar"><img src="" itemprop="image" alt="" height="70" width="70"></a>
+          <div class="meta">
+            <span class="title">Author</span>
+            <h3 itemprop="name">
+            <a href="" itemprop="url" rel="author"></a>
+            </h3>
+          </div>
+        </div>
+        <hr>
+        <p><i class="iconfont icon-write"></i></p>
+      </section>
+    </main><!-- #main -->
+  </div><!-- #primary -->
+</div>
+
+
+
+    </div>    
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            // PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+        },
+        ROOT_URL: '/skyblog/',
+        CONTENT_URL: '/skyblog/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+    <!-- <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2026 Sky<br>
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer> -->
+<footer id="colophon" class="site-footer" role="contentinfo">
+  <div class="site-info">
+    <div class="footertext">
+      <div class="img-preload">
+        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/wordpress-rotating-ball-o.svg">
+        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/disqus-preloader.svg">
+      </div>
+      <p style="color: #666666;">&copy 2026</p>
+    </div>
+    <div class="footer-device">
+    <p style="font-family: 'Ubuntu', sans-serif;">
+        <span style="color: #b9b9b9;">Theme <a href="https://github.com/honjun/hexo-theme-sakura" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Sakura</a> <i class="iconfont icon-sakura rotating" style="color: #ffc0cb;display:inline-block"></i> by <a href="https://2heng.xin/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Mashiro</a>&<a href="https://www.hojun.cn/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Hojun</a>, Powered by Hexo, Hosted by Coding Pages</a>
+        </span>
+      </p>
+    </div>
+  </div><!-- .site-info -->
+</footer>
+
+
+
+<!-- <script src="/skyblog/js/tocbot.js"></script> -->
+<script type="text/javascript" src="/skyblog/js/lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="/skyblog/js/InsightSearch.js"></script>
+<script type="text/javascript" src="/skyblog/js/jquery.fancybox.min.js"></script>
+<script type="text/javascript" src="/skyblog/js/zoom.min.js"></script>
+<script type="text/javascript" src="/skyblog/js/sakura-app.js"></script>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine@1.3.4/dist/Valine.min.js'></script>
+<script src="/skyblog/js/botui.js"></script>
+<!-- 不蒜子 网页计数器 -->
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script> -->
+<script type="text/javascript">
+/* <![CDATA[ */
+if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  var Poi = {"pjax":"0","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"close"},"windowheight":"fixed","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+} else {
+  var Poi = {"pjax":"0","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"open"},"windowheight":"auto","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+}
+/* ]]> */
+
+</script>
+<script>
+$(document).ready(function() {
+  if ($(".toc").length > 0 && document.body.clientWidth > 1200) {
+    if ($(".pattern-center").length > 0) { //有图的情况
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -400,
+          scrollSmoothOffset: -85
+      });
+    } else {
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -85,
+          scrollSmoothOffset: -85
+      });
+    }
+    var offsetTop = $('.toc').offset().top - 95;
+    window.onscroll = function() {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      if (scrollTop >= offsetTop) {
+        $('.toc').addClass('toc-fixed');
+      } else {
+        $('.toc').removeClass('toc-fixed');
+      }
+    }
+  }
+});
+</script>
+
+    <div class="openNav no-select" style="height: 50px;">
+      <div class="iconflat no-select" style="width: 50px; height: 50px;">
+        <div class="icon"></div>
+      </div>
+      <div class="site-branding search-form-submit">
+        <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+      </div>
+    </div>
+  </section>
+  <div id="mo-nav" class="">
+  <div class="m-avatar">
+    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/favicon.png">
+  </div>
+  <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">Sky</p>
+  <p style="text-align: center; word-spacing: 20px;">
+    
+      
+        <a href="https://github.com/zhixiaotx" class="fa fa-github" target="_blank" style="color: #333; margin-left:20px"></a>
+      
+        <a href="http://weibo.com/mashirozx?is_all=1" class="fa fa-weibo" target="_blank" style="color: #dd4b39; margin-left:20px"></a>
+      
+        <a href="https://wpa.qq.com/msgrd?v=3&uin=954655431&site=qq&menu=yes" class="fa fa-qq" target="_blank" style="color: #25c6fe; margin-left:20px"></a>
+      
+        <a href="mailto:liuliu19901110@gmail.com" class="fa fa-envelope" target="_blank" style="color: #dd4b39; margin-left:20px"></a>
+      
+    
+  </p>
+  <ul id="menu-new-1" class="menu">
+    
+      <li>
+        <a href="/skyblog/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-home" aria-hidden="true"></i>
+            首页
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/skyblog/archives/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-archive" aria-hidden="true"></i>
+            归档
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/skyblog/categories/%E6%8A%80%E6%9C%AF/">
+                  <i class="fa fa-code" aria-hidden="true"></i>
+                  技术
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/categories/%E7%94%9F%E6%B4%BB/">
+                  <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  生活
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/categories/%E8%B5%84%E6%BA%90/">
+                  <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                  资源
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/categories/%E9%9A%8F%E6%83%B3/">
+                  <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                  随想
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/categories/%E8%BD%AC%E8%BD%BD/">
+                  <i class="fa fa-book" aria-hidden="true"></i>
+                  转载
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/skyblog/tags/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-tags" aria-hidden="true"></i>
+            标签
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/skyblog/categories/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-folder-open" aria-hidden="true"></i>
+            分类
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="javascript:;">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-list-ul" aria-hidden="true"></i>
+            清单
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/skyblog/tags/%E6%82%A6%E8%AF%BB/">
+                  <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                  书单
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/bangumi/">
+                  <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                  番组
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/music/">
+                  <i class="fa fa-headphones" aria-hidden="true"></i>
+                  歌单
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/tags/%E5%9B%BE%E9%9B%86/">
+                  <i class="fa fa-photo" aria-hidden="true"></i>
+                  图集
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/skyblog/comment/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-pencil-square-o" aria-hidden="true"></i>
+            留言板
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/skyblog/links/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-link" aria-hidden="true"></i>
+            友人帐
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/skyblog/about/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-heart" aria-hidden="true"></i>
+            关于
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/skyblog/about/">
+                  <i class="fa fa-meetup" aria-hidden="true"></i>
+                  我？
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/theme-sakura/">
+                  <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                  主题
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/lab/">
+                  <i class="fa fa-cogs" aria-hidden="true"></i>
+                  Lab
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+  </ul>
+  <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
+</div>
+<button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<style>
+  .aplayer .aplayer-lrc {
+    height: 35px;
+  }
+  .aplayer .aplayer-lrc p{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px !important;
+  }
+  .aplayer .aplayer-lrc p.aplayer-lrc-current{
+    color: #FF1493;
+  }
+  .aplayer.aplayer-narrow .aplayer-body{
+    left: -66px !important;
+  }
+  .aplayer.aplayer-fixed .aplayer-lrc {
+    display: none;
+  }
+  .aplayer .aplayer-lrc.aplayer-lrc-hide {
+      display:none !important;
+  }
+  .aplayer.aplayer-fixed .lrc-show {
+    display: block;
+    background: rgba(255, 255, 255, 0.8);
+  }
+</style>
+<div id="aplayer" class="aplayer"></div>
+<script>
+  $(function(){
+    var cfg = {
+      server: 'netease',
+      type: 'playlist',
+      id: '19723756',
+      fixed: true,
+      autoplay: false,
+      loop: 'all',
+      order: 'random',
+      preload: 'auto',
+      volume: 0.7,
+      mutex: true
+    };
+    $.getJSON('https://api.i-meto.com/meting/api', {server: cfg.server, type: cfg.type, id: cfg.id})
+      .done(function(songs){
+        if (!songs || !songs.length) { console.log('music list empty'); return; }
+        var ap = new APlayer({
+          container: document.getElementById('aplayer'),
+          fixed: cfg.fixed,
+          autoplay: cfg.autoplay,
+          loop: cfg.loop,
+          order: cfg.order,
+          preload: cfg.preload,
+          volume: cfg.volume,
+          mutex: cfg.mutex,
+          audio: songs.map(function(s){
+            return {name: s.title, artist: s.author, url: s.url, cover: s.pic, lrc: s.lrc};
+          })
+        });
+        // 播放失败/坏链自动切下一首（网易云外链有部分 VIP/版权歌 404）
+        ap.on('error', function(){
+          try { ap.list.next(); } catch(e) {}
+        });
+        // 点击播放器切换歌词显示
+        $('body').on('click', '.aplayer', function(){
+          if ($('.aplayer-button').hasClass('aplayer-play')) {
+            $('.aplayer-lrc').removeClass('lrc-show');
+          } else {
+            $('.aplayer-lrc').addClass('lrc-show');
+          }
+        });
+      })
+      .fail(function(){ console.log('music api unavailable'); });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  
+  <title itemprop="name">Umami：开源网站统计分析工具，宝塔搭建自己的数据分析平台 | 我的技术博客</title>
+  
+    <link rel="shortcut icon" href="/skyblog/img/favicon.png">
+  
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+SerifMerriweather|Merriweather+Sans|Source+Code+Pro|Ubuntu:400,700|Noto+Serif+SC" media="all">
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="stylesheet" id="saukra_css-css" href="/skyblog/css/style.css" type="text/css" media="all">
+  <link rel="stylesheet" href="/skyblog/css/lib.min.css" media="all">
+  <link rel="stylesheet" href="/skyblog/css/font.css" media="all">
+  <link rel="stylesheet" href="/skyblog/css/insight.css" media="all">
+  <link rel="stylesheet" href="/skyblog/css/jquery.fancybox.min.css" media="all">
+  <link rel="stylesheet" href="/skyblog/css/zoom.css" media="all">
+  <link rel="stylesheet" type="text/css" href="/skyblog/css/sharejs.css">
+<!--   <link rel="stylesheet" id="saukra_css-css" href="https://2heng.xin/wp-content/cache/autoptimize/css/autoptimize_ad42a61f4c7d4bdd9f91afcff6b5dda5.css
+" type="text/css" media="all"> -->
+  <script>
+  /*Initial Variables*/
+  var mashiro_option = new Object();
+  var mashiro_global = new Object();
+  mashiro_option.NProgressON = true;
+  /* 
+   * 邮箱信息之类的东西可以填在这里，这些js变量基本都作用于sakura-app.js
+   * 这样的设置仅是为了方便在基于PHP开发的主题中设置js变量，既然移植到了Node上，我想或许可以精简这一逻辑吧
+   */
+  mashiro_option.email_domain = "";
+  mashiro_option.email_name = "";
+  mashiro_option.cookie_version_control = "";
+  mashiro_option.qzone_autocomplete = false;
+  mashiro_option.site_name = "Sky";
+  mashiro_option.author_name = "Sky";
+  mashiro_option.site_url = "https://zhixiaotx.github.io/skyblog";
+  mashiro_option.v_appId = "GyC3NzMvd0hT9Yyd2hYIC0MN-gzGzoHsz";
+  mashiro_option.v_appKey = "mgOpfzbkHYqU92CV4IDlAUHQ";
+  mashiro_option.mathjax = "0";
+  mashiro_option.qq_api_url = "https://api.mashiro.top/qqinfo/"; 
+  mashiro_option.qq_avatar_api_url = "https://api.mashiro.top/qqinfo/";
+
+  // mashiro_option.jsdelivr_css_src = "https://cdn.jsdelivr.net/gh/moezx/cdn@3.4.5/css/lib.min.css";
+  // mashiro_option.float_player_on = true;
+
+  /*End of Initial Variables*/
+  </script>
+  <script type="text/javascript">
+  
+  var bg = "/skyblog/img/wallpaper/anime-scene.webp,/skyblog/img/wallpaper/china-city.webp,/skyblog/img/wallpaper/night-clouds.webp,/skyblog/img/wallpaper/city-night.webp,/skyblog/img/wallpaper/beach-sailboat.webp,/skyblog/img/wallpaper/country-cottage.webp,/skyblog/img/wallpaper/hammock.webp,/skyblog/img/wallpaper/bookshelf.webp".split(",");
+  var bgindex = Math.floor(Math.random()*bg.length);
+  if (!!window.ActiveXObject || "ActiveXObject" in window) { //is IE?
+    alert('朋友，IE浏览器未适配哦~');
+  }
+  </script>
+  <style type="text/css">
+  .hljs-ln{border-collapse:collapse}.hljs-ln td{padding:0}.hljs-ln-n:before{content:attr(data-line-number)}
+  </style>
+  <style type="text/css">.site-top .lower nav{display:block !important;}.author-profile i,.post-like a,.post-share .show-share,.sub-text,.we-info a,span.sitename,.post-more i:hover,#pagination a:hover,.post-content a:hover,.float-content i:hover{color:#FE9600}.feature i,.download,.navigator i:hover,.links ul li:before,.ar-time i,span.ar-circle,.object,.comment .comment-reply-link,.siren-checkbox-radio:checked + .siren-checkbox-radioInput:after{background:#FE9600}::-webkit-scrollbar-thumb{background:#FE9600}.download,.navigator i:hover,.link-title,.links ul li:hover,#pagination a:hover,.comment-respond input[type='submit']:hover{border-color:#FE9600}.entry-content a:hover,.site-info a:hover,.comment h4 a,#comments-navi a.prev,#comments-navi a.next,.comment h4 a:hover,.site-top ul li a:hover,.entry-title a:hover,#archives-temp h3,span.page-numbers.current,.sorry li a:hover,.site-title a:hover,i.iconfont.js-toggle-search.iconsearch:hover,.comment-respond input[type='submit']:hover{color:#FE9600}.comments .comments-main{display:block !important;}.comments .comments-hidden{display:none !important;}background-position:center center;background-attachment:inherit;}
+  </style>
+<meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/skyblog/atom.xml" title="我的技术博客" type="application/atom+xml">
+</head>
+
+<body class="page-template page-template-user page-template-page-analytics page-template-userpage-analytics-php page page-id-1297 chinese-font serif isWebKit">
+  <div class="scrollbar" id="bar">
+  </div>
+  <a href="#" class="cd-top faa-float animated"></a>
+  <section id="main-container">
+    <div class="headertop ">
+  <div id="banner_wave_1"></div>
+  <div id="banner_wave_2"></div>
+  <figure id="centerbg" class="centerbg">
+    <div class="focusinfo no-select">
+      <div class="header-tou">
+        <a href="https://zhixiaotx.github.io/skyblog">
+          
+          
+          <img src="/skyblog/img/favicon.png">
+          
+        </a>
+      </div>
+      <div class="header-info">
+        <p>基于 Hexo + Sakura 搭建的二次元技术博客</p>
+        <div class="top-social_v2">
+          <li id="bg-pre">
+            <img class="flipx" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
+          
+            
+              
+                <li>
+                  <a href="https://github.com/" target="_blank" class="social-github" title="github">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/github.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="sina">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/sina.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="wangyiyun">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/wangyiyun.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="zhihu">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/zhihu.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="email">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/email.svg">
+                  </a>
+                </li>
+              
+            
+              
+                <li class="wechat">
+                  <a href="/#">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/wechat.png">
+                  </a>
+                  <div class="wechatInner">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/wechat.jpg">
+                  </div>
+                </li>
+              
+            
+              
+                <li class="wechat">
+                  <a href="/#">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/wechat.png">
+                  </a>
+                  <div class="wechatInner">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/wechat.jpg">
+                  </div>
+                </li>
+              
+            
+          
+          <li id="bg-next">
+            <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
+        </div>
+      </div>
+    </div>
+  </figure>
+  <div id="video-container" style="">
+    <video style="object-fit: fill" id="bgvideo" class="video" video-name="" src="" width="auto" preload="auto">
+    </video>
+    <div id="video-btn" class="loadvideo videolive">
+    </div>
+    <div id="video-add">
+    </div>
+    <div class="video-stu">
+    </div>
+  </div>
+  <div class="headertop-down faa-float animated" onclick="headertop_down()">
+    <span>
+      <i class="fa fa-chevron-down" aria-hidden="true">
+      </i>
+    </span>
+  </div>
+</div>
+    <div id="page" class="site wrapper">
+      <header class="site-header no-select gizle sabit" role="banner">
+  <div class="site-top">
+    <div class="site-branding">
+      <span class="site-title">
+        <span class="logolink moe-mashiro">
+          <a href="/skyblog/">
+            <span class="sakurasono"></span>
+            <span class="shironeko">Sky</span>
+          </a>
+        </span>
+      </span>
+    </div>
+    <div class="searchbox search-form-submit">
+      <i class="iconfont js-toggle-search iconsearch icon-search">
+      </i>
+    </div>
+    <div id="show-nav" class="showNav mobile-fit">
+      <div class="line line1">
+      </div>
+      <div class="line line2">
+      </div>
+      <div class="line line3">
+      </div>
+    </div>
+    <div class="lower-cantiner">
+      <div class="lower">
+        <nav class="mobile-fit-control hide">
+          <ul id="menu-new" class="menu">
+            
+              <li>
+                <a href="/skyblog/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-home" aria-hidden="true"></i>
+                    首页
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/skyblog/archives/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-archive" aria-hidden="true"></i>
+                    归档
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/skyblog/categories/%E6%8A%80%E6%9C%AF/">
+                          <i class="fa fa-code" aria-hidden="true"></i>
+                          技术
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/categories/%E7%94%9F%E6%B4%BB/">
+                          <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                          生活
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/categories/%E8%B5%84%E6%BA%90/">
+                          <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                          资源
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/categories/%E9%9A%8F%E6%83%B3/">
+                          <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                          随想
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/categories/%E8%BD%AC%E8%BD%BD/">
+                          <i class="fa fa-book" aria-hidden="true"></i>
+                          转载
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/skyblog/tags/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-tags" aria-hidden="true"></i>
+                    标签
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/skyblog/categories/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-folder-open" aria-hidden="true"></i>
+                    分类
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="javascript:;">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-list-ul" aria-hidden="true"></i>
+                    清单
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/skyblog/tags/%E6%82%A6%E8%AF%BB/">
+                          <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                          书单
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/bangumi/">
+                          <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                          番组
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/music/">
+                          <i class="fa fa-headphones" aria-hidden="true"></i>
+                          歌单
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/tags/%E5%9B%BE%E9%9B%86/">
+                          <i class="fa fa-photo" aria-hidden="true"></i>
+                          图集
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/skyblog/comment/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-pencil-square-o" aria-hidden="true"></i>
+                    留言板
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/skyblog/links/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-link" aria-hidden="true"></i>
+                    友人帐
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/skyblog/about/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-heart" aria-hidden="true"></i>
+                    关于
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/skyblog/about/">
+                          <i class="fa fa-meetup" aria-hidden="true"></i>
+                          我？
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/theme-sakura/">
+                          <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                          主题
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/skyblog/lab/">
+                          <i class="fa fa-cogs" aria-hidden="true"></i>
+                          Lab
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <link rel="stylesheet" type="text/css" href="/skyblog/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<div class="pattern-center-blank"></div>
+
+  <div class="pattern-center single-center">
+    <!-- 有配图默认渲染第一张 -->
+    <div class="pattern-attachment-img lazyload" style="background-image: url(/skyblog/img/aixmb/1117/cover.webp);" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="/skyblog/img/aixmb/1117/cover.webp">
+    </div>
+    <header class="pattern-header single-header">
+      <h1 class="entry-title">
+      Umami：开源网站统计分析工具，宝塔搭建自己的数据分析平台</h1>
+      <p class="entry-census">
+        <span>
+          <a href="">
+            <img src="">
+          </a>
+        </span>
+        <span>
+          <a href=""></a>
+        </span>
+        <span class="bull">
+        ·</span>
+        2026-10-8<span class="bull">
+        ·</span>
+      <span id="busuanzi_value_page_pv"></span>次阅读</p>
+    </header>
+  </div>
+
+<div id="content" class="site-content">
+  <div id="primary" class="content-area">
+    <main id="main" class="site-main" role="main">
+      <article id="post-1" class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+        <div class="toc"></div>
+        <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
+        
+        <div class="entry-content">
+          <p>你有没有遇到过这些问题？</p>
+<p>😵 网站每天到底有多少人访问？<br>🌍 用户来自哪个国家、地区？<br>📱 手机用户多还是电脑用户多？<br>🔗 用户是从搜索引擎、社交平台还是其他网站进来的？<br>📈 哪个页面访问量最高？<br>🎯 用户到底有没有完成注册、点击、购买等操作？</p>
+<p>很多网站上线以后，只知道“有人访问”，却不知道<strong>用户从哪里来、看了什么、最后做了什么</strong>。</p>
+<p>这时候就需要一套网站统计分析工具。</p>
+<p>今天分享一个非常值得关注的开源项目——<strong>Umami</strong>。它是一款开源的网站与产品分析平台，可以把流量、访问者行为、营销活动、转化、留存以及收入等数据集中到一个后台进行分析。</p>
+<p>而且 Umami 支持<strong>自己部署</strong>，这次我也录制了一期 <strong>宝塔保姆级搭建教程</strong>，通过宝塔部署自己的 Umami 数据统计平台。🚀</p>
+<hr>
+<h2 id="🤔-Umami-到底是干什么的？"><a href="#🤔-Umami-到底是干什么的？" class="headerlink" title="🤔 Umami 到底是干什么的？"></a>🤔 Umami 到底是干什么的？</h2><p>简单来说：</p>
+<blockquote>
+<p><strong>Umami 就是给你的网站装一个“数据仪表盘”。</strong></p>
+</blockquote>
+<p>网站接入 Umami 后，就可以在后台查看网站访问数据。</p>
+<p>比如：</p>
+<ul>
+<li>👀 页面浏览量</li>
+<li>👤 访客数量</li>
+<li>🌍 访客地区</li>
+<li>📱 设备类型</li>
+<li>💻 操作系统</li>
+<li>🌐 浏览器</li>
+<li>🔗 来源网站</li>
+<li>🔎 搜索来源</li>
+<li>📈 实时访问</li>
+<li>📊 用户行为</li>
+<li>🎯 转化目标</li>
+<li>🔥 热力图</li>
+<li>🎥 Session Replay</li>
+<li>💰 收入数据</li>
+</ul>
+<p>官方目前的 Umami v3 已经不仅仅是简单的“访问量统计”，而是覆盖网站分析、产品分析、用户行为和转化分析的一整套工具。</p>
+<hr>
+<h1 id="🔥-为什么推荐-Umami？"><a href="#🔥-为什么推荐-Umami？" class="headerlink" title="🔥 为什么推荐 Umami？"></a>🔥 为什么推荐 Umami？</h1><p>以前做网站统计，很多人第一时间想到的是 Google Analytics。</p>
+<p>但对于一些个人站长、独立开发者或者企业项目来说，可能更希望：</p>
+<p><strong>数据自己掌握、系统自己部署、后台自己控制。</strong></p>
+<p>Umami 的特点就是：</p>
+<h3 id="🟢-开源"><a href="#🟢-开源" class="headerlink" title="🟢 开源"></a>🟢 开源</h3><p>项目采用开源模式，可以自行部署和使用。GitHub 项目目前拥有较高的社区关注度。</p>
+<h3 id="🔐-更注重隐私"><a href="#🔐-更注重隐私" class="headerlink" title="🔐 更注重隐私"></a>🔐 更注重隐私</h3><p>Umami 官方强调 Privacy-first，支持在不依赖 Cookie、跨站追踪的情况下进行网站分析，并且可以自托管数据。</p>
+<h3 id="🖥️-支持自托管"><a href="#🖥️-支持自托管" class="headerlink" title="🖥️ 支持自托管"></a>🖥️ 支持自托管</h3><p>不想使用云端服务，可以直接部署到自己的服务器。</p>
+<p>这也是我这次录制教程的主要原因。</p>
+<hr>
+<h1 id="📊-Umami-可以查看哪些数据？"><a href="#📊-Umami-可以查看哪些数据？" class="headerlink" title="📊 Umami 可以查看哪些数据？"></a>📊 Umami 可以查看哪些数据？</h1><h2 id="👀-1、网站访问量"><a href="#👀-1、网站访问量" class="headerlink" title="👀 1、网站访问量"></a>👀 1、网站访问量</h2><p>最基础也是最重要的功能。</p>
+<p>可以查看：</p>
+<p><strong>访问量、访客、页面浏览量、实时活动等。</strong></p>
+<p>网站运营一段时间以后，就可以直观看到网站每天的流量变化。</p>
+<p>比如：</p>
+<p>📈 今天流量上涨了？</p>
+<p>📉 为什么昨天突然下降？</p>
+<p>🔥 哪篇文章带来了最多访问？</p>
+<p>这些都可以通过数据进行分析。</p>
+<hr>
+<h2 id="🌍-2、访客来源分析"><a href="#🌍-2、访客来源分析" class="headerlink" title="🌍 2、访客来源分析"></a>🌍 2、访客来源分析</h2><p>用户从哪里进入你的网站？</p>
+<p>这个问题非常重要。</p>
+<p>Umami 可以帮助你分析：</p>
+<p>🔎 搜索引擎<br>🔗 外部网站<br>📱 社交媒体<br>📧 营销活动<br>🌐 直接访问</p>
+<p>还可以结合 <strong>UTM Campaign</strong> 等方式分析不同推广渠道的效果。</p>
+<p>对于做 SEO、自媒体、网站推广的人来说，这个功能非常实用。</p>
+<hr>
+<h1 id="📱-3、设备和用户环境"><a href="#📱-3、设备和用户环境" class="headerlink" title="📱 3、设备和用户环境"></a>📱 3、设备和用户环境</h1><p>想知道你的用户主要使用什么设备？</p>
+<p>Umami 可以查看：</p>
+<p>📱 手机<br>💻 桌面电脑<br>🌐 浏览器<br>🖥️ 操作系统<br>🌍 地区等信息。</p>
+<p>这样你就能更清楚自己的用户群体。</p>
+<p>比如发现：</p>
+<blockquote>
+<p>80%的访问来自手机。</p>
+</blockquote>
+<p>那网站就应该更加重视移动端体验。</p>
+<hr>
+<h1 id="🎯-4、事件统计"><a href="#🎯-4、事件统计" class="headerlink" title="🎯 4、事件统计"></a>🎯 4、事件统计</h1><p>仅仅知道“用户访问了页面”还不够。</p>
+<p>有时候我们更关心：</p>
+<p><strong>用户有没有点击按钮？</strong></p>
+<p>比如：</p>
+<p>👉 点击下载<br>👉 点击注册<br>👉 点击购买<br>👉 点击广告<br>👉 提交表单<br>👉 播放视频</p>
+<p>Umami 支持自定义事件，可以对这些用户行为进行统计。</p>
+<p>这样就可以从简单的“流量统计”，进一步分析<strong>用户到底做了什么</strong>。</p>
+<hr>
+<h1 id="🔥-5、热力图"><a href="#🔥-5、热力图" class="headerlink" title="🔥 5、热力图"></a>🔥 5、热力图</h1><p>网站到底哪里最吸引用户？</p>
+<p>用户点击最多的地方在哪里？</p>
+<p>通过 Heatmaps，可以更加直观地分析用户在页面上的行为。</p>
+<p>对于：</p>
+<p>🛒 电商网站<br>📝 内容网站<br>🚀 产品官网<br>💰 营销落地页</p>
+<p>都非常有价值。</p>
+<hr>
+<h1 id="🎥-6、Session-Replay"><a href="#🎥-6、Session-Replay" class="headerlink" title="🎥 6、Session Replay"></a>🎥 6、Session Replay</h1><p>如果你想进一步了解用户是怎么使用网站的，Umami 还提供 <strong>Session Replay</strong>。</p>
+<p>它可以帮助你分析用户访问过程中的行为。</p>
+<p>比如：</p>
+<p>用户进入页面 → 浏览内容 → 点击按钮 → 返回 → 最终离开。</p>
+<p>相比单纯看访问量，这类数据能够提供更多用户行为信息。</p>
+<hr>
+<h1 id="🎯-7、目标与漏斗分析"><a href="#🎯-7、目标与漏斗分析" class="headerlink" title="🎯 7、目标与漏斗分析"></a>🎯 7、目标与漏斗分析</h1><p>如果你运营一个网站，最终目的通常不只是“让别人访问”。</p>
+<p>而是希望用户：</p>
+<p><strong>访问 → 点击 → 注册 → 使用 → 转化</strong></p>
+<p>Umami 支持 Goals 和 Funnels，可以帮助分析用户在不同步骤中的转化情况，并找到用户流失的位置。</p>
+<p>这对于产品网站、SaaS、营销页面等尤其有用。</p>
+<hr>
+<h1 id="💰-8、收入与营销分析"><a href="#💰-8、收入与营销分析" class="headerlink" title="💰 8、收入与营销分析"></a>💰 8、收入与营销分析</h1><p>如果网站存在商业化，那么流量最终能带来多少价值也很重要。</p>
+<p>Umami 可以把事件与价值关联起来，并通过 Revenue 等分析功能查看不同页面、活动以及用户群体带来的价值。</p>
+<p>也就是说，它不仅告诉你：</p>
+<blockquote>
+<p>“来了多少人。”</p>
+</blockquote>
+<p>还可以进一步帮助你分析：</p>
+<blockquote>
+<p><strong>“这些用户最终带来了什么结果？”</strong></p>
+</blockquote>
+<hr>
+<h1 id="📈-9、用户留存与行为分析"><a href="#📈-9、用户留存与行为分析" class="headerlink" title="📈 9、用户留存与行为分析"></a>📈 9、用户留存与行为分析</h1><p>如果是一个长期运营的网站，只看 PV、UV 其实远远不够。</p>
+<p>Umami 还提供：</p>
+<ul>
+<li>👥 Segments</li>
+<li>📊 Cohorts</li>
+<li>🔄 Retention</li>
+<li>🧭 Journey</li>
+</ul>
+<p>可以从不同角度分析用户行为和留存情况。</p>
+<hr>
+<h1 id="🖥️-10、支持多个网站"><a href="#🖥️-10、支持多个网站" class="headerlink" title="🖥️ 10、支持多个网站"></a>🖥️ 10、支持多个网站</h1><p>如果你手里不止一个网站，也可以使用 Umami 集中管理统计数据。</p>
+<p>例如：</p>
+<p>🌐 个人博客<br>🛠️ 在线工具站<br>📱 产品官网<br>💻 开源项目官网<br>📰 内容网站</p>
+<p>都可以统一放到 Umami 后台进行分析。</p>
+<p>这样就不用每个网站都单独登录不同的统计平台。</p>
+<hr>
+<h1 id="🔌-11、API-与扩展能力"><a href="#🔌-11、API-与扩展能力" class="headerlink" title="🔌 11、API 与扩展能力"></a>🔌 11、API 与扩展能力</h1><p>对于开发者来说，Umami 还提供 API，可以围绕网站、事件、会话以及报表等数据进行开发和集成。</p>
+<p>官方文档还提供了 MCP 等集成能力，可以进一步连接其他工具。</p>
+<p>所以它不只是一个“看数据的后台”，也可以成为网站数据分析基础设施的一部分。</p>
+<hr>
+<h1 id="🔐-为什么适合自己部署？"><a href="#🔐-为什么适合自己部署？" class="headerlink" title="🔐 为什么适合自己部署？"></a>🔐 为什么适合自己部署？</h1><p>Umami 支持 Self-hosted。</p>
+<p>也就是说，你可以把它安装到自己的服务器上。</p>
+<p>数据存储在哪里？</p>
+<p><strong>自己决定。</strong></p>
+<p>系统怎么管理？</p>
+<p><strong>自己决定。</strong></p>
+<p>网站统计后台放在哪里？</p>
+<p><strong>自己决定。</strong></p>
+<p>对于比较重视隐私、数据控制权，或者喜欢折腾开源项目的人来说，这种方式非常有吸引力。</p>
+<hr>
+<h1 id="🛠️-这次使用宝塔搭建"><a href="#🛠️-这次使用宝塔搭建" class="headerlink" title="🛠️ 这次使用宝塔搭建"></a>🛠️ 这次使用宝塔搭建</h1><p>这次我录制的是：</p>
+<blockquote>
+<p><strong>Umami + 宝塔保姆级搭建教程</strong></p>
+</blockquote>
+<p>通过宝塔来完成服务器环境、Docker、Umami 等相关配置。</p>
+<p>整体思路就是：</p>
+<p><strong>服务器 → 宝塔 → Docker → Umami → 数据库 → 域名 → HTTPS → 网站接入统计</strong></p>
+<p>Umami 官方本身也提供 Docker 镜像和 Docker Compose 部署方式，因此非常适合通过 Docker 进行部署。</p>
+<p>具体搭建过程我已经放到视频教程里面了，文章这里主要介绍项目功能和使用场景。</p>
+<hr>
+<h1 id="👨‍💻-哪些人适合使用-Umami？"><a href="#👨‍💻-哪些人适合使用-Umami？" class="headerlink" title="👨‍💻 哪些人适合使用 Umami？"></a>👨‍💻 哪些人适合使用 Umami？</h1><h3 id="🌐-网站站长"><a href="#🌐-网站站长" class="headerlink" title="🌐 网站站长"></a>🌐 网站站长</h3><p>想知道自己的网站每天有多少访问。</p>
+<h3 id="🔎-SEO-玩家"><a href="#🔎-SEO-玩家" class="headerlink" title="🔎 SEO 玩家"></a>🔎 SEO 玩家</h3><p>分析搜索流量和页面表现。</p>
+<h3 id="✍️-博主-自媒体"><a href="#✍️-博主-自媒体" class="headerlink" title="✍️ 博主 &#x2F; 自媒体"></a>✍️ 博主 &#x2F; 自媒体</h3><p>看看哪些文章真正有人看。</p>
+<h3 id="🚀-独立开发者"><a href="#🚀-独立开发者" class="headerlink" title="🚀 独立开发者"></a>🚀 独立开发者</h3><p>分析产品用户行为和转化。</p>
+<h3 id="💻-程序员"><a href="#💻-程序员" class="headerlink" title="💻 程序员"></a>💻 程序员</h3><p>喜欢开源、自托管和自己掌控数据。</p>
+<h3 id="🏢-企业网站"><a href="#🏢-企业网站" class="headerlink" title="🏢 企业网站"></a>🏢 企业网站</h3><p>统计访问来源、用户行为和营销效果。</p>
+<hr>
+<h1 id="💡-最后说一下"><a href="#💡-最后说一下" class="headerlink" title="💡 最后说一下"></a>💡 最后说一下</h1><p>如果你的网站目前只是：</p>
+<blockquote>
+<p>“网站上线了，然后每天不知道有没有人访问。”</p>
+</blockquote>
+<p>那么 Umami 就非常值得部署一个。</p>
+<p>它可以让你从简单的：</p>
+<p><strong>“网站有没有人访问？”</strong></p>
+<p>进一步变成：</p>
+<p><strong>“用户从哪里来？”</strong></p>
+<p><strong>“用户看了什么？”</strong></p>
+<p><strong>“用户点击了什么？”</strong></p>
+<p><strong>“用户为什么离开？”</strong></p>
+<p><strong>“哪个渠道带来的用户更有价值？”</strong></p>
+<p>这才是真正的数据分析。📊</p>
+<p>而且 Umami 开源、支持自托管，同时提供网站分析、事件、漏斗、热力图、Session Replay、留存、UTM、归因和收入分析等功能。</p>
+<p>如果你手里有一台服务器，又想搭建自己的<strong>网站统计分析平台</strong>，可以试试 Umami。</p>
+<p>👉 <strong>我也已经录制了 Umami 宝塔保姆级搭建教程，从环境配置到最终网站接入统计，跟着视频一步一步操作即可。</strong></p>
+<h3 id="💻-部署代码："><a href="#💻-部署代码：" class="headerlink" title="💻 部署代码："></a><strong>💻 部署代码：</strong></h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">services:</span><br><span class="line">  umami:</span><br><span class="line">    image: ghcr.io/umami-software/umami:latest</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;3000:3000&quot;</span><br><span class="line">    environment:</span><br><span class="line">      DATABASE_URL: postgresql://umami:您的数据库密码@db:5432/umami</span><br><span class="line">      APP_SECRET: 生成一串64位的随机十六进制密钥</span><br><span class="line">      # Required for two-factor authentication, generate with: openssl rand -hex 32</span><br><span class="line">      TWO_FACTOR_ENCRYPTION_KEY: 再生成一串64位的随机十六进制密钥</span><br><span class="line">    depends_on:</span><br><span class="line">      db:</span><br><span class="line">        condition: service_healthy</span><br><span class="line">    init: true</span><br><span class="line">    restart: always</span><br><span class="line">    healthcheck:</span><br><span class="line">      test: [&quot;CMD-SHELL&quot;, &quot;curl http://localhost:3000/api/heartbeat&quot;]</span><br><span class="line">      interval: 5s</span><br><span class="line">      timeout: 5s</span><br><span class="line">      retries: 5</span><br><span class="line">  db:</span><br><span class="line">    image: postgres:15-alpine</span><br><span class="line">    environment:</span><br><span class="line">      POSTGRES_DB: umami</span><br><span class="line">      POSTGRES_USER: umami</span><br><span class="line">      POSTGRES_PASSWORD: 您的数据库密码</span><br><span class="line">    volumes:</span><br><span class="line">      - umami-db-data:/var/lib/postgresql/data</span><br><span class="line">    restart: always</span><br><span class="line">    healthcheck:</span><br><span class="line">      test: [&quot;CMD-SHELL&quot;, &quot;pg_isready -U $$&#123;POSTGRES_USER&#125; -d $$&#123;POSTGRES_DB&#125;&quot;]</span><br><span class="line">      interval: 5s</span><br><span class="line">      timeout: 5s</span><br><span class="line">      retries: 5</span><br><span class="line">volumes:</span><br><span class="line">  umami-db-data:</span><br></pre></td></tr></table></figure>
+
+<p>服务器终端里直接输</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl rand -hex 32</span><br></pre></td></tr></table></figure>
+
+<p>回车就会生成一串<strong>64位的随机十六进制密钥</strong>，</p>
+<p>把它分别填到<strong>APP_SECRET</strong>和<strong>TWO_FACTOR_ENCRYPTION_KEY</strong>的位置！</p>
+<p><strong>默认登陆账号：admin 密码：umami</strong></p>
+<h1 id="🖼️相关截图"><a href="#🖼️相关截图" class="headerlink" title="🖼️相关截图"></a>🖼️相关截图</h1><p><img src="/skyblog/img/aixmb/1117/01.webp" alt="Ai星码博客"></p>
+<p><img src="/skyblog/img/aixmb/1117/02.webp" alt="Ai星码博客"></p>
+<h3 id="🔗项目地址-https-github-com-umami-software-umami"><a href="#🔗项目地址-https-github-com-umami-software-umami" class="headerlink" title="🔗项目地址:https://github.com/umami-software/umami"></a><strong>🔗项目地址:<a target="_blank" rel="noopener" href="https://github.com/umami-software/umami">https://github.com/umami-software/umami</a></strong></h3>
+        </div>
+        <!-- .entry-content -->
+        <div class="single-reward">
+          <div class="reward-open">赏
+            <div class="reward-main">
+              <ul class="reward-row">
+                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/donate/AliPayQR.jpg"></li>
+                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/donate/WeChanQR.jpg"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center; width: 100%" class="social-share share-mobile" data-disabled="diandian, tencent"></div>
+        <footer class="post-footer">
+          <div class="post-tags">
+          </div>
+          <div class="post-share">
+            <div class="social-share sharehidden share-component"></div>
+            <i class="iconfont show-share icon-forward"></i>
+          </div>
+        </footer><!-- .entry-footer -->
+      </article>
+      <!-- #post-## -->
+      <div class="toc" style="background: none;"></div>
+      <section class="post-squares nextprev">
+        
+          
+            <div class="post-nepre half previous">
+          
+            <a href="/skyblog/2026/10/12/1130-%F0%9F%9A%80%20%E4%B8%8D%E7%94%A8%E4%B9%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%81%E8%BF%99%E4%B8%AA%E5%BC%80%E6%BA%90%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%B7%A5%E5%85%B7%E6%94%AF%E6%8C%81%20Cloudflare%20%E9%9B%B6%E6%88%90%E6%9C%AC%E9%83%A8%E7%BD%B2%EF%BC%8C%E8%BF%98%E8%83%BD%E6%8E%A5%E5%B9%BF%E5%91%8A%E5%81%9A%E5%89%AF%E4%B8%9A%EF%BC%81/" rel="prev">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="/skyblog/img/aixmb/1130/cover.webp" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)">
+              </div>
+              <span class="label">
+              Previous Post</span>
+              <div class="info">
+                <h3>
+                🚀 不用买服务器！这个开源二维码工具支持 Cloudflare 零成本部署，还能接广告做副业！</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+        
+          
+            <div class="post-nepre half next">
+          
+            <a href="/skyblog/2026/10/07/1108-Memos%EF%BC%9A%E5%BC%80%E6%BA%90%E8%87%AA%E6%89%98%E7%AE%A1%E7%AC%94%E8%AE%B0%E5%B7%A5%E5%85%B7%EF%BC%8C%E5%AE%9D%E5%A1%94+Docker%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E7%A7%81%E4%BA%BA%E7%AC%94%E8%AE%B0%E7%B3%BB%E7%BB%9F/" rel="next">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="/skyblog/img/aixmb/1108/cover.webp" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)">
+              </div>
+              <span class="label">
+              Next Post</span>
+              <div class="info">
+                <h3>
+                Memos：开源自托管笔记工具，宝塔+Docker搭建自己的私人笔记系统</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+      </section>
+      
+
+
+
+      <section class="author-profile">
+        <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+          <a href="" class="profile gravatar"><img src="" itemprop="image" alt="" height="70" width="70"></a>
+          <div class="meta">
+            <span class="title">Author</span>
+            <h3 itemprop="name">
+            <a href="" itemprop="url" rel="author"></a>
+            </h3>
+          </div>
+        </div>
+        <hr>
+        <p><i class="iconfont icon-write"></i></p>
+      </section>
+    </main><!-- #main -->
+  </div><!-- #primary -->
+</div>
+
+
+
+    </div>    
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            // PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+        },
+        ROOT_URL: '/skyblog/',
+        CONTENT_URL: '/skyblog/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+    <!-- <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2026 Sky<br>
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer> -->
+<footer id="colophon" class="site-footer" role="contentinfo">
+  <div class="site-info">
+    <div class="footertext">
+      <div class="img-preload">
+        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/wordpress-rotating-ball-o.svg">
+        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/disqus-preloader.svg">
+      </div>
+      <p style="color: #666666;">&copy 2026</p>
+    </div>
+    <div class="footer-device">
+    <p style="font-family: 'Ubuntu', sans-serif;">
+        <span style="color: #b9b9b9;">Theme <a href="https://github.com/honjun/hexo-theme-sakura" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Sakura</a> <i class="iconfont icon-sakura rotating" style="color: #ffc0cb;display:inline-block"></i> by <a href="https://2heng.xin/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Mashiro</a>&<a href="https://www.hojun.cn/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Hojun</a>, Powered by Hexo, Hosted by Coding Pages</a>
+        </span>
+      </p>
+    </div>
+  </div><!-- .site-info -->
+</footer>
+
+
+
+<!-- <script src="/skyblog/js/tocbot.js"></script> -->
+<script type="text/javascript" src="/skyblog/js/lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="/skyblog/js/InsightSearch.js"></script>
+<script type="text/javascript" src="/skyblog/js/jquery.fancybox.min.js"></script>
+<script type="text/javascript" src="/skyblog/js/zoom.min.js"></script>
+<script type="text/javascript" src="/skyblog/js/sakura-app.js"></script>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine@1.3.4/dist/Valine.min.js'></script>
+<script src="/skyblog/js/botui.js"></script>
+<!-- 不蒜子 网页计数器 -->
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script> -->
+<script type="text/javascript">
+/* <![CDATA[ */
+if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  var Poi = {"pjax":"0","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"close"},"windowheight":"fixed","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+} else {
+  var Poi = {"pjax":"0","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"open"},"windowheight":"auto","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+}
+/* ]]> */
+
+</script>
+<script>
+$(document).ready(function() {
+  if ($(".toc").length > 0 && document.body.clientWidth > 1200) {
+    if ($(".pattern-center").length > 0) { //有图的情况
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -400,
+          scrollSmoothOffset: -85
+      });
+    } else {
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -85,
+          scrollSmoothOffset: -85
+      });
+    }
+    var offsetTop = $('.toc').offset().top - 95;
+    window.onscroll = function() {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      if (scrollTop >= offsetTop) {
+        $('.toc').addClass('toc-fixed');
+      } else {
+        $('.toc').removeClass('toc-fixed');
+      }
+    }
+  }
+});
+</script>
+
+    <div class="openNav no-select" style="height: 50px;">
+      <div class="iconflat no-select" style="width: 50px; height: 50px;">
+        <div class="icon"></div>
+      </div>
+      <div class="site-branding search-form-submit">
+        <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+      </div>
+    </div>
+  </section>
+  <div id="mo-nav" class="">
+  <div class="m-avatar">
+    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/favicon.png">
+  </div>
+  <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">Sky</p>
+  <p style="text-align: center; word-spacing: 20px;">
+    
+      
+        <a href="https://github.com/zhixiaotx" class="fa fa-github" target="_blank" style="color: #333; margin-left:20px"></a>
+      
+        <a href="http://weibo.com/mashirozx?is_all=1" class="fa fa-weibo" target="_blank" style="color: #dd4b39; margin-left:20px"></a>
+      
+        <a href="https://wpa.qq.com/msgrd?v=3&uin=954655431&site=qq&menu=yes" class="fa fa-qq" target="_blank" style="color: #25c6fe; margin-left:20px"></a>
+      
+        <a href="mailto:liuliu19901110@gmail.com" class="fa fa-envelope" target="_blank" style="color: #dd4b39; margin-left:20px"></a>
+      
+    
+  </p>
+  <ul id="menu-new-1" class="menu">
+    
+      <li>
+        <a href="/skyblog/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-home" aria-hidden="true"></i>
+            首页
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/skyblog/archives/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-archive" aria-hidden="true"></i>
+            归档
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/skyblog/categories/%E6%8A%80%E6%9C%AF/">
+                  <i class="fa fa-code" aria-hidden="true"></i>
+                  技术
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/categories/%E7%94%9F%E6%B4%BB/">
+                  <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  生活
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/categories/%E8%B5%84%E6%BA%90/">
+                  <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                  资源
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/categories/%E9%9A%8F%E6%83%B3/">
+                  <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                  随想
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/categories/%E8%BD%AC%E8%BD%BD/">
+                  <i class="fa fa-book" aria-hidden="true"></i>
+                  转载
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/skyblog/tags/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-tags" aria-hidden="true"></i>
+            标签
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/skyblog/categories/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-folder-open" aria-hidden="true"></i>
+            分类
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="javascript:;">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-list-ul" aria-hidden="true"></i>
+            清单
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/skyblog/tags/%E6%82%A6%E8%AF%BB/">
+                  <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                  书单
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/bangumi/">
+                  <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                  番组
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/music/">
+                  <i class="fa fa-headphones" aria-hidden="true"></i>
+                  歌单
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/tags/%E5%9B%BE%E9%9B%86/">
+                  <i class="fa fa-photo" aria-hidden="true"></i>
+                  图集
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/skyblog/comment/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-pencil-square-o" aria-hidden="true"></i>
+            留言板
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/skyblog/links/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-link" aria-hidden="true"></i>
+            友人帐
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/skyblog/about/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-heart" aria-hidden="true"></i>
+            关于
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/skyblog/about/">
+                  <i class="fa fa-meetup" aria-hidden="true"></i>
+                  我？
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/theme-sakura/">
+                  <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                  主题
+                </a>
+              </li>
+            
+              <li>
+                <a href="/skyblog/lab/">
+                  <i class="fa fa-cogs" aria-hidden="true"></i>
+                  Lab
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+  </ul>
+  <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
+</div>
+<button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<style>
+  .aplayer .aplayer-lrc {
+    height: 35px;
+  }
+  .aplayer .aplayer-lrc p{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px !important;
+  }
+  .aplayer .aplayer-lrc p.aplayer-lrc-current{
+    color: #FF1493;
+  }
+  .aplayer.aplayer-narrow .aplayer-body{
+    left: -66px !important;
+  }
+  .aplayer.aplayer-fixed .aplayer-lrc {
+    display: none;
+  }
+  .aplayer .aplayer-lrc.aplayer-lrc-hide {
+      display:none !important;
+  }
+  .aplayer.aplayer-fixed .lrc-show {
+    display: block;
+    background: rgba(255, 255, 255, 0.8);
+  }
+</style>
+<div id="aplayer" class="aplayer"></div>
+<script>
+  $(function(){
+    var cfg = {
+      server: 'netease',
+      type: 'playlist',
+      id: '19723756',
+      fixed: true,
+      autoplay: false,
+      loop: 'all',
+      order: 'random',
+      preload: 'auto',
+      volume: 0.7,
+      mutex: true
+    };
+    $.getJSON('https://api.i-meto.com/meting/api', {server: cfg.server, type: cfg.type, id: cfg.id})
+      .done(function(songs){
+        if (!songs || !songs.length) { console.log('music list empty'); return; }
+        var ap = new APlayer({
+          container: document.getElementById('aplayer'),
+          fixed: cfg.fixed,
+          autoplay: cfg.autoplay,
+          loop: cfg.loop,
+          order: cfg.order,
+          preload: cfg.preload,
+          volume: cfg.volume,
+          mutex: cfg.mutex,
+          audio: songs.map(function(s){
+            return {name: s.title, artist: s.author, url: s.url, cover: s.pic, lrc: s.lrc};
+          })
+        });
+        // 播放失败/坏链自动切下一首（网易云外链有部分 VIP/版权歌 404）
+        ap.on('error', function(){
+          try { ap.list.next(); } catch(e) {}
+        });
+        // 点击播放器切换歌词显示
+        $('body').on('click', '.aplayer', function(){
+          if ($('.aplayer-button').hasClass('aplayer-play')) {
+            $('.aplayer-lrc').removeClass('lrc-show');
+          } else {
+            $('.aplayer-lrc').addClass('lrc-show');
+          }
+        });
+      })
+      .fail(function(){ console.log('music api unavailable'); });
+  });
+</script>
+</body>
+</html>
