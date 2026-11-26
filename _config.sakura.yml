@@ -7,9 +7,19 @@
 prefixName: ""
 siteName: Sky
 
-# favicon 与头像（复用已上传到 source/img 的图片）
+# favicon 与头像
+# 头像=首页头部中间那张圆图：想换成自己的图，把图片放到 source/img/custom/avatar.jpg，
+# 再把下面 avatar 一行改成 /img/custom/avatar.jpg 即可（以 / 开头走本地 url_for）
 favicon: /img/favicon.png
 avatar: /img/favicon.png
+
+# 首页头像下方的社交链接（顺序即显示顺序；img 为图标，带 cdn 前缀时走主题 CDN）
+# 想加知乎/微博等，照格式追加一行即可；带 qrcode 的会在鼠标悬停时弹二维码
+social:
+  github: {url: https://github.com/zhixiaotx, img: /img/social/github.png}
+  email: {url: mailto:liuliu19901110@gmail.com, img: /img/social/email.svg}
+  # zhihu: {url: https://www.zhihu.com/people/xxx, img: /img/social/zhihu.png}
+  # wechat: {url: /#, img: /img/social/wechat.png, qrcode: /img/custom/wechat.jpg}
 
 url: https://zhixiaotx.github.io/skyblog
 description: 基于 Hexo + Sakura 搭建的二次元技术博客

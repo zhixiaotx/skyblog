@@ -39,6 +39,7 @@
 18. [批量导入外部博客文章（84 篇实战）](#18-批量导入外部博客文章84-篇实战)
 19. [页脚署名 / 版权文字怎么改](#19-页脚署名--版权文字怎么改)
 20. [音乐播放器（myhkw 免插件版）](#20-音乐播放器myhkw-免插件版)
+21. [首页头像与头像下方的社交链接](#21-首页头像与头像下方的社交链接)
 
 ---
 
@@ -1369,6 +1370,68 @@ curl -I "https://myhkw.cn/api/player/178355703190"
 # 构建产物里应有 myhk 脚本，且不再有旧 APlayer/meting 残留
 grep -c "myhkw.cn" public/index.html      # ≥1
 grep -c "meting\|APlayer.min.js" public/index.html   # 0
+```
+
+---
+
+## 21. 首页头像与头像下方的社交链接
+
+首页头部中间那张圆形头像、以及下面那一排小图标，都由主题配置控制，不用改模板。
+
+### 21.1 头像
+
+| 环节 | 位置 |
+| --- | --- |
+| 配置 | `_config.sakura.yml` 的 `avatar:` |
+| 图片 | 放 `source/img/custom/avatar.jpg`（正方形，建议 ≥200×200） |
+| 渲染 | `themes/sakura/layout/_partial/headertop.ejs` 第 6-16 行，圆形裁切由 CSS `.header-tou img` 负责 |
+
+换头像三步：
+
+1. 图片放到 `source/img/custom/avatar.jpg`
+2. `_config.sakura.yml` 改 `avatar: /img/custom/avatar.jpg`（以 `/` 开头走 `url_for`，子目录部署不会裂图）
+3. `npx hexo clean && npx hexo generate`
+
+也支持直接写外链：`avatar: https://example.com/avatar.jpg`。
+当前用的是 `/img/favicon.png`（站点图标兼作头像），所以看着偏小。
+
+### 21.2 头像下方的社交链接
+
+- 配置：`_config.sakura.yml` 的 `social:` 段
+- 模板：`headertop.ejs` 第 24-43 行
+- 每项字段：`url`（点击去哪）、`img`（图标）、可选 `qrcode`（鼠标悬停弹二维码）
+
+```yaml
+social:
+  github: {url: https://github.com/zhixiaotx, img: /img/social/github.png}
+  email: {url: mailto:liuliu19901110@gmail.com, img: /img/social/email.svg}
+  # zhihu: {url: https://www.zhihu.com/people/xxx, img: /img/social/zhihu.png}
+  # wechat: {url: /#, img: /img/social/wechat.png, qrcode: /img/custom/wechat.jpg}
+```
+
+顺序就是显示顺序；想加新图标，照格式追加一行。
+
+### 21.3 两个坑（重要）
+
+1. **旧图标删不掉**：Hexo 会把你写的 `social` 与 `themes/sakura/_config.yml` 里的 `social` **深合并**，
+   站点配置里没覆盖到的键（原主题的 sina / wangyiyun / zhihu / wechat / wechat2）会继续显示。
+   要精简必须在**主题的 `_config.yml`** 里也删掉对应条目
+   —— 本项目已把 7 个占位项收敛为 `github` + `email` 两项。
+2. **图标图片走 CDN**：`headertop.ejs` 里写的是 `(theme.cdn || '') + img`，**没有** `url_for`，
+   所以 `img: /img/social/github.png` 实际加载的是
+   `https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/github.png`。
+   想用自己的图标：要么 `img` 写成完整外链，要么把模板这几处改成 `url_for()` 并把图片放进 `source/img/social/`。
+
+### 21.4 手机端
+
+移动端用的是 `msocial:`（Font Awesome 图标，不需要图片），同样受深合并影响，
+直接在 `_config.sakura.yml` 的 `msocial:` 里增删即可。
+
+### 21.5 自检
+
+```bash
+grep -c "img/social/" public/index.html        # 当前项目应为 2
+grep -o 'hero\|header-tou' public/index.html   # 确认头部结构存在
 ```
 
 ---

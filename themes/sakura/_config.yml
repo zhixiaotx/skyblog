@@ -71,13 +71,8 @@ siteBuildingTime: 07/17/2018
 
 #social  url, img PC端配置
 social:
-  github: {url: https://github.com/, img: /img/social/github.png}
-  sina: {url: http://weibo.com/mashirozx?is_all=1, img: /img/social/sina.png}
-  wangyiyun: {url: http://weibo.com/mashirozx?is_all=1, img: /img/social/wangyiyun.png}
-  zhihu: {url: http://weibo.com/mashirozx?is_all=1, img: /img/social/zhihu.png}
-  email: {url: http://weibo.com/mashirozx?is_all=1, img: /img/social/email.svg}
-  wechat: {url: /#, qrcode: /img/custom/wechat.jpg, img: /img/social/wechat.png}
-  wechat2: {url: /#, qrcode: /img/custom/wechat.jpg, img: /img/social/wechat.png}
+  github: {url: https://github.com/zhixiaotx, img: /img/social/github.png}
+  email: {url: mailto:liuliu19901110@gmail.com, img: /img/social/email.svg}
 
 #social  url, img 移动端配置
 msocial:
