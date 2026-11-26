@@ -37,6 +37,7 @@
 16. [避坑清单（必读）](#16-避坑清单必读)
 17. [赞赏（"赏"）二维码：换成自己的收款码](#17-赞赏赏二维码换成自己的收款码)
 18. [批量导入外部博客文章（84 篇实战）](#18-批量导入外部博客文章84-篇实战)
+19. [页脚署名 / 版权文字怎么改](#19-页脚署名--版权文字怎么改)
 
 ---
 
@@ -1250,6 +1251,46 @@ git push -f origin gh-pages
 ```bash
 curl -s "https://zhixiaotx.github.io/skyblog/2026/11/25/文章标题/?t=$(date +%s)" | grep -c "关键内容"
 ```
+
+---
+
+## 19. 页脚署名 / 版权文字怎么改
+
+页脚那句 `Theme Sakura by Mashiro & Hojun, Powered by Hexo, Hosted by Coding Pages`
+**不是配置项**，是主题模板里写死的 HTML，改 `_config*.yml` 无效。
+
+### 19.1 位置
+
+| 内容 | 文件 | 行 |
+| --- | --- | --- |
+| 版权年 `&copy 2026` | `themes/sakura/layout/_partial/footer.ejs` | 第 19 行 |
+| 主题署名/托管声明（整句） | 同上 | 第 22-25 行 |
+| 两张预加载 SVG（走 honjun 的 CDN） | 同上 | 第 16-17 行（可删） |
+
+### 19.2 本项目当前文案（2026-11-26 已改）
+
+`footer.ejs` 里已改为：
+
+```html
+<p style="color: #666666;"></p>
+...
+<span style="color: #b9b9b9;">© 2026 <a href="<%- url_for('/') %>">Sky</a> · 基于 <a href="https://hexo.io/">Hexo</a> + <a href="https://github.com/honjun/hexo-theme-sakura">Sakura</a> 搭建 · 托管于 <a href="https://pages.github.com/">GitHub Pages</a>
+</span>
+```
+
+页脚显示：**© 2026 Sky · 基于 Hexo + Sakura 搭建 · 托管于 GitHub Pages**
+
+其中 **Sky** 是回到首页的链接：`url_for('/')` 渲染成 `/skyblog/`，子目录部署也不会错。
+（用 `url_for('/')` 而不是写死 `/`，否则部署到 `/skyblog/` 子目录时点回 404。）
+
+### 19.3 想自己再改
+
+直接编辑 `footer.ejs` 第 22-25 行那段 `<p>`，保留 `color: #b9b9b9` 和
+`text-decoration: underline dotted rgba(0,0,0,.1)` 这两个样式，视觉才和页脚一致；
+改完 `npx hexo clean && npx hexo generate` + 部署。
+
+> 注意：年份是硬编码的，跨年要手动改；也可以写成
+> `<%- date(new Date(), 'YYYY') %>` 自动取当前年。
 
 ---
 
