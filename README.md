@@ -40,6 +40,7 @@
 19. [页脚署名 / 版权文字怎么改](#19-页脚署名--版权文字怎么改)
 20. [音乐播放器（myhkw 免插件版）](#20-音乐播放器myhkw-免插件版)
 21. [首页头像与头像下方的社交链接](#21-首页头像与头像下方的社交链接)
+22. [导航栏站名左边加头像](#22-导航栏站名左边加头像)
 
 ---
 
@@ -1463,6 +1464,60 @@ wechat2: {url: https://mp.weixin.qq.com/, img: /img/social/wechat.png, qrcode: /
 ```bash
 grep -c "img/social/" public/index.html          # 当前项目应为 7
 grep -o 'img/custom/wechat[^"]*' public/index.html   # 应为 wechat.webp 与 wechat-mp.webp
+```
+
+---
+
+## 22. 导航栏站名左边加头像
+
+顶部导航栏左侧那个「Sky」是纯文字 logo（`.sakurasono` 前缀 + `.shironeko` 站名），
+现在在它左边加了一个圆形头像，**复用的就是首页中间那个头像**，所以换头像只改一处。
+
+### 22.1 位置
+
+| 环节 | 文件 / 行 |
+| --- | --- |
+| 结构 | `themes/sakura/layout/_partial/header.ejs` 第 6-13 行（`.logolink > a` 内） |
+| 头像来源 | `_config.sakura.yml` 的 `avatar:`（与首页头像同一项） |
+| 样式 | 内联在 `<img>` 上，改 `width/height/border-radius/margin-right` 即可 |
+
+### 22.2 现在的写法
+
+```ejs
+<a href="<%- url_for('/') %>">
+  <% var _navAvatar = theme.avatar || ''; %>
+  <% var _navAvatarSrc = /^https?:\/\//.test(_navAvatar) || _navAvatar.indexOf('//') === 0 ? _navAvatar : (_navAvatar.indexOf('/') === 0 ? url_for(_navAvatar) : url_for((theme.cdn || '') + _navAvatar)); %>
+  <img class="site-logo-avatar" src="<%- _navAvatarSrc %>" alt="<%= theme.siteName %>"
+       style="width:30px;height:30px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px;box-shadow:0 0 4px rgba(0,0,0,.15)">
+  <span class="sakurasono"><%= theme.prefixName %></span>
+  <span class="shironeko"><%= theme.siteName %></span>
+</a>
+```
+
+三种 `avatar` 写法都兼容：
+
+- `https://.../a.jpg`（完整外链）→ 直接用
+- `/img/favicon.png`（以 `/` 开头）→ 走 `url_for`，自动补 `/skyblog/` 前缀
+- `avatar.jpg`（相对路径）→ 拼主题 `cdn`
+
+### 22.3 想让导航栏用另一张图
+
+把上面 `<img>` 的 `src` 直接换成固定路径即可，例如：
+
+```ejs
+<img class="site-logo-avatar" src="<%- url_for('/img/custom/logo.png') %>" ...>
+```
+
+### 22.4 想调大小 / 去掉
+
+- 大小：改 `width:30px;height:30px`（建议 24–36px，导航栏高约 50px，太大可能撑开）
+- 去掉：把 `<img ...>` 那一行删掉即可，其余不用动
+
+### 22.5 自检
+
+```bash
+grep -o 'site-logo-avatar[^>]*' public/index.html | head -1
+# 期望看到 src="/skyblog/img/favicon.png"
 ```
 
 ---
