@@ -13,13 +13,18 @@ siteName: Sky
 favicon: /img/favicon.png
 avatar: /img/favicon.png
 
-# 首页头像下方的社交链接（顺序即显示顺序；img 为图标，带 cdn 前缀时走主题 CDN）
-# 想加知乎/微博等，照格式追加一行即可；带 qrcode 的会在鼠标悬停时弹二维码
+# 首页头像下方的社交链接（顺序即显示顺序；img 为图标，实际加载时自动拼主题 CDN 前缀）
+# 想换成自己的主页，把 url 改成对应地址即可；带 qrcode 的会在鼠标悬停时弹二维码
 social:
   github: {url: https://github.com/zhixiaotx, img: /img/social/github.png}
+  sina: {url: https://weibo.com/, img: /img/social/sina.png}
+  wangyiyun: {url: https://music.163.com/, img: /img/social/wangyiyun.png}
+  zhihu: {url: https://www.zhihu.com/, img: /img/social/zhihu.png}
   email: {url: mailto:liuliu19901110@gmail.com, img: /img/social/email.svg}
-  # zhihu: {url: https://www.zhihu.com/people/xxx, img: /img/social/zhihu.png}
-  # wechat: {url: /#, img: /img/social/wechat.png, qrcode: /img/custom/wechat.jpg}
+  wechat: {url: https://weixin.qq.com/, img: /img/social/wechat.png}
+  wechat2: {url: https://mp.weixin.qq.com/, img: /img/social/wechat.png}
+  # 想恢复“悬停弹二维码”：给对应项加 qrcode 字段（注意 qrcode 同样会拼 CDN 前缀，建议填完整外链）
+  # wechat: {url: /#, img: /img/social/wechat.png, qrcode: https://example.com/wechat-qr.png}
 
 url: https://zhixiaotx.github.io/skyblog
 description: 基于 Hexo + Sakura 搭建的二次元技术博客
@@ -53,9 +58,11 @@ startdash:
 
 siteBuildingTime: 08/26/2026
 
-# 移动端社交按钮（使用 Font Awesome 图标，无需图片）
+# 移动端社交按钮（Font Awesome 图标，无需图片）
 msocial:
   github: {url: https://github.com/zhixiaotx, fa: fa-github, color: 333}
+  weibo: {url: https://weibo.com/, fa: fa-weibo, color: dd4b39}
+  qq: {url: https://im.qq.com/, fa: fa-qq, color: 25c6fe}
   email: {url: mailto:liuliu19901110@gmail.com, fa: fa-envelope, color: dd4b39}
 
 # 音乐播放器（myhkw.cn 免插件版）

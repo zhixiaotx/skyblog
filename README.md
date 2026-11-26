@@ -1404,19 +1404,24 @@ grep -c "meting\|APlayer.min.js" public/index.html   # 0
 ```yaml
 social:
   github: {url: https://github.com/zhixiaotx, img: /img/social/github.png}
+  sina: {url: https://weibo.com/, img: /img/social/sina.png}
+  wangyiyun: {url: https://music.163.com/, img: /img/social/wangyiyun.png}
+  zhihu: {url: https://www.zhihu.com/, img: /img/social/zhihu.png}
   email: {url: mailto:liuliu19901110@gmail.com, img: /img/social/email.svg}
-  # zhihu: {url: https://www.zhihu.com/people/xxx, img: /img/social/zhihu.png}
-  # wechat: {url: /#, img: /img/social/wechat.png, qrcode: /img/custom/wechat.jpg}
+  wechat: {url: https://weixin.qq.com/, img: /img/social/wechat.png}
+  wechat2: {url: https://mp.weixin.qq.com/, img: /img/social/wechat.png}
 ```
 
-顺序就是显示顺序；想加新图标，照格式追加一行。
+顺序就是显示顺序（当前 7 个：github / 微博 / 网易云 / 知乎 / 邮箱 / 微信 / 微信公众平台）。
+除 GitHub 和邮箱是本项目的真实地址外，其余 5 个填的是**各平台官网的官方地址**做占位，
+要换成自己的主页只需改对应 `url`。
 
 ### 21.3 两个坑（重要）
 
 1. **旧图标删不掉**：Hexo 会把你写的 `social` 与 `themes/sakura/_config.yml` 里的 `social` **深合并**，
-   站点配置里没覆盖到的键（原主题的 sina / wangyiyun / zhihu / wechat / wechat2）会继续显示。
-   要精简必须在**主题的 `_config.yml`** 里也删掉对应条目
-   —— 本项目已把 7 个占位项收敛为 `github` + `email` 两项。
+   站点配置里没覆盖到的键会继续显示。所以「增删图标」必须两边同步改
+   —— 本项目主题 `_config.yml` 与 `_config.sakura.yml` 已保持一致：
+   保留原主题 7 个图标，但把原作者的个人链接（mashirozx 的微博、Hojun 的 QQ 等）全部换成各平台官方地址。
 2. **图标图片走 CDN**：`headertop.ejs` 里写的是 `(theme.cdn || '') + img`，**没有** `url_for`，
    所以 `img: /img/social/github.png` 实际加载的是
    `https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/github.png`。
@@ -1424,14 +1429,14 @@ social:
 
 ### 21.4 手机端
 
-移动端用的是 `msocial:`（Font Awesome 图标，不需要图片），同样受深合并影响，
-直接在 `_config.sakura.yml` 的 `msocial:` 里增删即可。
+移动端用的是 `msocial:`（Font Awesome 图标，不需要图片），同样受深合并影响。
+本项目当前为 github / 微博 / QQ / 邮箱，链接同样是各平台官方地址，改 `_config.sakura.yml` 的 `msocial:` 即可。
 
 ### 21.5 自检
 
 ```bash
-grep -c "img/social/" public/index.html        # 当前项目应为 2
-grep -o 'hero\|header-tou' public/index.html   # 确认头部结构存在
+grep -c "img/social/" public/index.html        # 当前项目应为 7
+grep -o 'href="https://[^"]*"' public/index.html | head -7   # 逐个核对链接
 ```
 
 ---
