@@ -1732,6 +1732,47 @@ grep -o "jsonPath: '[^']*'" public/index.html
 
 页面加载后按 F12 打开控制台执行 `document.querySelector('#live2dcanvas')`，能取到 canvas 即为正常。
 
+## 29. 作者小头像裂图（友人帐 / 关于 / 打赏 / 手机侧边栏）
+
+现象：`/about/` 正文页的作者小头像、`/links/`、`/donate/` 的作者卡片、手机端抽屉里的头像全部裂图，
+请求的地址是 `https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/favicon.png`（CDN 上根本没有这个文件）。
+
+根因和第 26 节一样：这几个模板把 `theme.avatar`（值已经是站内的 `/img/favicon.png`）又拼了一次主题 CDN，
+`url_for()` 对绝对地址原样返回，于是拼出了一个不存在的 CDN 地址。
+
+涉及 4 个模板，统一改成同一段判定：
+
+| 文件 | 位置 |
+| --- | --- |
+| `layout/links.ejs` | `section.author-profile` 作者卡片 |
+| `layout/donate.ejs` | `section.author-profile` 作者卡片 |
+| `layout/_widget/common-page.ejs` | 普通页面的作者信息块 |
+| `layout/_partial/mheader.ejs` | 手机端抽屉头像 |
+
+```ejs
+<% var _avatar = theme.avatar || ''; %>
+<% var _avatarSrc = /^https?:\/\//.test(_avatar) || _avatar.indexOf('//') === 0
+     ? _avatar
+     : (_avatar.indexOf('/') === 0 ? url_for(_avatar) : url_for((theme.cdn || '') + _avatar)); %>
+<img src="<%- _avatarSrc %>" ...>
+```
+
+判定顺序和 `headertop.ejs` / `header.ejs` 保持一致：`http(s)://` 或 `//` 开头 → 原样；`/` 开头 → 站内 `url_for`；其余 → 拼主题 CDN。
+
+### 29.1 自检
+
+```bash
+# 构建产物里不应再出现 CDN 头像地址
+grep -rc 'honjun/cdn@1.6/img/favicon.png' public --include=*.html | grep -v ':0' || echo "clean"
+
+# 作者卡片头像应为站内路径
+grep -o 'class="profile gravatar"><img src="[^"]*"' public/about/index.html
+```
+
+> 另外：仓库目前只有 `about / categories / tags` 三个页面，导航栏里的「友人帐」「清单」等入口没有对应页面，
+> 点开是 404（和本次部署无关）。需要的话新建 `source/links/index.md`、`source/donate/index.md`
+> 并在 front-matter 指定 `layout: links` / `layout: donate` 即可。
+
 ---
 
 ## 许可证
