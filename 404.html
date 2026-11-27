@@ -4,11 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>404 - 页面走丢了 | Sky</title>
-  <script>
-    /* 站点根前缀：GitHub Pages 子目录部署是 /skyblog，自定义域名代理时是根目录。
-       必须在这里同步算出来，后面的链接/图片都靠它拼，避免写死 /skyblog/ 在自定义域名下 404 */
-    window.SITE_PREFIX = location.pathname.indexOf('/skyblog/') === 0 ? '/skyblog' : '';
-  </script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; }
@@ -82,6 +77,8 @@
     }
     .btn a:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(254,150,0,0.55); }
     .btn a.ghost:hover { background: rgba(255,233,199,0.12); }
+    /* 探测站点根期间先禁用点击，避免点到还没修正的地址 */
+    .btn[data-ready="0"] a { pointer-events: none; opacity: 0.55; }
 
     /* 手机/小平板：缩小间距、按钮换行铺满、字号微调 */
     @media (max-width: 480px) {
@@ -114,27 +111,77 @@
     <div class="code">404</div>
     <div class="sub">呀，页面不小心走丢了 🌸</div>
     <p class="msg">你访问的页面可能已被移动、删除，或者从来没有存在过。<br>不如回到首页，看看别的风景吧～</p>
-    <div class="btn">
+    <div class="btn" data-ready="0">
       <!-- 静态值用相对路径：JS 失效时单层错误地址也能回到站点根，不写死 /skyblog/ -->
       <a href="./" id="lnk-home">回到首页</a>
       <a class="ghost" href="./archives/" id="lnk-archives">浏览文章</a>
     </div>
   </div>
   <script>
-    // 按站点根前缀修正链接与资源地址
+    /* 自适应站点根：
+       - GitHub Pages 子目录部署：根是 /skyblog
+       - 自定义域名代理到根目录：根是 /
+       注意用户输错的地址本身可能就带 /skyblog（例如 域名/skyblog/archives/），
+       所以不能只靠 location.pathname 猜前缀 —— 直接探测哪个根能打开，用能打开的那个。 */
     (function () {
-      var P = window.SITE_PREFIX || '';
-
-      document.getElementById('lnk-home').href = P + '/';
-      document.getElementById('lnk-archives').href = P + '/archives/';
-
+      var btn = document.querySelector('.btn');
+      var home = document.getElementById('lnk-home');
+      var arch = document.getElementById('lnk-archives');
       var bg = document.querySelector('.bg');
-      if (bg) bg.style.backgroundImage = 'url("' + P + '/img/wallpaper/night-clouds.webp")';
+      var timer;
 
-      var icon = document.createElement('link');
-      icon.rel = 'icon';
-      icon.href = P + '/img/favicon.png';
-      document.head.appendChild(icon);
+      function done() {
+        clearTimeout(timer);
+        if (btn) btn.setAttribute('data-ready', '1');
+      }
+
+      function apply(P) {
+        home.href = P + '/';
+        arch.href = P + '/archives/';
+        if (bg) bg.style.backgroundImage = 'url("' + P + '/img/wallpaper/night-clouds.webp")';
+
+        var icon = document.head.querySelector('link[data-site-icon]');
+        if (!icon) {
+          icon = document.createElement('link');
+          icon.rel = 'icon';
+          icon.setAttribute('data-site-icon', '1');
+          document.head.appendChild(icon);
+        }
+        icon.href = P + '/img/favicon.png';
+      }
+
+      // 本地双击打开 public/404.html：file:// 下只能用同目录相对路径
+      if (location.protocol === 'file:') {
+        home.href = 'index.html';
+        arch.href = 'archives/';
+        done();
+        return;
+      }
+
+      // 先按 pathname 猜一个，保证背景图等资源尽快就位
+      var guess = location.pathname.indexOf('/skyblog/') === 0 ? '/skyblog' : '';
+      apply(guess);
+
+      // 再依次探测两个候选根，谁返回 200 就换成谁；2 秒内没结果就放行
+      var cands = guess === '/skyblog' ? ['/skyblog', ''] : ['', '/skyblog'];
+      timer = setTimeout(done, 2000);
+
+      (function probe(i) {
+        if (i >= cands.length) {
+          done();
+          return;
+        }
+        fetch(cands[i] + '/', { method: 'HEAD', cache: 'no-store' })
+          .then(function (r) {
+            if (r.ok) {
+              apply(cands[i]);
+              done();
+            } else {
+              probe(i + 1);
+            }
+          })
+          .catch(function () { probe(i + 1); });
+      })(0);
     })();
   </script>
   <script>
