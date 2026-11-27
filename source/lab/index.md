@@ -43,4 +43,4 @@ photos: /img/wallpaper/city-night.webp
 
 ---
 
-→ 返回 [关于我](../)
+→ 返回 [关于我](../about/)

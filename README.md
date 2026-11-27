@@ -46,6 +46,7 @@
 25. [看板娘挪到左侧 + 社交图标改回品牌色](#31-看板娘挪到左侧--社交图标改回品牌色)（正文编号 §31）
 26. [移动端页脚与电脑端署名统一](#32-移动端页脚与电脑端署名统一)（正文编号 §32）
 27. [清单 / 留言板 / 关于子页 + 友人帐「本站」域名无关](#33-清单--留言板--关于子页--友人帐本站域名无关)（正文编号 §33）
+28. [关于两篇文章改顶级路径 + 清单/留言板改占位页](#34-关于两篇文章改顶级路径--清单留言板改占位页)（正文编号 §34）
 
 ---
 
@@ -2088,6 +2089,105 @@ grep -o 'href="[^"]*list/"[^>]*>[^<]*' public/index.html | head -1
 # Markdown 里没有漏 url_for 的绝对路径
 grep -rn '](/img/' source/list source/about | grep -v '../../img'
 # 应无输出
+```
+
+---
+
+## 34. 关于两篇文章改顶级路径 + 清单/留言板改占位页
+
+### 34.1 为什么要改
+
+上一版把「关于」的两篇文章放在了 `/about/theme/` 和 `/about/lab/`，
+但期望的地址是顶级的 `/theme-sakura/` 和 `/lab/`。线上验证：
+
+```
+/about/theme/    200   ← 旧地址还在
+/theme-sakura/   404   ← 想要的地址不存在
+/lab/            404
+```
+
+### 34.2 改法：目录搬家
+
+| 旧路径 | 新路径 | 源文件 |
+|---|---|---|
+| `/about/theme/` | `/theme-sakura/` | `source/theme-sakura/index.md` |
+| `/about/lab/` | `/lab/` | `source/lab/index.md` |
+
+Hexo 的页面路径就是 `source/` 下的目录结构，所以搬家 = 挪文件：
+
+```bash
+mkdir source/theme-sakura source/lab
+move source/about/theme/index.md source/theme-sakura/index.md
+move source/about/lab/index.md   source/lab/index.md
+rmdir source/about/theme source/about/lab
+```
+
+然后 `source/about/index.md` 里的链接要跟着改（`about` 在 `/about/`，
+`../` 回到站点根）：
+
+```markdown
+- [主题](../theme-sakura/)
+- [Lab](../lab/)
+```
+
+> 注意：**别用 `/theme-sakura/` 这种绝对路径**。子目录部署（`/skyblog/`）会丢前缀。
+> 用 `../theme-sakura/` 这种相对形式，两种部署都对。
+
+### 34.3 清单子页 + 留言板改成占位页
+
+`书单 / 番组 / 歌单 / 图集 / 留言板` 五页统一成占位形式：
+
+```markdown
+---
+title: 书单
+layout: default
+photos: /img/wallpaper/bookshelf.webp
+---
+
+> 占位页，内容待补。
+
+## 在读
+
+_（待补）_
+```
+
+好处是结构先立住、导航能点通，之后往小节里追加内容就行，不用再动模板。
+
+图集占位页保留了两张真图，顺便把图片相对路径的写法留在页面上：
+
+```markdown
+![占位图](../../img/wallpaper/beach-sailboat.webp)
+```
+
+`../../` 从 `/list/gallery/` 回到站点根——Markdown 里的图片不过 `url_for`，
+必须靠相对路径才能在子目录部署下不裂图。
+
+### 34.4 自检
+
+```bash
+# 新地址有、旧地址没了
+test -f public/theme-sakura/index.html && echo "theme-sakura OK"
+test -f public/lab/index.html && echo "lab OK"
+test -d public/about/theme || echo "about/theme 已清理"
+
+# 关于页链接指向新地址
+grep -o 'href="\.\./theme-sakura/"' public/about/index.html
+grep -o 'href="\.\./lab/"' public/about/index.html
+
+# 占位页
+grep -l '占位页，内容待补' public/list/*/index.html public/comment/index.html
+```
+
+### 34.5 线上验证
+
+```
+/theme-sakura/   200
+/lab/            200
+/list/books/     200（占位）
+/list/bangumi/   200（占位）
+/list/music/     200（占位）
+/list/gallery/   200（占位）
+/comment/        200（占位）
 ```
 
 ---

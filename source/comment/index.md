@@ -4,33 +4,29 @@ layout: default
 photos: /img/wallpaper/country-cottage.webp
 ---
 
-随便说点什么吧，不用客气。
+> 占位页。评论系统还没开，所以这里现在是空的。
 
-## 怎么留言
+## 怎么让它真能留言
 
-留言功能走评论系统。当前 `_config.sakura.yml` 里是：
+`_config.sakura.yml` 里现在是：
 
 ```yaml
 # 评论系统：暂不启用（如需可配置 Valine / Waline）
 valine: false
 ```
 
-所以这一页暂时是空白的留言区。想让它真的能留言，二选一：
+二选一配好就生效：
 
-### 方案 A：Valine（LeanCloud）
-
-1. 去 [LeanCloud](https://console.leancloud.app/) 建一个国际版应用
-2. 在「设置 → 应用凭证」拿到 `AppID` / `AppKey`
-3. 填进 `_config.sakura.yml`：
+**方案 A：Valine（LeanCloud）**
 
 ```yaml
 valine: true
-valine_appid: 你的AppID
+valine_appid: 你的AppID      # LeanCloud 国际版 → 设置 → 应用凭证
 valine_appkey: 你的AppKey
 valine_placeholder: 随便说点什么吧...
 ```
 
-### 方案 B：Waline（可自托管）
+**方案 B：Waline（可自托管）**
 
 ```yaml
 waline:
@@ -38,7 +34,7 @@ waline:
   serverURL: https://你的waline实例
 ```
 
-改完 `npx hexo clean && npx hexo generate` 重新部署即可。
+改完 `npx hexo clean && npx hexo generate` 重新部署。
 
 ## 先在这里找我
 
