@@ -2383,46 +2383,99 @@ https://skyblog.rainsky.cc.cd/skyblog/archives/   ← 404
 | `/nonexistent` | `/` | ✅ |
 | `/nonexistent/deep/path` | `/nonexistent/deep/` | ❌ |
 
-所以单靠 `../` 这类相对路径，深层 404 会算错。做法是**静态值给相对路径 + 脚本按站点根前缀修正**，两层保险。
+所以单靠 `../` 这类相对路径，深层 404 会算错。做法是**静态值给相对路径 + 脚本修正**，两层保险。
 
-### 36.4 改法
+### 36.4 只靠 `location.pathname` 猜前缀也不够（踩过的坑）
 
-head 里先同步算出前缀（此时还没 DOM，只能算）：
+第一版修法是：
 
-```html
-<script>
-  /* 站点根前缀：GitHub Pages 子目录部署是 /skyblog，自定义域名代理时是根目录 */
-  window.SITE_PREFIX = location.pathname.indexOf('/skyblog/') === 0 ? '/skyblog' : '';
-</script>
+```js
+var P = location.pathname.indexOf('/skyblog/') === 0 ? '/skyblog' : '';
 ```
 
-按钮先写相对路径（脚本没执行时单层 404 也能用）：
+在 `github.io/skyblog/xxx` 下正确。但用户在自定义域名下打开
+`https://skyblog.rainsky.cc.cd/skyblog/archives/`（这就是他点坏的链接）时，
+`pathname` 以 `/skyblog/` 开头 → 判定成子目录部署 → 按钮又指回 `/skyblog/archives/` → 继续 404。
+
+**根因：用户输错的地址本身可能就带着 `/skyblog`，用一个不可信的字符串去推断部署方式，必然翻车。**
+
+正确做法：不猜，**探测**。两个候选根各发一个 `HEAD` 请求，谁返回 200 用谁。
+
+### 36.5 改法
+
+按钮先写相对路径（脚本挂了单层 404 也能用），并给容器标记「未就绪」：
 
 ```html
-<a href="./" id="lnk-home">回到首页</a>
-<a class="ghost" href="./archives/" id="lnk-archives">浏览文章</a>
+<div class="btn" data-ready="0">
+  <a href="./" id="lnk-home">回到首页</a>
+  <a class="ghost" href="./archives/" id="lnk-archives">浏览文章</a>
+</div>
 ```
 
-body 末尾统一修正链接、背景图和 favicon：
+```css
+/* 探测完成前禁止点击，避免点到还没修正的地址 */
+.btn[data-ready="0"] a { pointer-events: none; opacity: 0.55; }
+```
+
+body 末尾做探测与修正：
 
 ```js
 (function () {
-  var P = window.SITE_PREFIX || '';
-
-  document.getElementById('lnk-home').href = P + '/';
-  document.getElementById('lnk-archives').href = P + '/archives/';
-
+  var btn = document.querySelector('.btn');
+  var home = document.getElementById('lnk-home');
+  var arch = document.getElementById('lnk-archives');
   var bg = document.querySelector('.bg');
-  if (bg) bg.style.backgroundImage = 'url("' + P + '/img/wallpaper/night-clouds.webp")';
+  var timer;
 
-  var icon = document.createElement('link');
-  icon.rel = 'icon';
-  icon.href = P + '/img/favicon.png';
-  document.head.appendChild(icon);
+  function done() {
+    clearTimeout(timer);
+    if (btn) btn.setAttribute('data-ready', '1');   // 探测结束才放行点击
+  }
+
+  function apply(P) {
+    home.href = P + '/';
+    arch.href = P + '/archives/';
+    if (bg) bg.style.backgroundImage = 'url("' + P + '/img/wallpaper/night-clouds.webp")';
+
+    var icon = document.head.querySelector('link[data-site-icon]');
+    if (!icon) {
+      icon = document.createElement('link');
+      icon.rel = 'icon';
+      icon.setAttribute('data-site-icon', '1');
+      document.head.appendChild(icon);
+    }
+    icon.href = P + '/img/favicon.png';
+  }
+
+  // 本地双击打开 public/404.html：file:// 下只能走同目录相对路径
+  if (location.protocol === 'file:') {
+    home.href = 'index.html';
+    arch.href = 'archives/';
+    done();
+    return;
+  }
+
+  // 先按 pathname 猜一个，让背景图尽快就位（这只是预判，最终以探测为准）
+  var guess = location.pathname.indexOf('/skyblog/') === 0 ? '/skyblog' : '';
+  apply(guess);
+
+  // 依次探测两个候选根，谁 200 用谁；2 秒兜底放行
+  var cands = guess === '/skyblog' ? ['/skyblog', ''] : ['', '/skyblog'];
+  timer = setTimeout(done, 2000);
+
+  (function probe(i) {
+    if (i >= cands.length) { done(); return; }
+    fetch(cands[i] + '/', { method: 'HEAD', cache: 'no-store' })
+      .then(function (r) {
+        if (r.ok) { apply(cands[i]); done(); }
+        else { probe(i + 1); }
+      })
+      .catch(function () { probe(i + 1); });
+  })(0);
 })();
 ```
 
-背景图的 CSS 里只留渐变兜底，不要写 `url()` —— 否则脚本之前浏览器会先发一个错误路径的请求：
+背景图的 CSS 里只留渐变兜底，不要写 `url()` —— 否则脚本执行前浏览器会先发一个错误路径的请求：
 
 ```css
 .bg {
@@ -2430,7 +2483,15 @@ body 末尾统一修正链接、背景图和 favicon：
 }
 ```
 
-### 36.5 顺带：让 404 页别再套主题 layout
+各种情况下的探测结果：
+
+| 访问地址 | `pathname` 猜测 | 探测 | 最终按钮 |
+| --- | --- | --- | --- |
+| `github.io/skyblog/xxx` | `/skyblog` | `/skyblog/` 200 | `/skyblog/arc…` |
+| `自定义域名/xxx` | `''` | `/` 200 | `/archives/` |
+| `自定义域名/skyblog/archives/` | `/skyblog`（错） | `/skyblog/` 404 → `/` 200 | `/archives/` ✅ |
+
+### 36.6 顺带：让 404 页别再套主题 layout
 
 Hexo 会把 `source/404.html` 当成普通 page 渲染，塞进主题的 header/footer 里 ——
 成品 `404.html` 有 500 多行，还带着整套主题 CSS/JS 和一堆 `/skyblog/` 绝对路径。
@@ -2442,30 +2503,31 @@ skip_render:
   - 404.html # 404 页是自带完整 HTML 的独立文件，原样复制，不套主题 layout
 ```
 
-改完产物只剩 158 行，`/skyblog/` 只出现在前缀判断那一行里。
+改完产物只剩 206 行，`/skyblog` 只出现在预判和候选根数组里。
 
-### 36.6 自检
+### 36.7 自检
 
 ```bash
 npx hexo clean && npx hexo generate
 
 # 1. 不应再套主题 layout
 grep -c 'saukra_css' public/404.html   # 期望 0
-wc -l public/404.html                  # 期望 ~158
+wc -l public/404.html                  # 期望 ~206
 
-# 2. 硬编码前缀只剩判断那一行
-grep -n '/skyblog/' public/404.html
+# 2. 探测逻辑就位
+grep -n 'cands\|data-ready\|HEAD' public/404.html
 
 # 3. 两个按钮存在且 id 正确
 grep -n 'lnk-home\|lnk-archives' public/404.html
 ```
 
-浏览器实测两种部署：
+浏览器实测三种情况：
 
 | 访问地址 | 「浏览文章」应指向 |
 | --- | --- |
 | `https://zhixiaotx.github.io/skyblog/xxx` | `/skyblog/archives/` |
-| `https://skyblog.rainsky.cc.cd/xxx` | `/archives/` |
+| `https://zhixiaotx.github.io/skyblog/a/b/c` | `/skyblog/archives/`（深层也不能算成 `/skyblog/a/`） |
+| `https://skyblog.rainsky.cc.cd/skyblog/archives/` | `/archives/`（地址自带 `/skyblog` 也要纠正） |
 
 ---
 
