@@ -1769,9 +1769,61 @@ grep -rc 'honjun/cdn@1.6/img/favicon.png' public --include=*.html | grep -v ':0'
 grep -o 'class="profile gravatar"><img src="[^"]*"' public/about/index.html
 ```
 
-> 另外：仓库目前只有 `about / categories / tags` 三个页面，导航栏里的「友人帐」「清单」等入口没有对应页面，
-> 点开是 404（和本次部署无关）。需要的话新建 `source/links/index.md`、`source/donate/index.md`
-> 并在 front-matter 指定 `layout: links` / `layout: donate` 即可。
+> 另外：仓库原来只有 `about / categories / tags` 三个页面，导航栏里的「友人帐」等入口没有对应页面，
+> 点开是 404。已在第 30 节补上 `links` 和 `donate` 两个页面。
+
+## 30. 友人帐 / 打赏 页面
+
+导航栏「友人帐」原来指向 `/links/`，但仓库里没有这个页面，点开 404。现在两个页面都补上了：
+
+| 页面 | 文件 | layout |
+| --- | --- | --- |
+| `/links/` 友人帐 | `source/links/index.md` | `links` |
+| `/donate/` 打赏 | `source/donate/index.md` | `donate` |
+
+### 30.1 友人帐：友链写在 front-matter
+
+`layout/links.ejs` 只认 `page.links`，正文写什么都不显示，所以友链要维护在 front-matter：
+
+```yaml
+---
+title: 友人帐
+layout: links
+photos: /img/wallpaper/country-cottage.webp   # 页头大图
+links:
+  - group: 本站          # 分组名
+    desc: 自己的站点      # 可选，分组说明
+    items:
+      - name: Sky 的博客
+        url: https://skyblog.traesite.cn
+        img: /img/favicon.png              # 头像，建议用站内路径
+        desc: 记录技术与思考
+---
+```
+
+`img` 加载失败时主题会自动换成默认头像（模板里 `onerror="imgError(this,1)"`）。
+
+### 30.2 打赏：收款码来自主题配置
+
+`layout/donate.ejs` 读的是 `_config.sakura.yml` 里的 `donate`：
+
+```yaml
+donate:
+  paypal: "javascript:;"                      # 关键：不填会用主题作者的 PayPal 收款链接
+  alipay: /img/custom/donate/AliPayQR.webp
+  wechat: /img/custom/donate/WeChanQR.webp
+  wechatSQ: /img/custom/donate/WeChanSQ.webp
+```
+
+> 换收款码只换 `source/img/custom/donate/` 下的图片文件即可，文件名不用改。
+
+### 30.3 自检
+
+```bash
+ls public/links/index.html public/donate/index.html
+curl -sI https://skyblog.traesite.cn/links/  | head -1     # 200
+curl -sI https://skyblog.traesite.cn/donate/ | head -1     # 200
+```
 
 ---
 
