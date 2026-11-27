@@ -66,7 +66,8 @@
   </article>
   <section class="author-profile">
     <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
-      <a href="<%- url_for('/about/') %>" class="profile gravatar"><img src="<%- url_for((theme.cdn || '') + theme.avatar) %>" itemprop="image" alt="hojun" height="70" width="70"></a>
+      <% var _avatar = theme.avatar || ''; var _avatarSrc = /^https?:\/\//.test(_avatar) || _avatar.indexOf('//') === 0 ? _avatar : (_avatar.indexOf('/') === 0 ? url_for(_avatar) : url_for((theme.cdn || '') + _avatar)); %>
+      <a href="<%- url_for('/about/') %>" class="profile gravatar"><img src="<%- _avatarSrc %>" itemprop="image" alt="hojun" height="70" width="70"></a>
       <div class="meta">
         <span class="title">Author</span>
         <h3 itemprop="name">

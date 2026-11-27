@@ -1,6 +1,7 @@
 <div id="mo-nav" class="">
   <div class="m-avatar">
-    <img src="<%- url_for((theme.cdn || '') + theme.avatar) %>">
+    <% var _avatar = theme.avatar || ''; var _avatarSrc = /^https?:\/\//.test(_avatar) || _avatar.indexOf('//') === 0 ? _avatar : (_avatar.indexOf('/') === 0 ? url_for(_avatar) : url_for((theme.cdn || '') + _avatar)); %>
+    <img src="<%- _avatarSrc %>">
   </div>
   <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px"><%- theme.prefixName%><%- theme.siteName%></p>
   <p style="text-align: center; word-spacing: 20px;">
