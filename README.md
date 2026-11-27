@@ -1636,6 +1636,104 @@ grep -c 'id="video-btn"' public/index.html       # 0
 
 ---
 
+## 25. 部署到 Trae 站点（traesite.cn）
+
+线上地址：<https://skyblog.traesite.cn>（所有人可见）。
+
+### 25.1 和 GitHub Pages 的差别
+
+| 项目 | GitHub Pages | Trae 站点 |
+| --- | --- | --- |
+| 站点路径 | 子目录 `/skyblog/` | 站点根 `/` |
+| 静态资源 | 直接放在 `public/` | 改走版本化挂载 `/_assets/<version>/` |
+| 发布形态 | 全部静态文件 | HTML 由 Node 20 进程直出，图片/JS/CSS 等独立上传 |
+
+同一份源码要同时兼容两种环境，靠的是**构建时改 `url` / `root`、打包时改资源前缀**，仓库里的源码不用动。
+
+### 25.2 构建
+
+```bash
+# 用临时配置覆盖，不改 _config.yml，GitHub Pages 的子目录部署不受影响
+cat > /tmp/trae-deploy-config.yml <<'EOF'
+url: https://skyblog.traesite.cn
+root: /
+EOF
+
+npx hexo clean
+npx hexo generate --config "_config.yml,/tmp/trae-deploy-config.yml"
+```
+
+`public/` 里的文件数会到 600+，超出静态直发阈值后由部署侧自动转成「Node 20 静态服务 + 版本化资源挂载」，无需手动改项目。
+
+### 25.3 打包时做的两处 URL 适配
+
+1. 文章正文里硬编码的 `/skyblog/img/...` 前缀去掉 `/skyblog`，改为根路径（正文里的绝对路径不受 `root` 影响，只能在这一步改）；
+2. HTML 里的资源地址统一加 `/_assets/<version>/` 前缀，**页面跳转链接保持业务路径**（`/archives/`、`/2026/11/25/...` 之类不动）。
+
+### 25.4 自检
+
+```bash
+curl -sI https://skyblog.traesite.cn/ | head -1                  # 期望 200
+curl -s  https://skyblog.traesite.cn/ | grep -c '/skyblog/'      # 期望 0
+curl -sI https://skyblog.traesite.cn/img/favicon.png | head -1   # 307 → 200（旧路径兼容跳转）
+```
+
+## 26. 首页社交图标改成站内 SVG
+
+现象：首页描述条下面那排社交图标只有邮箱正常，其余全是破图。
+
+原因：`headertop.ejs` 把图标路径无脑拼到主题 CDN 上（`(theme.cdn || '') + theme.social[i].img`），而 CDN 上的 `img/social/*.png` 实际取不到；`email.svg` 恰好能取到，所以只有它显示。
+
+改法（三处一起改，缺一不可）：
+
+1. 图标放进 `source/img/social/`：`github.svg`、`sina.svg`、`wangyiyun.svg`、`zhihu.svg`、`wechat.svg`、`email.svg`（Font Awesome 免费品牌图标，`fill` 改为 `#ffffff` 适配深色条）；
+2. `_config.sakura.yml` 里 `social.*.img` 指向 `/img/social/*.svg`；
+3. `headertop.ejs` 增加路径判定：以 `/` 开头走 `url_for()`（站内），以 `http(s)://` 或 `//` 开头原样输出，其余才拼主题 CDN。
+
+### 26.1 自检
+
+```bash
+grep -o 'src="[^"]*/img/social/[^"]*"' public/index.html
+grep -c 'cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social' public/index.html   # 期望 0
+```
+
+## 27. 标签页 / 分类页封面占位修复
+
+现象：`/tags/xxx/`、`/categories/xxx/` 里出现 `<img data-src="github.img">` 这种地址，必然 404。
+
+原因：`tag.ejs` / `category.ejs` 用 `__(page.tag + '.img')` 取封面，语言文件里没有这个 key 时 Hexo 会**原样返回 key**，于是拼出了 `xxx.img`。
+
+改法：取到的值和 key 相同时视为「没有配置封面」，回退到默认封面图（`https://view.moezx.cc/images/2017/12/03/writing.jpg`）。
+
+## 28. 看板娘（Live2D 猫咪）
+
+之前右下角没有猫：主题里只留了看板娘的 CSS，没有任何加载脚本。
+
+现在的结构：
+
+| 位置 | 内容 |
+| --- | --- |
+| `source/live2d/lib/` | `L2Dwidget.min.js` + `L2Dwidget.0.min.js`（后者是动态 chunk，靠 `currentScript` 定位，必须和前者同目录） |
+| `source/live2d/models/tororo/` | 白猫 tororo 模型（moc / 贴图 / mtn 动作，约 730 KB） |
+| `_partial/footer.ejs` 末尾 | 初始化代码：右下角、150×300、悬停变淡、手机端不显示 |
+
+全部是站内资源，不依赖任何第三方 CDN。
+
+### 28.1 换模型 / 改位置
+
+把模型目录整体放进 `source/live2d/models/<名字>/`，改 `footer.ejs` 里的 `jsonPath`；大小改 `display.width / height`，左右位置改 `display.position`。
+
+### 28.2 自检
+
+```bash
+ls public/live2d/lib public/live2d/models/tororo
+grep -o "jsonPath: '[^']*'" public/index.html
+```
+
+页面加载后按 F12 打开控制台执行 `document.querySelector('#live2dcanvas')`，能取到 canvas 即为正常。
+
+---
+
 ## 许可证
 
 本项目代码 MIT 协议。Sakura 主题遵循其原作者协议。
