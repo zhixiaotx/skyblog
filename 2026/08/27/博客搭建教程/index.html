@@ -467,6 +467,7 @@
 <li><a href="#%E7%AC%AC-20-%E6%AD%A5%E5%8E%BB%E6%8E%89%E6%A0%87%E9%A2%98%E5%90%8E%E9%9D%A2%E7%9A%84--%E7%AC%A6%E5%8F%B7">第 20 步：去掉标题后面的 ¶ 符号</a></li>
 <li><a href="#%E7%AC%AC-21-%E6%AD%A5%E5%85%B3%E6%8E%89%E5%A4%B4%E9%83%A8%E8%87%AA%E5%8A%A8%E6%92%AD%E6%94%BE%E7%9A%84%E8%83%8C%E6%99%AF%E8%A7%86%E9%A2%91">第 21 步：关掉头部自动播放的背景视频</a></li>
 <li><a href="#%E7%AC%AC-22-%E6%AD%A5%E7%9C%8B%E6%9D%BF%E5%A8%98%E6%8C%AA%E5%88%B0%E5%B7%A6%E4%BE%A7--%E7%A4%BE%E4%BA%A4%E5%9B%BE%E6%A0%87%E6%94%B9%E5%9B%9E%E5%93%81%E7%89%8C%E8%89%B2">第 22 步：看板娘挪到左侧 + 社交图标改回品牌色</a></li>
+<li><a href="#%E7%AC%AC-23-%E6%AD%A5%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%A1%B5%E8%84%9A%E4%B8%8E%E7%94%B5%E8%84%91%E7%AB%AF%E7%BD%B2%E5%90%8D%E7%BB%9F%E4%B8%80">第 23 步：移动端页脚与电脑端署名统一</a></li>
 <li><a href="#%E9%99%84%E5%BD%95-a%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5">附录 A：命令速查</a></li>
 <li><a href="#%E9%99%84%E5%BD%95-b%E8%A1%80%E6%B3%AA%E9%81%BF%E5%9D%91%E6%B8%85%E5%8D%95">附录 B：血泪避坑清单</a></li>
 </ul>
@@ -1377,6 +1378,49 @@
 
 <h3 id="22-5-别忘了重新部署"><a href="#22-5-别忘了重新部署" class="headerlink" title="22.5 别忘了重新部署"></a>22.5 别忘了重新部署</h3><p>改完一定要 <code>npx hexo clean &amp;&amp; npx hexo generate</code> 再推 <code>gh-pages</code>。<br><code>hexo generate</code> 是增量构建，只改 CSS&#x2F;SVG 时旧产物可能留在 <code>public/</code> 里。</p>
 <hr>
+<h2 id="第-23-步：移动端页脚与电脑端署名统一"><a href="#第-23-步：移动端页脚与电脑端署名统一" class="headerlink" title="第 23 步：移动端页脚与电脑端署名统一"></a>第 23 步：移动端页脚与电脑端署名统一</h2><h3 id="23-1-现象"><a href="#23-1-现象" class="headerlink" title="23.1 现象"></a>23.1 现象</h3><p>电脑端页脚已经改成自己的署名：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">© 2026 Sky · 基于 Hexo + Sakura 🌸 搭建 · 托管于 GitHub Pages</span><br></pre></td></tr></table></figure>
+
+<p>但手机端点左上角菜单，抽屉最底下还是主题自带的：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">© 2019 hexo-sakura</span><br></pre></td></tr></table></figure>
+
+<p>因为这两处根本不是同一个模板，改电脑端时容易漏掉移动端。</p>
+<h3 id="23-2-两个文件"><a href="#23-2-两个文件" class="headerlink" title="23.2 两个文件"></a>23.2 两个文件</h3><table>
+<thead>
+<tr>
+<th>端</th>
+<th>模板</th>
+<th>位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>电脑端</td>
+<td><code>themes/sakura/layout/_partial/footer.ejs</code></td>
+<td>第 23 行，<code>.footer-device</code> 里</td>
+</tr>
+<tr>
+<td>移动端</td>
+<td><code>themes/sakura/layout/_partial/mheader.ejs</code></td>
+<td>第 38 行，<code>#mo-nav</code> 抽屉底部</td>
+</tr>
+</tbody></table>
+<p><code>mheader.ejs</code> 原来是硬编码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;p style=&quot;text-align: center; font-size: 13px; color: #b9b9b9;&quot;&gt;&amp;copy 2019 hexo-sakura&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="23-3-改法"><a href="#23-3-改法" class="headerlink" title="23.3 改法"></a>23.3 改法</h3><p>直接换成和电脑端一致的署名，保留移动端的小字号、居中和左右内边距：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;p style=&quot;text-align: center; font-size: 13px; color: #b9b9b9; padding: 0 12px 10px; line-height: 1.8;&quot;&gt;</span><br><span class="line">  &lt;span style=&quot;color: #b9b9b9;&quot;&gt;© 2026</span><br><span class="line">    &lt;a href=&quot;&lt;%- url_for(&#x27;/&#x27;) %&gt;&quot; style=&quot;color: #b9b9b9; text-decoration: underline dotted rgba(0, 0, 0, .1);&quot;&gt;Sky&lt;/a&gt;</span><br><span class="line">    · 基于 &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; style=&quot;color: #b9b9b9; text-decoration: underline dotted rgba(0, 0, 0, .1);&quot;&gt;Hexo&lt;/a&gt;</span><br><span class="line">    + &lt;a href=&quot;https://github.com/honjun/hexo-theme-sakura&quot; target=&quot;_blank&quot; style=&quot;color: #b9b9b9; text-decoration: underline dotted rgba(0, 0, 0, .1);&quot;&gt;Sakura&lt;/a&gt;</span><br><span class="line">    &lt;i class=&quot;iconfont icon-sakura rotating&quot; style=&quot;color: #ffc0cb; display: inline-block;&quot;&gt;&lt;/i&gt;</span><br><span class="line">    搭建 · 托管于 &lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot; style=&quot;color: #b9b9b9; text-decoration: underline dotted rgba(0, 0, 0, .1);&quot;&gt;GitHub Pages&lt;/a&gt;</span><br><span class="line">  &lt;/span&gt;</span><br><span class="line">&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<p>三个容易踩的点：</p>
+<ol>
+<li><strong><code>url_for</code> 必须用 <code>&lt;%- %&gt;</code> 不转义</strong>，写成 <code>&lt;%= %&gt;</code> 会把 <code>&amp;</code> 之类转义掉，在 <code>/skyblog/</code> 子目录下链接会拼错</li>
+<li><strong>旋转小花花 <code>&lt;i class=&quot;iconfont icon-sakura rotating&quot;&gt;</code> 要一起搬</strong>，不然两边视觉不一致</li>
+<li>颜色统一 <code>#b9b9b9</code>，和电脑端同色，别一个深灰一个浅灰</li>
+</ol>
+<h3 id="23-4-自检"><a href="#23-4-自检" class="headerlink" title="23.4 自检"></a>23.4 自检</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 旧文案彻底消失（应无输出）</span></span><br><span class="line">grep -rc <span class="string">&#x27;2019 hexo-sakura&#x27;</span> public/ | grep -v <span class="string">&#x27;:0&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 两处都有完整署名</span></span><br><span class="line">grep -c <span class="string">&#x27;托管于&#x27;</span> public/index.html     <span class="comment"># ≥2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 没有漏渲染的 EJS</span></span><br><span class="line">grep -c <span class="string">&#x27;&amp;lt;%-&#x27;</span> public/index.html     <span class="comment"># 0</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="23-5-以后改页脚记得改两处"><a href="#23-5-以后改页脚记得改两处" class="headerlink" title="23.5 以后改页脚记得改两处"></a>23.5 以后改页脚记得改两处</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">themes/sakura/layout/_partial/footer.ejs    # 电脑端</span><br><span class="line">themes/sakura/layout/_partial/mheader.ejs   # 移动端 #mo-nav 抽屉底部</span><br></pre></td></tr></table></figure>
+
+<hr>
 <p><strong>恭喜读到这里！</strong> 现在你已经能从零搭起并上线一个 Hexo + Sakura 博客了。<br>剩下就是多写、多改、多看 <code>npx hexo server</code> 的实时预览。<br>有问题就回看本教程的排错表，或者到 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">Hexo 文档</a> 查。</p>
 
         </div>
@@ -1469,7 +1513,7 @@
     <div class="ins-search-mask"></div>
     <div class="ins-search-container">
         <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Type something..."/>
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
             <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="ins-section-wrapper">
@@ -1481,10 +1525,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
-            // PAGES: 'Pages',
-            CATEGORIES: 'Categories',
-            TAGS: 'Tags',
+            POSTS: '文章',
+            // PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
         },
         ROOT_URL: '/skyblog/',
         CONTENT_URL: '/skyblog/content.json',
@@ -1810,7 +1854,9 @@ $(document).ready(function() {
       </li>
     
   </ul>
-  <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
+  <p style="text-align: center; font-size: 13px; color: #b9b9b9; padding: 0 12px 10px; line-height: 1.8;">
+    <span style="color: #b9b9b9;">© 2026 <a href="/skyblog/" style="color: #b9b9b9; text-decoration: underline dotted rgba(0, 0, 0, .1);">Sky</a> · 基于 <a href="https://hexo.io/" target="_blank" style="color: #b9b9b9; text-decoration: underline dotted rgba(0, 0, 0, .1);">Hexo</a> + <a href="https://github.com/honjun/hexo-theme-sakura" target="_blank" style="color: #b9b9b9; text-decoration: underline dotted rgba(0, 0, 0, .1);">Sakura</a> <i class="iconfont icon-sakura rotating" style="color: #ffc0cb; display: inline-block;"></i> 搭建 · 托管于 <a href="https://pages.github.com/" target="_blank" style="color: #b9b9b9; text-decoration: underline dotted rgba(0, 0, 0, .1);">GitHub Pages</a></span>
+  </p>
 </div>
 <button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
   
