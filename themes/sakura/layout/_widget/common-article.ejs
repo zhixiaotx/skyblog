@@ -1,5 +1,17 @@
 <link rel="stylesheet" type="text/css" href="<%- url_for('/css/sharejs.css') %>">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<%
+  // 文章页作者信息：banner 作者行与底部作者卡片共用
+  // 文章 front-matter 没写 author / avatar / authorLink / authorAbout 时
+  // 会渲染成空链接 + 裂图 + 只有铅笔图标，这里统一回退到站点配置
+  var _author = post.author || config.author || theme.siteName || 'Sky';
+  var _authorLink = post.authorLink || url_for('/about/');
+  var _av = post.avatar || theme.avatar || '';
+  var _avSrc = /^https?:\/\//.test(_av) || _av.indexOf('//') === 0
+    ? _av
+    : (_av.indexOf('/') === 0 ? url_for(_av) : url_for((theme.cdn || '') + _av));
+  var _about = post.authorAbout || '用文字记录技术与生活，欢迎交流。';
+%>
 <div class="pattern-center-blank"></div>
 <% if (post.photos && post.photos.length){ %>
   <div class="pattern-center single-center">
@@ -11,12 +23,12 @@
       <%- post.title %></h1>
       <p class="entry-census">
         <span>
-          <a href="<%- post.authorLink%>">
-            <img src="<%- post.avatar%>">
+          <a href="<%- _authorLink %>">
+            <img src="<%- _avSrc %>" alt="<%- _author %>">
           </a>
         </span>
         <span>
-          <a href="<%- post.authorLink%>"><%- post.author %></a>
+          <a href="<%- _authorLink %>"><%- _author %></a>
         </span>
         <span class="bull">
         ·</span>
@@ -35,7 +47,7 @@
         <% if (!post.photos[0]){ %>
           <header class="entry-header">
             <h1 class="entry-title"><%- post.title %></h1>
-            <p class="entry-census"><%- post.author %>&nbsp;·&nbsp;<%= date(post.date, 'YYYY-M-D') %>&nbsp;·&nbsp;<span id="busuanzi_value_page_pv"></span>次阅读</p></p>
+            <p class="entry-census"><%- _author %>&nbsp;·&nbsp;<%= date(post.date, 'YYYY-M-D') %>&nbsp;·&nbsp;<span id="busuanzi_value_page_pv"></span>次阅读</p>
 
             <hr>
           </header>
@@ -111,16 +123,16 @@
       <%- partial('_partial/comment') %>
       <section class="author-profile">
         <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
-          <a href="<%- post.authorLink %>" class="profile gravatar"><img src="<%- post.avatar%>" itemprop="image" alt="<%- post.author %>" height="70" width="70"></a>
+          <a href="<%- _authorLink %>" class="profile gravatar"><img src="<%- _avSrc %>" itemprop="image" alt="<%- _author %>" height="70" width="70"></a>
           <div class="meta">
             <span class="title">Author</span>
             <h3 itemprop="name">
-            <a href="<%- post.authorLink%>" itemprop="url" rel="author"><%- post.author %></a>
+            <a href="<%- _authorLink %>" itemprop="url" rel="author"><%- _author %></a>
             </h3>
           </div>
         </div>
         <hr>
-        <p><i class="iconfont icon-write"></i><%- post.authorAbout%></p>
+        <p><i class="iconfont icon-write"></i><%- _about %></p>
       </section>
     </main><!-- #main -->
   </div><!-- #primary -->

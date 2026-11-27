@@ -47,6 +47,7 @@
 26. [移动端页脚与电脑端署名统一](#32-移动端页脚与电脑端署名统一)（正文编号 §32）
 27. [清单 / 留言板 / 关于子页 + 友人帐「本站」域名无关](#33-清单--留言板--关于子页--友人帐本站域名无关)（正文编号 §33）
 28. [关于两篇文章改顶级路径 + 清单/留言板改占位页](#34-关于两篇文章改顶级路径--清单留言板改占位页)（正文编号 §34）
+29. [文章页作者信息空头像/空文字修复](#35-文章页作者信息空头像空文字修复)（正文编号 §35）
 
 ---
 
@@ -2188,6 +2189,152 @@ grep -l '占位页，内容待补' public/list/*/index.html public/comment/index
 /list/music/     200（占位）
 /list/gallery/   200（占位）
 /comment/        200（占位）
+```
+
+---
+
+## 35. 文章页作者信息空头像/空文字修复
+
+### 35.1 症状
+
+每篇文章最下面那块作者信息，渲染出来是：
+
+- 一个**空心的圆圈**（应该是圆形头像，图裂了）
+- 圆圈下面一个**孤零零的橙色铅笔图标**（后面本该有作者简介文字，空的）
+- 作者名字和链接也是空的，点不动
+
+### 35.2 定位
+
+看产物 HTML 就能确定：
+
+```html
+<section class="author-profile">
+  <div class="info" ...>
+    <a href="" class="profile gravatar"><img src="" ... height="70" width="70"></a>
+    <div class="meta">
+      <span class="title">Author</span>
+      <h3 itemprop="name"><a href="" itemprop="url" rel="author"></a></h3>
+    </div>
+  </div>
+  <hr>
+  <p><i class="iconfont icon-write"></i></p>
+</section>
+```
+
+`href=""`、`src=""`、作者名为空、简介为空 —— 四个字段全是空字符串。
+
+模板在 `themes/sakura/layout/_widget/common-article.ejs`，原来直接取：
+
+```ejs
+<a href="<%- post.authorLink %>"><img src="<%- post.avatar%>" alt="<%- post.author %>"></a>
+<h3><a href="<%- post.authorLink%>"><%- post.author %></a></h3>
+<p><i class="iconfont icon-write"></i><%- post.authorAbout%></p>
+```
+
+这四个字段属于**单篇文章 front-matter** 里的可选键，我们的文章（尤其批量导入的那 80 多篇）
+一个都没写，于是全部渲染成空。
+
+### 35.3 修法：加站点级回退
+
+```ejs
+<%
+  var _author = post.author || config.author || theme.siteName || 'Sky';
+  var _authorLink = post.authorLink || url_for('/about/');
+  var _av = post.avatar || theme.avatar || '';
+  var _avSrc = /^https?:\/\//.test(_av) || _av.indexOf('//') === 0
+    ? _av
+    : (_av.indexOf('/') === 0 ? url_for(_av) : url_for((theme.cdn || '') + _av));
+  var _about = post.authorAbout || '用文字记录技术与生活，欢迎交流。';
+%>
+<section class="author-profile">
+  <div class="info" ...>
+    <a href="<%- _authorLink %>" class="profile gravatar">
+      <img src="<%- _avSrc %>" itemprop="image" alt="<%- _author %>" height="70" width="70">
+    </a>
+    <div class="meta">
+      <span class="title">Author</span>
+      <h3 itemprop="name"><a href="<%- _authorLink %>" itemprop="url" rel="author"><%- _author %></a></h3>
+    </div>
+  </div>
+  <hr>
+  <p><i class="iconfont icon-write"></i><%- _about %></p>
+</section>
+```
+
+优先级：单篇 front-matter → 站点 `_config.yml` 的 `author` → 主题 `siteName` → 兜底 `Sky`。
+
+头像那段三分类判断和 header、about、links 页用的是同一套（外部 URL 直接用 /
+`/` 开头走 `url_for` / 相对路径才拼 CDN 前缀），这样 `theme.avatar` 配的是
+`/img/favicon.png` 时能正确输出 `/skyblog/img/favicon.png`。
+
+变量块放在模板最顶部（`pattern-center-blank` 之前），因为下面的顶部 banner 也要复用同一组变量（见 35.5）。
+
+### 35.4 自检
+
+```bash
+f=$(ls -d public/2026/*/*/*/index.html | head -1)
+python - "$f" <<'PY'
+import re, sys
+h = open(sys.argv[1], encoding='utf-8').read()
+m = re.search(r'<section class="author-profile".*?</section>', h, re.S)
+s = m.group(0)
+print('空 href:', 'href=""' in s)
+print('空 src :', 'src=""' in s)
+print(s[:400])
+PY
+```
+
+输出应为 `空 href: False`、`空 src : False`，并且能看到 `/skyblog/img/favicon.png` 和作者名。
+
+想全站扫一遍（推荐，能一次确认 162 个页面都没问题）：
+
+```python
+import glob, re
+bad = []
+for p in glob.glob("public/**/index.html", recursive=True):
+    h = open(p, encoding="utf-8").read()
+    for pat in (r'<section class="author-profile".*?</section>', r'<p class="entry-census">.*?</p>'):
+        m = re.search(pat, h, re.S)
+        if m and ('href=""' in m.group(0) or 'src=""' in m.group(0)):
+            bad.append(p)
+print("broken:", len(bad))
+```
+
+实测结果：`author-profile broken: 0`、`entry-census broken: 0`。
+
+### 35.5 顶部 banner 的作者行是同一个 bug
+
+同一个模板 `common-article.ejs` 在文件开头还有一段 banner 作者行，用的是同样那四个裸变量：
+
+```ejs
+<p class="entry-census">
+  <span><a href="<%- post.authorLink%>"><img src="<%- post.avatar%>"></a></span>
+  <span><a href="<%- post.authorLink%>"><%- post.author %></a></span>
+  <span class="bull">·</span><%= date(post.date, 'YYYY-M-D') %><span class="bull">·</span>
+  <span id="busuanzi_value_page_pv"></span>次阅读</p>
+```
+
+产物里就是 `<a href=""></a>` + `<img src="">`，页面上表现为日期前面**多悬着一个孤零零的 `·`**、
+头像位置留白。既然根因相同，一起改成复用同一组变量：
+
+```ejs
+<a href="<%- _authorLink %>"><img src="<%- _avSrc %>" alt="<%- _author %>"></a>
+<a href="<%- _authorLink %>"><%- _author %></a>
+```
+
+没有配图（走 `.entry-header` 分支）的那处 `<%- post.author %>` 也一起换成 `<%- _author %>`。
+
+三处统一后，改一次 front-matter 或一次站点配置，上下两处同时生效，不会再各走各的。
+
+### 35.6 想给某篇文章单独设置作者
+
+在那篇文章的 front-matter 里加即可，会覆盖站点默认值：
+
+```yaml
+author: 某某
+authorLink: https://example.com
+avatar: /img/custom/avatar.jpg
+authorAbout: 这段话会出现在铅笔图标后面
 ```
 
 ---
