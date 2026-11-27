@@ -405,6 +405,7 @@
 
       <link rel="stylesheet" type="text/css" href="/skyblog/css/sharejs.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+
 <div class="pattern-center-blank"></div>
 
   <div class="pattern-center single-center">
@@ -416,12 +417,12 @@
       手把手教程：从零搭建一个 Hexo + Sakura 二次元博客</h1>
       <p class="entry-census">
         <span>
-          <a href="">
-            <img src="">
+          <a href="/skyblog/about/">
+            <img src="/skyblog/img/favicon.png" alt="Sky">
           </a>
         </span>
         <span>
-          <a href=""></a>
+          <a href="/skyblog/about/">Sky</a>
         </span>
         <span class="bull">
         ·</span>
@@ -470,6 +471,7 @@
 <li><a href="#%E7%AC%AC-23-%E6%AD%A5%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%A1%B5%E8%84%9A%E4%B8%8E%E7%94%B5%E8%84%91%E7%AB%AF%E7%BD%B2%E5%90%8D%E7%BB%9F%E4%B8%80">第 23 步：移动端页脚与电脑端署名统一</a></li>
 <li><a href="#%E7%AC%AC-24-%E6%AD%A5%E6%B8%85%E5%8D%95--%E7%95%99%E8%A8%80%E6%9D%BF--%E5%85%B3%E4%BA%8E%E5%AD%90%E9%A1%B5--%E5%8F%8B%E4%BA%BA%E5%B8%90%E6%9C%AC%E7%AB%99%E5%9F%9F%E5%90%8D%E6%97%A0%E5%85%B3">第 24 步：清单 &#x2F; 留言板 &#x2F; 关于子页 + 友人帐「本站」域名无关</a></li>
 <li><a href="#%E7%AC%AC-25-%E6%AD%A5%E5%85%B3%E4%BA%8E%E4%B8%A4%E7%AF%87%E6%96%87%E7%AB%A0%E6%94%B9%E9%A1%B6%E7%BA%A7%E8%B7%AF%E5%BE%84--%E6%B8%85%E5%8D%95%E7%95%99%E8%A8%80%E6%9D%BF%E6%94%B9%E5%8D%A0%E4%BD%8D%E9%A1%B5">第 25 步：关于两篇文章改顶级路径 + 清单&#x2F;留言板改占位页</a></li>
+<li><a href="#%E7%AC%AC-26-%E6%AD%A5%E6%96%87%E7%AB%A0%E9%A1%B5%E4%BD%9C%E8%80%85%E4%BF%A1%E6%81%AF%E7%A9%BA%E5%A4%B4%E5%83%8F--%E7%A9%BA%E6%96%87%E5%AD%97%E4%BF%AE%E5%A4%8D">第 26 步：文章页作者信息空头像 &#x2F; 空文字修复</a></li>
 <li><a href="#%E9%99%84%E5%BD%95-a%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5">附录 A：命令速查</a></li>
 <li><a href="#%E9%99%84%E5%BD%95-b%E8%A1%80%E6%B3%AA%E9%81%BF%E5%9D%91%E6%B8%85%E5%8D%95">附录 B：血泪避坑清单</a></li>
 </ul>
@@ -1561,6 +1563,97 @@
 <li>部署了还 404 → 等 CDN（GitHub Pages 是 <code>max-age=600</code>，最多 10 分钟）</li>
 </ol>
 <hr>
+<h2 id="第-26-步：文章页作者信息空头像-空文字修复"><a href="#第-26-步：文章页作者信息空头像-空文字修复" class="headerlink" title="第 26 步：文章页作者信息空头像 &#x2F; 空文字修复"></a>第 26 步：文章页作者信息空头像 &#x2F; 空文字修复</h2><h3 id="26-1-症状"><a href="#26-1-症状" class="headerlink" title="26.1 症状"></a>26.1 症状</h3><p>每篇文章最下面作者卡片只剩两样东西：</p>
+<ul>
+<li>一个<strong>只有描边的空圆圈</strong>（70×70 的头像框，<code>src</code> 是空字符串，图片加载失败只留下 <code>border-radius: 50%</code> 的边框）</li>
+<li>下方一个<strong>孤立的绿色铅笔图标</strong>（<code>&lt;i class=&quot;iconfont icon-write&quot;&gt;&lt;/i&gt;</code>，后面的简介文字为空）</li>
+</ul>
+<p>作者名字、头像、简介全部不显示。</p>
+<p>顺带还能发现：顶部 banner 的日期前面多悬着一个孤零零的 <code>·</code>，头像位置也是留白 —— 那是同一个 bug。</p>
+<h3 id="26-2-定位：产物里的四个字段全空"><a href="#26-2-定位：产物里的四个字段全空" class="headerlink" title="26.2 定位：产物里的四个字段全空"></a>26.2 定位：产物里的四个字段全空</h3><p>先看构建产物，不要猜 CSS。打开任意一篇的 <code>public/2026/…/index.html</code>，抽作者卡片那段：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep -A3 <span class="string">&#x27;class=&quot;author-profile&quot;&#x27;</span> public/2026/*/index.html | <span class="built_in">head</span> -20</span><br></pre></td></tr></table></figure>
+
+<p>修复前长这样：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span> <span class="attr">class</span>=<span class="string">&quot;profile gravatar&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">itemprop</span>=<span class="string">&quot;image&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span> <span class="attr">height</span>=<span class="string">&quot;70&quot;</span> <span class="attr">width</span>=<span class="string">&quot;70&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h3</span> <span class="attr">itemprop</span>=<span class="string">&quot;name&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span> <span class="attr">itemprop</span>=<span class="string">&quot;url&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;author&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;iconfont icon-write&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>href=&quot;&quot;</code>、<code>src=&quot;&quot;</code>、alt 为空、姓名节点为空、简介节点为空 —— 五个空位一一对应模板里的五个变量。</p>
+<p>翻模板 <a href="file:///c:/Users/12243/WorkBuddy/2026-08-26-19-04-45/hexo-blog/themes/sakura/layout/_widget/common-article.ejs">common-article.ejs</a> 就明白了：它直接取的是<strong>单篇文章 front-matter 里的可选键</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>模板里的变量</th>
+<th>来源</th>
+<th>站内文章有没有写</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>post.author</code></td>
+<td>文章 front-matter <code>author:</code></td>
+<td>没有</td>
+</tr>
+<tr>
+<td><code>post.avatar</code></td>
+<td>文章 front-matter <code>avatar:</code></td>
+<td>没有</td>
+</tr>
+<tr>
+<td><code>post.authorLink</code></td>
+<td>文章 front-matter <code>authorLink:</code></td>
+<td>没有</td>
+</tr>
+<tr>
+<td><code>post.authorAbout</code></td>
+<td>文章 front-matter <code>authorAbout:</code></td>
+<td>没有</td>
+</tr>
+</tbody></table>
+<p>四个键一个都没写 → EJS 取到 <code>undefined</code> → 输出空字符串 → 空链接 + 裂图 + 空署名 + 空简介。<br><strong>这不是样式问题，是数据缺省问题。</strong> 每篇文章都补 front-matter 显然不现实，应该在模板里做站点级回退。</p>
+<h3 id="26-3-修法：模板里加站点级回退"><a href="#26-3-修法：模板里加站点级回退" class="headerlink" title="26.3 修法：模板里加站点级回退"></a>26.3 修法：模板里加站点级回退</h3><p>变量块放在模板<strong>最顶部</strong>（<code>pattern-center-blank</code> 之前），不要塞在作者卡片前面 —— 因为顶部 banner 的作者行也要用同一组变量，见 26.4。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">  // 文章页作者信息：banner 作者行与底部作者卡片共用</span><br><span class="line">  // 文章 front-matter 没写 author / avatar / authorLink / authorAbout 时</span><br><span class="line">  // 会渲染成空链接 + 裂图 + 只有铅笔图标，这里统一回退到站点配置</span><br><span class="line">  var _author = post.author || config.author || theme.siteName || &#x27;Sky&#x27;;</span><br><span class="line">  var _authorLink = post.authorLink || url_for(&#x27;/about/&#x27;);</span><br><span class="line">  var _av = post.avatar || theme.avatar || &#x27;&#x27;;</span><br><span class="line">  var _avSrc = /^https?:\/\//.test(_av) || _av.indexOf(&#x27;//&#x27;) === 0</span><br><span class="line">    ? _av</span><br><span class="line">    : (_av.indexOf(&#x27;/&#x27;) === 0 ? url_for(_av) : url_for((theme.cdn || &#x27;&#x27;) + _av));</span><br><span class="line">  var _about = post.authorAbout || &#x27;用文字记录技术与生活，欢迎交流。&#x27;;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<p>底部作者卡片：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;section class=&quot;author-profile&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;info&quot; itemprop=&quot;author&quot; itemscope=&quot;&quot; itemtype=&quot;https://schema.org/Person&quot;&gt;</span><br><span class="line">    &lt;a href=&quot;&lt;%- _authorLink %&gt;&quot; class=&quot;profile gravatar&quot;&gt;&lt;img src=&quot;&lt;%- _avSrc %&gt;&quot; itemprop=&quot;image&quot; alt=&quot;&lt;%- _author %&gt;&quot; height=&quot;70&quot; width=&quot;70&quot;&gt;&lt;/a&gt;</span><br><span class="line">    &lt;div class=&quot;meta&quot;&gt;</span><br><span class="line">      &lt;span class=&quot;title&quot;&gt;Author&lt;/span&gt;</span><br><span class="line">      &lt;h3 itemprop=&quot;name&quot;&gt;</span><br><span class="line">      &lt;a href=&quot;&lt;%- _authorLink %&gt;&quot; itemprop=&quot;url&quot; rel=&quot;author&quot;&gt;&lt;%- _author %&gt;&lt;/a&gt;</span><br><span class="line">      &lt;/h3&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;hr&gt;</span><br><span class="line">  &lt;p&gt;&lt;i class=&quot;iconfont icon-write&quot;&gt;&lt;/i&gt;&lt;%- _about %&gt;&lt;/p&gt;</span><br><span class="line">&lt;/section&gt;</span><br></pre></td></tr></table></figure>
+
+<p>三点要点：</p>
+<ol>
+<li><strong>优先级</strong>：<code>文章 front-matter</code> &gt; <code>站点配置</code> &gt; <code>硬编码兜底</code>。想给某篇文章单独设置作者时，只写那篇文章的 front-matter 即可覆盖。</li>
+<li><strong>头像是三分支判断</strong>（全站统一规则，header &#x2F; about &#x2F; links 都用同一套）：<ul>
+<li><code>http(s)://</code> 或 <code>//</code> 开头 → 外部地址，原样输出，不拼 <code>cdn</code></li>
+<li><code>/</code> 开头 → 站点内绝对路径，过 <code>url_for()</code> 补 <code>/skyblog</code> 前缀</li>
+<li>相对路径 → <code>url_for(cdn + path)</code></li>
+</ul>
+</li>
+<li><strong>链接用 <code>url_for(&#39;/about/&#39;)</code></strong>，子目录部署时自动变成 <code>/skyblog/about/</code>，自定义域名时是 <code>/about/</code>。</li>
+</ol>
+<h3 id="26-4-顶部-banner-的作者行是同一个-bug"><a href="#26-4-顶部-banner-的作者行是同一个-bug" class="headerlink" title="26.4 顶部 banner 的作者行是同一个 bug"></a>26.4 顶部 banner 的作者行是同一个 bug</h3><p>同一个模板在文件开头还有一段 banner 作者行，用的是同样那四个裸变量：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;p class=&quot;entry-census&quot;&gt;</span><br><span class="line">  &lt;span&gt;&lt;a href=&quot;&lt;%- post.authorLink%&gt;&quot;&gt;&lt;img src=&quot;&lt;%- post.avatar%&gt;&quot;&gt;&lt;/a&gt;&lt;/span&gt;</span><br><span class="line">  &lt;span&gt;&lt;a href=&quot;&lt;%- post.authorLink%&gt;&quot;&gt;&lt;%- post.author %&gt;&lt;/a&gt;&lt;/span&gt;</span><br><span class="line">  &lt;span class=&quot;bull&quot;&gt;·&lt;/span&gt;&lt;%= date(post.date, &#x27;YYYY-M-D&#x27;) %&gt;&lt;span class=&quot;bull&quot;&gt;·&lt;/span&gt;</span><br><span class="line">  &lt;span id=&quot;busuanzi_value_page_pv&quot;&gt;&lt;/span&gt;次阅读&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<p>产物里就是 <code>&lt;a href=&quot;&quot;&gt;&lt;/a&gt;</code> + <code>&lt;img src=&quot;&quot;&gt;</code>，表现是日期前多悬着一个孤零零的 <code>·</code>、头像位置留白。<br>根因相同，改成复用同一组变量：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;a href=&quot;&lt;%- _authorLink %&gt;&quot;&gt;&lt;img src=&quot;&lt;%- _avSrc %&gt;&quot; alt=&quot;&lt;%- _author %&gt;&quot;&gt;&lt;/a&gt;</span><br><span class="line">&lt;a href=&quot;&lt;%- _authorLink %&gt;&quot;&gt;&lt;%- _author %&gt;&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+<p>没有配图（走 <code>.entry-header</code> 分支）的那处 <code>&lt;%- post.author %&gt;</code> 也一起换成 <code>&lt;%- _author %&gt;</code>。</p>
+<blockquote>
+<p>💡 判断「是不是同一个 bug」的方法：看它们是不是都在取 <code>post.author*</code> 这几个可选键。<br>是的话就该共用一份回退逻辑，别在三个地方各写一遍。</p>
+</blockquote>
+<h3 id="26-5-自检"><a href="#26-5-自检" class="headerlink" title="26.5 自检"></a>26.5 自检</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx hexo clean &amp;&amp; npx hexo generate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 抽一段产物，两处都不该有空字段</span></span><br><span class="line">python - &lt;&lt;<span class="string">&#x27;PY&#x27;</span></span><br><span class="line">import glob, re</span><br><span class="line">f = sorted(glob.glob(<span class="string">&#x27;public/2026/**/index.html&#x27;</span>, recursive=True))[0]</span><br><span class="line">h = open(f, encoding=<span class="string">&#x27;utf-8&#x27;</span>).<span class="built_in">read</span>()</span><br><span class="line"><span class="keyword">for</span> pat <span class="keyword">in</span> (r<span class="string">&#x27;&lt;section class=&quot;author-profile&quot;.*?&lt;/section&gt;&#x27;</span>, r<span class="string">&#x27;&lt;p class=&quot;entry-census&quot;&gt;.*?&lt;/p&gt;&#x27;</span>):</span><br><span class="line">    s = re.search(pat, h, re.S)</span><br><span class="line">    <span class="keyword">if</span> s:</span><br><span class="line">        s = s.group(0)</span><br><span class="line">        assert <span class="string">&#x27;href=&quot;&quot;&#x27;</span> not <span class="keyword">in</span> s, <span class="string">&#x27;还有空链接&#x27;</span></span><br><span class="line">        assert <span class="string">&#x27;src=&quot;&quot;&#x27;</span>  not <span class="keyword">in</span> s, <span class="string">&#x27;还有空头像&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;OK&#x27;</span>)</span><br><span class="line">PY</span><br></pre></td></tr></table></figure>
+
+<p>想全站扫一遍（推荐，162 个页面一次确认）：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> glob, re</span><br><span class="line">bad = []</span><br><span class="line"><span class="keyword">for</span> p <span class="keyword">in</span> glob.glob(<span class="string">&quot;public/**/index.html&quot;</span>, recursive=<span class="literal">True</span>):</span><br><span class="line">    h = <span class="built_in">open</span>(p, encoding=<span class="string">&quot;utf-8&quot;</span>).read()</span><br><span class="line">    <span class="keyword">for</span> pat <span class="keyword">in</span> (<span class="string">r&#x27;&lt;section class=&quot;author-profile&quot;.*?&lt;/section&gt;&#x27;</span>, <span class="string">r&#x27;&lt;p class=&quot;entry-census&quot;&gt;.*?&lt;/p&gt;&#x27;</span>):</span><br><span class="line">        m = re.search(pat, h, re.S)</span><br><span class="line">        <span class="keyword">if</span> m <span class="keyword">and</span> (<span class="string">&#x27;href=&quot;&quot;&#x27;</span> <span class="keyword">in</span> m.group(<span class="number">0</span>) <span class="keyword">or</span> <span class="string">&#x27;src=&quot;&quot;&#x27;</span> <span class="keyword">in</span> m.group(<span class="number">0</span>)):</span><br><span class="line">            bad.append(p)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;broken:&quot;</span>, <span class="built_in">len</span>(bad))</span><br></pre></td></tr></table></figure>
+
+<p>修复后应该看到：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/skyblog/about/&quot;</span> <span class="attr">class</span>=<span class="string">&quot;profile gravatar&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/skyblog/img/favicon.png&quot;</span> <span class="attr">itemprop</span>=<span class="string">&quot;image&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Sky&quot;</span> <span class="attr">height</span>=<span class="string">&quot;70&quot;</span> <span class="attr">width</span>=<span class="string">&quot;70&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/skyblog/about/&quot;</span> <span class="attr">itemprop</span>=<span class="string">&quot;url&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;author&quot;</span>&gt;</span>Sky<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;iconfont icon-write&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>用文字记录技术与生活，欢迎交流。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="26-6-给单篇文章单独设置"><a href="#26-6-给单篇文章单独设置" class="headerlink" title="26.6 给单篇文章单独设置"></a>26.6 给单篇文章单独设置</h3><p>想让文章页显示别的作者，只在那篇的 front-matter 里加：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">某篇客座文章</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">访客</span></span><br><span class="line"><span class="attr">avatar:</span> <span class="string">https://example.com/avatar.png</span></span><br><span class="line"><span class="attr">authorLink:</span> <span class="string">https://example.com</span></span><br><span class="line"><span class="attr">authorAbout:</span> <span class="string">一位路过的朋友</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<p>模板的 <code>||</code> 回退会自动让位，不用改任何代码。<strong>上下两处同时生效</strong>，不用分别改。</p>
+<h3 id="26-7-小结"><a href="#26-7-小结" class="headerlink" title="26.7 小结"></a>26.7 小结</h3><ul>
+<li>页面上「只有描边的空圆圈 + 孤立的铅笔图标」&#x3D; 模板变量取到空，不是 CSS 问题</li>
+<li><strong>先看产物 HTML，再改模板</strong>，比在浏览器里调样式快得多</li>
+<li>可选键一律做「文章 &gt; 站点 &gt; 兜底」三级回退，模板才不会因为缺数据变空白</li>
+<li>同一个可选键出现多次时，把取值逻辑提到文件顶部共用，别到处复制</li>
+</ul>
+<hr>
 <p><strong>恭喜读到这里！</strong> 现在你已经能从零搭起并上线一个 Hexo + Sakura 博客了。<br>剩下就是多写、多改、多看 <code>npx hexo server</code> 的实时预览。<br>有问题就回看本教程的排错表，或者到 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">Hexo 文档</a> 查。</p>
 
         </div>
@@ -1631,16 +1724,16 @@
 
       <section class="author-profile">
         <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
-          <a href="" class="profile gravatar"><img src="" itemprop="image" alt="" height="70" width="70"></a>
+          <a href="/skyblog/about/" class="profile gravatar"><img src="/skyblog/img/favicon.png" itemprop="image" alt="Sky" height="70" width="70"></a>
           <div class="meta">
             <span class="title">Author</span>
             <h3 itemprop="name">
-            <a href="" itemprop="url" rel="author"></a>
+            <a href="/skyblog/about/" itemprop="url" rel="author">Sky</a>
             </h3>
           </div>
         </div>
         <hr>
-        <p><i class="iconfont icon-write"></i></p>
+        <p><i class="iconfont icon-write"></i>用文字记录技术与生活，欢迎交流。</p>
       </section>
     </main><!-- #main -->
   </div><!-- #primary -->
