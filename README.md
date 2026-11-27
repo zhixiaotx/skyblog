@@ -45,6 +45,7 @@
 24. [关掉头部背景视频（不自动播放）](#24-关掉头部背景视频不自动播放)
 25. [看板娘挪到左侧 + 社交图标改回品牌色](#31-看板娘挪到左侧--社交图标改回品牌色)（正文编号 §31）
 26. [移动端页脚与电脑端署名统一](#32-移动端页脚与电脑端署名统一)（正文编号 §32）
+27. [清单 / 留言板 / 关于子页 + 友人帐「本站」域名无关](#33-清单--留言板--关于子页--友人帐本站域名无关)（正文编号 §33）
 
 ---
 
@@ -1965,6 +1966,128 @@ grep -c '&lt;%-' public/index.html                    # 0
 ```
 themes/sakura/layout/_partial/footer.ejs    # 电脑端
 themes/sakura/layout/_partial/mheader.ejs   # 移动端（#mo-nav 抽屉底部）
+```
+
+---
+
+## 33. 清单 / 留言板 / 关于子页 + 友人帐「本站」域名无关
+
+### 33.1 新增的页面
+
+| 页面 | 路径 | 源文件 |
+|---|---|---|
+| 清单（总览） | `/list/` | `source/list/index.md` |
+| 书单 | `/list/books/` | `source/list/books/index.md` |
+| 番组 | `/list/bangumi/` | `source/list/bangumi/index.md` |
+| 歌单 | `/list/music/` | `source/list/music/index.md` |
+| 图集 | `/list/gallery/` | `source/list/gallery/index.md` |
+| 留言板 | `/comment/` | `source/comment/index.md` |
+| 关于 → 主题 | `/about/theme/` | `source/about/theme/index.md` |
+| 关于 → Lab | `/about/lab/` | `source/about/lab/index.md` |
+
+全部用默认 `page` 布局，只靠 front-matter 的 `title` / `photos`，没有写新模板。
+
+### 33.2 导航菜单补上「清单」
+
+`_config.sakura.yml` 原本是：
+
+```yaml
+清单: { path: javascript:;, fa: fa-list-ul }   # 点了没反应
+```
+
+改成：
+
+```yaml
+清单: { path: /list/, fa: fa-list-ul }
+```
+
+菜单里的 `path` 由主题 `url_for` 处理，所以写 `/list/` 会正确输出 `/skyblog/list/`。
+
+### 33.3 页面之间的链接用相对路径，别用绝对路径
+
+`source/list/index.md` 里指向子页：
+
+```markdown
+- [书单](books/)
+- [番组](bangumi/)
+```
+
+`source/about/index.md` 里指向子页：
+
+```markdown
+- [主题](theme/)
+- [Lab](lab/)
+```
+
+**为什么不用 `/list/books/`：** 站点部署在 `/skyblog/` 子目录，绝对路径会丢前缀 404；
+绑到自定义域名根目录时又要反过来。相对路径两种场景都对。
+
+图集里引图片也同理，页面在 `/list/gallery/`，所以写 `../../img/wallpaper/xxx.webp`。
+
+> ⚠️ Markdown 里的链接 / 图片 **不会** 经过 `url_for`，只有模板里的才走。
+> 所以 Markdown 里一律用相对路径。
+
+### 33.4 友人帐「本站」：换成任何域名都回首页
+
+`source/links/index.md` 原来写死了地址：
+
+```yaml
+- name: Sky 的博客
+  url: https://skyblog.traesite.cn     # 换域名就跳丢
+```
+
+改成特殊值 `home`：
+
+```yaml
+- name: Sky 的博客
+  url: home
+```
+
+`themes/sakura/layout/links.ejs` 里加一层判断：
+
+```ejs
+<% (group.items||[]).forEach(function (item) {
+     var _url = (item.url === 'home') ? '../' : item.url;
+%>
+  <a class="link-item-inner effect-apollo" href="<%- _url %>" ...>
+```
+
+`../` 从 `/links/` 回到站点根，两种部署都能命中：
+
+| 部署方式 | 页面路径 | `../` 指向 | 结果 |
+|---|---|---|---|
+| GitHub Pages 子目录 | `/skyblog/links/` | `/skyblog/` | ✅ 首页 |
+| 自定义域名根目录 | `/links/` | `/` | ✅ 首页 |
+
+### 33.5 留言板暂时没有评论功能
+
+`_config.sakura.yml` 里评论是关的：
+
+```yaml
+valine: false
+```
+
+所以 `/comment/` 目前只是一张说明页。要真能留言，得配 Valine（LeanCloud 拿 AppID/AppKey）
+或 Waline（自托管 serverURL），页面正文里写了具体步骤。
+
+### 33.6 自检
+
+```bash
+# 8 个新页面都生成了
+for p in list list/books list/bangumi list/music list/gallery comment about/theme about/lab; do
+  test -f "public/$p/index.html" && echo "$p OK"
+done
+
+# 友人帐本站是相对路径
+grep -o 'link-item-inner[^>]*href="[^"]*"' public/links/index.html | head -2
+# → href="../"
+
+# 导航清单指向 /list/
+grep -o 'href="[^"]*list/"[^>]*>[^<]*' public/index.html | head -1
+
+# Markdown 里没有漏 url_for 的绝对路径
+grep -rn '](/img/' source/list source/about | grep -v '../../img'
+# 应无输出
 ```
 
 ---

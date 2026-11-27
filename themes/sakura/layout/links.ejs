@@ -37,9 +37,13 @@
             <div class="link-description"><%- group.desc %></div>
           <% } %>
           <ul class="link-items fontSmooth">
-            <% (group.items||[]).forEach(function (item) { %>
+            <% (group.items||[]).forEach(function (item) {
+                 // url 写 home 时渲染成相对路径 ../，域名无关：
+                 //   /skyblog/links/ + ../ -> /skyblog/   自定义域名 /links/ + ../ -> /
+                 var _url = (item.url === 'home') ? '../' : item.url;
+            %>
               <li class="link-item">
-                <a class="link-item-inner effect-apollo" href="<%- item.url %>" title="<%- item.desc %>" target="_blank" rel="friend">
+                <a class="link-item-inner effect-apollo" href="<%- _url %>" title="<%- item.desc %>" target="_blank" rel="friend">
                   <img class="lazyload" onerror="imgError(this,1)" src="<%- theme.lazyloadImg%>" data-src="<%- item.img %>" src="<%- item.img %>">
                   <span class="sitename">
                   <%- item.name %></span>

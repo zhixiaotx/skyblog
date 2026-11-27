@@ -9,7 +9,9 @@ links:
     desc: 自己的站点
     items:
       - name: Sky 的博客
-        url: https://skyblog.traesite.cn
+        # url 写 home 时由 links.ejs 渲染成相对路径 ../，
+        # 这样挂在 github.io/skyblog/ 还是任何自定义域名根目录，点进来都回首页
+        url: home
         img: /img/favicon.png
         desc: 记录技术与思考
   - group: 常用
