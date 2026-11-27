@@ -417,44 +417,15 @@
   
   <div id="content" class="site-content">
     <article class="post-item post-301 page type-page status-publish has-post-thumbnail hentry">
-      <p>在追的和追完的。评分只是个人口味，别当参考。</p>
-<h2 id="本季在追"><a href="#本季在追" class="headerlink" title="本季在追"></a>本季在追</h2><table>
-<thead>
-<tr>
-<th>作品</th>
-<th>进度</th>
-<th>一句话</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>葬送的芙莉莲</td>
-<td>连载中</td>
-<td>节奏慢得刚好，适合睡前看一集</td>
-</tr>
-<tr>
-<td>迷宫饭</td>
-<td>连载中</td>
-<td>把吃饭这件事拍得特别认真</td>
-</tr>
-<tr>
-<td>孤独摇滚！</td>
-<td>已补完</td>
-<td>社恐的快乐，看完想去学吉他</td>
-</tr>
-</tbody></table>
-<h2 id="追完了"><a href="#追完了" class="headerlink" title="追完了"></a>追完了</h2><ul>
-<li><strong>《紫罗兰永恒花园》</strong> —— 每一帧都能当壁纸，情绪拉得很满</li>
-<li><strong>《强风吹拂》</strong> —— 看完真的想出门跑两公里</li>
-<li><strong>《EVA》</strong> —— 每隔几年重看一次，感受都不一样</li>
-</ul>
-<h2 id="想看"><a href="#想看" class="headerlink" title="想看"></a>想看</h2><ul>
-<li>《夏日重现》</li>
-<li>《赛博朋克：边缘行者》</li>
-</ul>
-<hr>
-<blockquote>
-<p>说明：这一页没接 Bangumi 的 API，是纯手写表格。<br>想自动化的话，可以装 <code>hexo-bangumi</code> 之类的插件，把 front-matter 换成插件要的数据格式。</p>
+      <blockquote>
+<p>占位页，内容待补。</p>
 </blockquote>
+<h2 id="本季在追"><a href="#本季在追" class="headerlink" title="本季在追"></a>本季在追</h2><p><em>（待补）</em></p>
+<h2 id="追完了"><a href="#追完了" class="headerlink" title="追完了"></a>追完了</h2><p><em>（待补）</em></p>
+<h2 id="想看"><a href="#想看" class="headerlink" title="想看"></a>想看</h2><p><em>（待补）</em></p>
+<hr>
+<p>填法：用表格或列表都行，例如</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">| 作品 | 进度 | 一句话 |</span><br><span class="line">| --- | --- | --- |</span><br><span class="line">| 某某番 | 连载中 | 一句话点评 |</span><br></pre></td></tr></table></figure>
 
       <!-- .entry-content -->
       
@@ -504,7 +475,7 @@
     <div class="ins-search-mask"></div>
     <div class="ins-search-container">
         <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Type something..."/>
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
             <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="ins-section-wrapper">
@@ -516,10 +487,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
-            // PAGES: 'Pages',
-            CATEGORIES: 'Categories',
-            TAGS: 'Tags',
+            POSTS: '文章',
+            // PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
         },
         ROOT_URL: '/skyblog/',
         CONTENT_URL: '/skyblog/content.json',

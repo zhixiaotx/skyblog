@@ -417,20 +417,15 @@
   
   <div id="content" class="site-content">
     <article class="post-item post-301 page type-page status-publish has-post-thumbnail hentry">
-      <p>存下来的图。都是站内壁纸，不依赖外链，换图只要替换 <code>source/img/wallpaper/</code> 里对应的文件。</p>
-<h2 id="海边帆船"><a href="#海边帆船" class="headerlink" title="海边帆船"></a>海边帆船</h2><p><img src="/skyblog/../../img/wallpaper/beach-sailboat.webp" alt="海边帆船"></p>
-<h2 id="城市夜色"><a href="#城市夜色" class="headerlink" title="城市夜色"></a>城市夜色</h2><p><img src="/skyblog/../../img/wallpaper/city-night.webp" alt="城市夜景"></p>
-<h2 id="乡村小屋"><a href="#乡村小屋" class="headerlink" title="乡村小屋"></a>乡村小屋</h2><p><img src="/skyblog/../../img/wallpaper/country-cottage.webp" alt="乡村小屋"></p>
-<h2 id="吊床"><a href="#吊床" class="headerlink" title="吊床"></a>吊床</h2><p><img src="/skyblog/../../img/wallpaper/hammock.webp" alt="吊床"></p>
+      <blockquote>
+<p>占位页，内容待补。</p>
+</blockquote>
+<h2 id="第一组"><a href="#第一组" class="headerlink" title="第一组"></a>第一组</h2><p><img src="/skyblog/../../img/wallpaper/beach-sailboat.webp" alt="占位图"></p>
+<h2 id="第二组"><a href="#第二组" class="headerlink" title="第二组"></a>第二组</h2><p><img src="/skyblog/../../img/wallpaper/hammock.webp" alt="占位图"></p>
 <hr>
+<p>填法：图片放 <code>source/img/wallpaper/</code>（或任意 <code>source/img/</code> 子目录），<br>路径写 <code>../../img/xxx.webp</code>。</p>
 <blockquote>
-<p><strong>为什么图片路径写 <code>../../img/...</code> 而不是 <code>/img/...</code></strong></p>
-<p>这个页面生成在 <code>/list/gallery/</code>，<code>../../</code> 正好回到站点根目录。</p>
-<ul>
-<li>部署在 <code>github.io/skyblog/</code> 时：<code>/skyblog/list/gallery/</code> + <code>../../</code> → <code>/skyblog/img/...</code> ✅</li>
-<li>绑到自定义域名根目录时：<code>/list/gallery/</code> + <code>../../</code> → <code>/img/...</code> ✅</li>
-</ul>
-<p>写成 <code>/img/...</code> 的话，子目录部署会丢 <code>/skyblog</code> 前缀，图就裂了。</p>
+<p>为什么要写 <code>../../</code>：这个页面生成在 <code>/list/gallery/</code>，<code>../../</code> 正好回到站点根。<br>部署在 <code>github.io/skyblog/</code> 时得到 <code>/skyblog/img/...</code>，绑到自定义域名根目录时得到 <code>/img/...</code>，两边都对。<br>写成 <code>/img/...</code> 的话子目录部署会丢 <code>/skyblog</code> 前缀，图就裂了。</p>
 </blockquote>
 
       <!-- .entry-content -->
@@ -481,7 +476,7 @@
     <div class="ins-search-mask"></div>
     <div class="ins-search-container">
         <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Type something..."/>
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
             <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="ins-section-wrapper">
@@ -493,10 +488,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
-            // PAGES: 'Pages',
-            CATEGORIES: 'Categories',
-            TAGS: 'Tags',
+            POSTS: '文章',
+            // PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
         },
         ROOT_URL: '/skyblog/',
         CONTENT_URL: '/skyblog/content.json',

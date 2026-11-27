@@ -417,24 +417,23 @@
   
   <div id="content" class="site-content">
     <article class="post-item post-301 page type-page status-publish has-post-thumbnail hentry">
-      <p>随便说点什么吧，不用客气。</p>
-<h2 id="怎么留言"><a href="#怎么留言" class="headerlink" title="怎么留言"></a>怎么留言</h2><p>留言功能走评论系统。当前 <code>_config.sakura.yml</code> 里是：</p>
+      <blockquote>
+<p>占位页。评论系统还没开，所以这里现在是空的。</p>
+</blockquote>
+<h2 id="怎么让它真能留言"><a href="#怎么让它真能留言" class="headerlink" title="怎么让它真能留言"></a>怎么让它真能留言</h2><p><code>_config.sakura.yml</code> 里现在是：</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 评论系统：暂不启用（如需可配置 Valine / Waline）</span></span><br><span class="line"><span class="attr">valine:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
 
-<p>所以这一页暂时是空白的留言区。想让它真的能留言，二选一：</p>
-<h3 id="方案-A：Valine（LeanCloud）"><a href="#方案-A：Valine（LeanCloud）" class="headerlink" title="方案 A：Valine（LeanCloud）"></a>方案 A：Valine（LeanCloud）</h3><ol>
-<li>去 <a target="_blank" rel="noopener" href="https://console.leancloud.app/">LeanCloud</a> 建一个国际版应用</li>
-<li>在「设置 → 应用凭证」拿到 <code>AppID</code> &#x2F; <code>AppKey</code></li>
-<li>填进 <code>_config.sakura.yml</code>：</li>
-</ol>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">valine:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">valine_appid:</span> <span class="string">你的AppID</span></span><br><span class="line"><span class="attr">valine_appkey:</span> <span class="string">你的AppKey</span></span><br><span class="line"><span class="attr">valine_placeholder:</span> <span class="string">随便说点什么吧...</span></span><br></pre></td></tr></table></figure>
+<p>二选一配好就生效：</p>
+<p><strong>方案 A：Valine（LeanCloud）</strong></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">valine:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">valine_appid:</span> <span class="string">你的AppID</span>      <span class="comment"># LeanCloud 国际版 → 设置 → 应用凭证</span></span><br><span class="line"><span class="attr">valine_appkey:</span> <span class="string">你的AppKey</span></span><br><span class="line"><span class="attr">valine_placeholder:</span> <span class="string">随便说点什么吧...</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="方案-B：Waline（可自托管）"><a href="#方案-B：Waline（可自托管）" class="headerlink" title="方案 B：Waline（可自托管）"></a>方案 B：Waline（可自托管）</h3><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">waline:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">serverURL:</span> <span class="string">https://你的waline实例</span></span><br></pre></td></tr></table></figure>
+<p><strong>方案 B：Waline（可自托管）</strong></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">waline:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">serverURL:</span> <span class="string">https://你的waline实例</span></span><br></pre></td></tr></table></figure>
 
-<p>改完 <code>npx hexo clean &amp;&amp; npx hexo generate</code> 重新部署即可。</p>
+<p>改完 <code>npx hexo clean &amp;&amp; npx hexo generate</code> 重新部署。</p>
 <h2 id="先在这里找我"><a href="#先在这里找我" class="headerlink" title="先在这里找我"></a>先在这里找我</h2><ul>
 <li>GitHub：<a target="_blank" rel="noopener" href="https://github.com/zhixiaotx">@zhixiaotx</a></li>
-<li>邮箱：<a href="mailto:&#x6c;&#x69;&#117;&#x6c;&#x69;&#117;&#x31;&#57;&#57;&#48;&#x31;&#49;&#49;&#48;&#64;&#x67;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;">liuliu19901110@gmail.com</a></li>
+<li>邮箱：<a href="mailto:&#108;&#105;&#x75;&#x6c;&#x69;&#x75;&#x31;&#x39;&#57;&#48;&#49;&#49;&#49;&#48;&#x40;&#103;&#109;&#x61;&#x69;&#x6c;&#46;&#99;&#x6f;&#109;">liuliu19901110@gmail.com</a></li>
 </ul>
 <hr>
 <blockquote>
@@ -489,7 +488,7 @@
     <div class="ins-search-mask"></div>
     <div class="ins-search-container">
         <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Type something..."/>
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
             <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="ins-section-wrapper">
@@ -501,10 +500,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
-            // PAGES: 'Pages',
-            CATEGORIES: 'Categories',
-            TAGS: 'Tags',
+            POSTS: '文章',
+            // PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
         },
         ROOT_URL: '/skyblog/',
         CONTENT_URL: '/skyblog/content.json',

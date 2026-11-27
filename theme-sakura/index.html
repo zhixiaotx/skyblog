@@ -463,7 +463,7 @@
 <h2 id="配置是怎么覆盖的"><a href="#配置是怎么覆盖的" class="headerlink" title="配置是怎么覆盖的"></a>配置是怎么覆盖的</h2><p>关键点：<code>hexo-blog/_config.sakura.yml</code> 会<strong>深合并</strong>覆盖主题自己的 <code>_config.yml</code>。<br>同名键覆盖、缺失的继承。所以想删掉主题里某个数组项，光改站点配置不够，<br>得连主题那份一起改——这点在配社交图标时踩过。</p>
 <h2 id="想换主题的话"><a href="#想换主题的话" class="headerlink" title="想换主题的话"></a>想换主题的话</h2><p>Hexo 换主题只要三步：把主题目录放进 <code>themes/</code>，改根 <code>_config.yml</code> 的 <code>theme:</code>，<br>再按新主题的要求补齐配置。但注意我们的自定义改动全在 <code>themes/sakura/</code> 里，<br>换主题等于那些改动全部失效，得重新来一遍。</p>
 <hr>
-<p>→ 返回 <a href="../">关于我</a></p>
+<p>→ 返回 <a href="../about/">关于我</a></p>
 
       <!-- .entry-content -->
       
@@ -513,7 +513,7 @@
     <div class="ins-search-mask"></div>
     <div class="ins-search-container">
         <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Type something..."/>
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
             <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="ins-section-wrapper">
@@ -525,10 +525,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
-            // PAGES: 'Pages',
-            CATEGORIES: 'Categories',
-            TAGS: 'Tags',
+            POSTS: '文章',
+            // PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
         },
         ROOT_URL: '/skyblog/',
         CONTENT_URL: '/skyblog/content.json',
