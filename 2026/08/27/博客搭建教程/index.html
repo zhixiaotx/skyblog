@@ -300,7 +300,7 @@
               </li>
             
               <li>
-                <a href="javascript:;">
+                <a href="/skyblog/list/">
                   <span class="faa-parent animated-hover">
                     <i class="fa  fa-list-ul" aria-hidden="true"></i>
                     清单
@@ -468,6 +468,7 @@
 <li><a href="#%E7%AC%AC-21-%E6%AD%A5%E5%85%B3%E6%8E%89%E5%A4%B4%E9%83%A8%E8%87%AA%E5%8A%A8%E6%92%AD%E6%94%BE%E7%9A%84%E8%83%8C%E6%99%AF%E8%A7%86%E9%A2%91">第 21 步：关掉头部自动播放的背景视频</a></li>
 <li><a href="#%E7%AC%AC-22-%E6%AD%A5%E7%9C%8B%E6%9D%BF%E5%A8%98%E6%8C%AA%E5%88%B0%E5%B7%A6%E4%BE%A7--%E7%A4%BE%E4%BA%A4%E5%9B%BE%E6%A0%87%E6%94%B9%E5%9B%9E%E5%93%81%E7%89%8C%E8%89%B2">第 22 步：看板娘挪到左侧 + 社交图标改回品牌色</a></li>
 <li><a href="#%E7%AC%AC-23-%E6%AD%A5%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%A1%B5%E8%84%9A%E4%B8%8E%E7%94%B5%E8%84%91%E7%AB%AF%E7%BD%B2%E5%90%8D%E7%BB%9F%E4%B8%80">第 23 步：移动端页脚与电脑端署名统一</a></li>
+<li><a href="#%E7%AC%AC-24-%E6%AD%A5%E6%B8%85%E5%8D%95--%E7%95%99%E8%A8%80%E6%9D%BF--%E5%85%B3%E4%BA%8E%E5%AD%90%E9%A1%B5--%E5%8F%8B%E4%BA%BA%E5%B8%90%E6%9C%AC%E7%AB%99%E5%9F%9F%E5%90%8D%E6%97%A0%E5%85%B3">第 24 步：清单 &#x2F; 留言板 &#x2F; 关于子页 + 友人帐「本站」域名无关</a></li>
 <li><a href="#%E9%99%84%E5%BD%95-a%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5">附录 A：命令速查</a></li>
 <li><a href="#%E9%99%84%E5%BD%95-b%E8%A1%80%E6%B3%AA%E9%81%BF%E5%9D%91%E6%B8%85%E5%8D%95">附录 B：血泪避坑清单</a></li>
 </ul>
@@ -1421,6 +1422,114 @@
 <h3 id="23-5-以后改页脚记得改两处"><a href="#23-5-以后改页脚记得改两处" class="headerlink" title="23.5 以后改页脚记得改两处"></a>23.5 以后改页脚记得改两处</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">themes/sakura/layout/_partial/footer.ejs    # 电脑端</span><br><span class="line">themes/sakura/layout/_partial/mheader.ejs   # 移动端 #mo-nav 抽屉底部</span><br></pre></td></tr></table></figure>
 
 <hr>
+<h2 id="第-24-步：清单-留言板-关于子页-友人帐「本站」域名无关"><a href="#第-24-步：清单-留言板-关于子页-友人帐「本站」域名无关" class="headerlink" title="第 24 步：清单 &#x2F; 留言板 &#x2F; 关于子页 + 友人帐「本站」域名无关"></a>第 24 步：清单 &#x2F; 留言板 &#x2F; 关于子页 + 友人帐「本站」域名无关</h2><h3 id="24-1-要加哪些页面"><a href="#24-1-要加哪些页面" class="headerlink" title="24.1 要加哪些页面"></a>24.1 要加哪些页面</h3><table>
+<thead>
+<tr>
+<th>页面</th>
+<th>路径</th>
+<th>源文件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>清单（总览）</td>
+<td><code>/list/</code></td>
+<td><code>source/list/index.md</code></td>
+</tr>
+<tr>
+<td>书单</td>
+<td><code>/list/books/</code></td>
+<td><code>source/list/books/index.md</code></td>
+</tr>
+<tr>
+<td>番组</td>
+<td><code>/list/bangumi/</code></td>
+<td><code>source/list/bangumi/index.md</code></td>
+</tr>
+<tr>
+<td>歌单</td>
+<td><code>/list/music/</code></td>
+<td><code>source/list/music/index.md</code></td>
+</tr>
+<tr>
+<td>图集</td>
+<td><code>/list/gallery/</code></td>
+<td><code>source/list/gallery/index.md</code></td>
+</tr>
+<tr>
+<td>留言板</td>
+<td><code>/comment/</code></td>
+<td><code>source/comment/index.md</code></td>
+</tr>
+<tr>
+<td>关于 → 主题</td>
+<td><code>/about/theme/</code></td>
+<td><code>source/about/theme/index.md</code></td>
+</tr>
+<tr>
+<td>关于 → Lab</td>
+<td><code>/about/lab/</code></td>
+<td><code>source/about/lab/index.md</code></td>
+</tr>
+</tbody></table>
+<p>新建页面的套路就三步：建目录 → 里面放 <code>index.md</code> → front-matter 写 <code>title</code>。</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 书单</span><br><span class="line">layout: default</span><br><span class="line"><span class="section">photos: /img/wallpaper/bookshelf.webp</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line">正文用普通 Markdown 写。</span><br></pre></td></tr></table></figure>
+
+<p><code>layout: default</code> 走主题的 <code>page.ejs</code>，不用写任何模板代码。<br><code>photos</code> 是这一页的顶部封面图。</p>
+<h3 id="24-2-导航菜单把「清单」接上"><a href="#24-2-导航菜单把「清单」接上" class="headerlink" title="24.2 导航菜单把「清单」接上"></a>24.2 导航菜单把「清单」接上</h3><p><code>_config.sakura.yml</code> 原来是这样：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">清单:</span> &#123; <span class="attr">path:</span> <span class="string">javascript:;</span>, <span class="attr">fa:</span> <span class="string">fa-list-ul</span> &#125;   <span class="comment"># 点了没任何反应</span></span><br></pre></td></tr></table></figure>
+
+<p>改成真链接：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">清单:</span> &#123; <span class="attr">path:</span> <span class="string">/list/</span>, <span class="attr">fa:</span> <span class="string">fa-list-ul</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>菜单里的 <code>path</code> 会被主题的 <code>url_for</code> 处理，写 <code>/list/</code> 最终输出 <code>/skyblog/list/</code>，正确。</p>
+<h3 id="24-3-页面之间的链接：一律相对路径"><a href="#24-3-页面之间的链接：一律相对路径" class="headerlink" title="24.3 页面之间的链接：一律相对路径"></a>24.3 页面之间的链接：一律相对路径</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">&lt;!-- source/list/index.md --&gt;</span><br><span class="line"><span class="bullet">-</span> [<span class="string">书单</span>](<span class="link">books/</span>)</span><br><span class="line"><span class="bullet">-</span> [<span class="string">番组</span>](<span class="link">bangumi/</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">&lt;!-- source/about/index.md --&gt;</span><br><span class="line"><span class="bullet">-</span> [<span class="string">主题</span>](<span class="link">theme/</span>)</span><br><span class="line"><span class="bullet">-</span> [<span class="string">Lab</span>](<span class="link">lab/</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">&lt;!-- source/list/gallery/index.md --&gt;</span><br><span class="line">![<span class="string">海边帆船</span>](<span class="link">../../img/wallpaper/beach-sailboat.webp</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>🚨 <strong>最容易踩的坑</strong>：Markdown 里的链接和图片 <strong>不会</strong> 过 <code>url_for</code>。<br>只有 EJS 模板里的 <code>&lt;%- url_for() %&gt;</code> 才会补 <code>/skyblog</code> 前缀。<br>所以在 Markdown 里写 <code>/list/books/</code> 这种绝对路径，子目录部署直接 404。<br>用相对路径，子目录和自定义域名根目录两种部署都对。</p>
+</blockquote>
+<h3 id="24-4-友人帐「本站」：换任何域名都回首页"><a href="#24-4-友人帐「本站」：换任何域名都回首页" class="headerlink" title="24.4 友人帐「本站」：换任何域名都回首页"></a>24.4 友人帐「本站」：换任何域名都回首页</h3><p><code>source/links/index.md</code> 原来写死了域名：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Sky</span> <span class="string">的博客</span></span><br><span class="line">  <span class="attr">url:</span> <span class="string">https://skyblog.traesite.cn</span></span><br></pre></td></tr></table></figure>
+
+<p>换个域名访问就跳丢了。改成特殊值：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Sky</span> <span class="string">的博客</span></span><br><span class="line">  <span class="attr">url:</span> <span class="string">home</span></span><br></pre></td></tr></table></figure>
+
+<p>然后在 <code>themes/sakura/layout/links.ejs</code> 的循环里加判断：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;% (group.items||[]).forEach(function (item) &#123;</span><br><span class="line">     var _url = (item.url === &#x27;home&#x27;) ? &#x27;../&#x27; : item.url;</span><br><span class="line">%&gt;</span><br><span class="line">  &lt;a class=&quot;link-item-inner effect-apollo&quot; href=&quot;&lt;%- _url %&gt;&quot; ...&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>../</code> 从 <code>/links/</code> 回到站点根：</p>
+<table>
+<thead>
+<tr>
+<th>部署方式</th>
+<th>页面路径</th>
+<th><code>../</code> 去向</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GitHub Pages 子目录</td>
+<td><code>/skyblog/links/</code></td>
+<td><code>/skyblog/</code> ✅</td>
+</tr>
+<tr>
+<td>自定义域名根目录</td>
+<td><code>/links/</code></td>
+<td><code>/</code> ✅</td>
+</tr>
+</tbody></table>
+<h3 id="24-5-留言板为什么还不能留言"><a href="#24-5-留言板为什么还不能留言" class="headerlink" title="24.5 留言板为什么还不能留言"></a>24.5 留言板为什么还不能留言</h3><p><code>_config.sakura.yml</code> 里评论是关的：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">valine:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>想把留言板做成真能留言，配 Valine 或 Waline：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 方案 A：Valine</span></span><br><span class="line"><span class="attr">valine:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">valine_appid:</span> <span class="string">你的AppID</span>      <span class="comment"># LeanCloud 国际版 → 设置 → 应用凭证</span></span><br><span class="line"><span class="attr">valine_appkey:</span> <span class="string">你的AppKey</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方案 B：Waline（可自托管）</span></span><br><span class="line"><span class="attr">waline:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">serverURL:</span> <span class="string">https://你的waline实例</span></span><br></pre></td></tr></table></figure>
+
+<p>改完 <code>npx hexo clean &amp;&amp; npx hexo generate</code> 重新部署。</p>
+<h3 id="24-6-自检"><a href="#24-6-自检" class="headerlink" title="24.6 自检"></a>24.6 自检</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 8 个页面都生成了</span></span><br><span class="line"><span class="keyword">for</span> p <span class="keyword">in</span> list list/books list/bangumi list/music list/gallery comment about/theme about/lab; <span class="keyword">do</span></span><br><span class="line">  <span class="built_in">test</span> -f <span class="string">&quot;public/<span class="variable">$p</span>/index.html&quot;</span> &amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$p</span> OK&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 友人帐本站是相对路径</span></span><br><span class="line">grep -o <span class="string">&#x27;href=&quot;\.\./&quot;&#x27;</span> public/links/index.html</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导航清单已接上</span></span><br><span class="line">grep -o <span class="string">&#x27;href=&quot;[^&quot;]*list/&quot;&#x27;</span> public/index.html | <span class="built_in">head</span> -1</span><br></pre></td></tr></table></figure>
+
+<hr>
 <p><strong>恭喜读到这里！</strong> 现在你已经能从零搭起并上线一个 Hexo + Sakura 博客了。<br>剩下就是多写、多改、多看 <code>npx hexo server</code> 的实时预览。<br>有问题就回看本教程的排错表，或者到 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">Hexo 文档</a> 查。</p>
 
         </div>
@@ -1470,15 +1579,15 @@
           
             <div class="post-nepre half next">
           
-            <a href="/skyblog/2026/08/27/GitHub%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/" rel="next">
+            <a href="/skyblog/2026/08/27/%E5%85%B3%E4%BA%8E-GitHub-%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B%E6%83%85/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="/skyblog/img/wallpaper/city-night.webp" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="/skyblog/img/wallpaper/bookshelf.webp" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                GitHub从入门到精通</h3>
+                关于-GitHub-的一些事情</h3>
                 <hr>
               </div>
             </a>
@@ -1513,7 +1622,7 @@
     <div class="ins-search-mask"></div>
     <div class="ins-search-container">
         <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
+            <input type="text" class="ins-search-input" placeholder="Type something..."/>
             <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="ins-section-wrapper">
@@ -1525,10 +1634,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: '文章',
-            // PAGES: '页面',
-            CATEGORIES: '分类',
-            TAGS: '标签',
+            POSTS: 'Posts',
+            // PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
         },
         ROOT_URL: '/skyblog/',
         CONTENT_URL: '/skyblog/content.json',
@@ -1757,7 +1866,7 @@ $(document).ready(function() {
       </li>
     
       <li>
-        <a href="javascript:;">
+        <a href="/skyblog/list/">
           <span class="faa-parent animated-hover">
             <i class="fa  fa-list-ul" aria-hidden="true"></i>
             清单
