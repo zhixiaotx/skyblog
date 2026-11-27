@@ -5,7 +5,7 @@ keywords: null
 author: Sky
 language: zh-CN
 timezone: Asia/Shanghai
-url: https://skyblog.pages.dev
+url: https://skyblog.traesite.cn
 root: /
 permalink: ':year/:month/:day/:title/'
 permalink_defaults: null

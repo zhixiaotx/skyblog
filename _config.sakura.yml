@@ -13,16 +13,17 @@ siteName: Sky
 favicon: /img/favicon.png
 avatar: /img/favicon.png
 
-# 首页头像下方的社交链接（顺序即显示顺序；img 为图标，实际加载时自动拼主题 CDN 前缀）
+# 首页头像下方的社交链接（顺序即显示顺序；img 以 / 开头时使用本地文件 source/img/social/，
+# 只有相对路径才会自动拼主题 CDN 前缀。图标已改为本地 SVG，避免 CDN 裂图）
 # 想换成自己的主页，把 url 改成对应地址即可；带 qrcode 的会在鼠标悬停时弹二维码
 social:
-  github: {url: https://github.com/zhixiaotx, img: /img/social/github.png}
-  sina: {url: https://weibo.com/, img: /img/social/sina.png}
-  wangyiyun: {url: https://music.163.com/, img: /img/social/wangyiyun.png}
-  zhihu: {url: https://www.zhihu.com/, img: /img/social/zhihu.png}
+  github: {url: https://github.com/zhixiaotx, img: /img/social/github.svg}
+  sina: {url: https://weibo.com/, img: /img/social/sina.svg}
+  wangyiyun: {url: https://music.163.com/, img: /img/social/wangyiyun.svg}
+  zhihu: {url: https://www.zhihu.com/, img: /img/social/zhihu.svg}
   email: {url: mailto:liuliu19901110@gmail.com, img: /img/social/email.svg}
-  wechat: {url: https://weixin.qq.com/, img: /img/social/wechat.png, qrcode: /img/custom/wechat.webp}
-  wechat2: {url: https://mp.weixin.qq.com/, img: /img/social/wechat.png, qrcode: /img/custom/wechat-mp.webp}
+  wechat: {url: https://weixin.qq.com/, img: /img/social/wechat.svg, qrcode: /img/custom/wechat.webp}
+  wechat2: {url: https://mp.weixin.qq.com/, img: /img/social/wechat.svg, qrcode: /img/custom/wechat-mp.webp}
   # 二维码换图：直接替换 source/img/custom/wechat.webp 与 wechat-mp.webp（文件名不变）
   # 也可以把 qrcode 写成完整外链，例如 qrcode: https://example.com/my-wechat-qr.png
 
