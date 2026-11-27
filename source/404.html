@@ -4,7 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>404 - 页面走丢了 | Sky</title>
-  <link rel="icon" href="/img/favicon.png">
+  <script>
+    /* 站点根前缀：GitHub Pages 子目录部署是 /skyblog，自定义域名代理时是根目录。
+       必须在这里同步算出来，后面的链接/图片都靠它拼，避免写死 /skyblog/ 在自定义域名下 404 */
+    window.SITE_PREFIX = location.pathname.indexOf('/skyblog/') === 0 ? '/skyblog' : '';
+  </script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; }
@@ -14,10 +18,11 @@
       color: #fff;
       overflow: hidden;
     }
-    /* 背景壁纸（本地，自适应 cover） */
+    /* 背景壁纸（本地，自适应 cover）：图片地址由脚本按 SITE_PREFIX 注入，
+       这里只留渐变兜底，避免子目录/自定义域名两种部署下请求错路径 */
     .bg {
       position: fixed; inset: 0;
-      background: url(/skyblog/img/wallpaper/night-clouds.webp) center/cover no-repeat;
+      background: radial-gradient(circle at 50% 32%, #1b2a41, #0d1117 70%) center/cover no-repeat;
       filter: brightness(0.55) saturate(1.1);
       transform: scale(1.05);
       animation: slowzoom 20s ease-in-out infinite alternate;
@@ -110,10 +115,28 @@
     <div class="sub">呀，页面不小心走丢了 🌸</div>
     <p class="msg">你访问的页面可能已被移动、删除，或者从来没有存在过。<br>不如回到首页，看看别的风景吧～</p>
     <div class="btn">
-      <a href="/skyblog/">回到首页</a>
-      <a class="ghost" href="/skyblog/archives/">浏览文章</a>
+      <!-- 静态值用相对路径：JS 失效时单层错误地址也能回到站点根，不写死 /skyblog/ -->
+      <a href="./" id="lnk-home">回到首页</a>
+      <a class="ghost" href="./archives/" id="lnk-archives">浏览文章</a>
     </div>
   </div>
+  <script>
+    // 按站点根前缀修正链接与资源地址
+    (function () {
+      var P = window.SITE_PREFIX || '';
+
+      document.getElementById('lnk-home').href = P + '/';
+      document.getElementById('lnk-archives').href = P + '/archives/';
+
+      var bg = document.querySelector('.bg');
+      if (bg) bg.style.backgroundImage = 'url("' + P + '/img/wallpaper/night-clouds.webp")';
+
+      var icon = document.createElement('link');
+      icon.rel = 'icon';
+      icon.href = P + '/img/favicon.png';
+      document.head.appendChild(icon);
+    })();
+  </script>
   <script>
     // 生成樱花飘落（移动端减少数量，保证流畅）
     (function () {

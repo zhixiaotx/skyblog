@@ -31,6 +31,7 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
+  - 404.html # 404 页是自带完整 HTML 的独立文件，原样复制，不套主题 layout
 
 # Writing
 new_post_name: :title.md # File name of new posts

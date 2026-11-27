@@ -48,6 +48,7 @@
 27. [清单 / 留言板 / 关于子页 + 友人帐「本站」域名无关](#33-清单--留言板--关于子页--友人帐本站域名无关)（正文编号 §33）
 28. [关于两篇文章改顶级路径 + 清单/留言板改占位页](#34-关于两篇文章改顶级路径--清单留言板改占位页)（正文编号 §34）
 29. [文章页作者信息空头像/空文字修复](#35-文章页作者信息空头像空文字修复)（正文编号 §35）
+30. [404 页链接不再写死 /skyblog/ 前缀](#36-404-页链接不再写死-skyblog-前缀)（正文编号 §36）
 
 ---
 
@@ -2336,6 +2337,135 @@ authorLink: https://example.com
 avatar: /img/custom/avatar.jpg
 authorAbout: 这段话会出现在铅笔图标后面
 ```
+
+---
+
+## 36. 404 页链接不再写死 `/skyblog/` 前缀
+
+### 36.1 症状
+
+访问一个不存在的地址，404 页面上「浏览文章」按钮跳到：
+
+```
+https://skyblog.rainsky.cc.cd/skyblog/archives/   ← 404
+```
+
+而正确的应该是 `https://skyblog.rainsky.cc.cd/archives/`。
+
+### 36.2 原因
+
+`source/404.html` 里两个按钮是**硬编码**的：
+
+```html
+<a href="/skyblog/">回到首页</a>
+<a class="ghost" href="/skyblog/archives/">浏览文章</a>
+```
+
+`/skyblog` 这个前缀只属于 GitHub Pages 的**子目录部署**（`zhixiaotx.github.io/skyblog/`）。
+一旦用自定义域名（`skyblog.rainsky.cc.cd`）把站点挂在根目录，`/skyblog/archives/` 就不存在了。
+
+同一个问题还藏在背景图和 favicon 上：
+
+```css
+.bg { background: url(/skyblog/img/wallpaper/night-clouds.webp) ... }  /* 自定义域名下裂图 */
+```
+
+```html
+<link rel="icon" href="/img/favicon.png">   /* 子目录部署下裂图 */
+```
+
+### 36.3 为什么不能直接写相对路径
+
+404 是服务器兜底页，浏览器地址栏保留的是**用户输错的那个地址**，深度不固定：
+
+| 出错地址 | `./` 解析结果 | 对不对 |
+| --- | --- | --- |
+| `/nonexistent` | `/` | ✅ |
+| `/nonexistent/deep/path` | `/nonexistent/deep/` | ❌ |
+
+所以单靠 `../` 这类相对路径，深层 404 会算错。做法是**静态值给相对路径 + 脚本按站点根前缀修正**，两层保险。
+
+### 36.4 改法
+
+head 里先同步算出前缀（此时还没 DOM，只能算）：
+
+```html
+<script>
+  /* 站点根前缀：GitHub Pages 子目录部署是 /skyblog，自定义域名代理时是根目录 */
+  window.SITE_PREFIX = location.pathname.indexOf('/skyblog/') === 0 ? '/skyblog' : '';
+</script>
+```
+
+按钮先写相对路径（脚本没执行时单层 404 也能用）：
+
+```html
+<a href="./" id="lnk-home">回到首页</a>
+<a class="ghost" href="./archives/" id="lnk-archives">浏览文章</a>
+```
+
+body 末尾统一修正链接、背景图和 favicon：
+
+```js
+(function () {
+  var P = window.SITE_PREFIX || '';
+
+  document.getElementById('lnk-home').href = P + '/';
+  document.getElementById('lnk-archives').href = P + '/archives/';
+
+  var bg = document.querySelector('.bg');
+  if (bg) bg.style.backgroundImage = 'url("' + P + '/img/wallpaper/night-clouds.webp")';
+
+  var icon = document.createElement('link');
+  icon.rel = 'icon';
+  icon.href = P + '/img/favicon.png';
+  document.head.appendChild(icon);
+})();
+```
+
+背景图的 CSS 里只留渐变兜底，不要写 `url()` —— 否则脚本之前浏览器会先发一个错误路径的请求：
+
+```css
+.bg {
+  background: radial-gradient(circle at 50% 32%, #1b2a41, #0d1117 70%) center/cover no-repeat;
+}
+```
+
+### 36.5 顺带：让 404 页别再套主题 layout
+
+Hexo 会把 `source/404.html` 当成普通 page 渲染，塞进主题的 header/footer 里 ——
+成品 `404.html` 有 500 多行，还带着整套主题 CSS/JS 和一堆 `/skyblog/` 绝对路径。
+
+在 `_config.yml` 里让它原样复制：
+
+```yaml
+skip_render:
+  - 404.html # 404 页是自带完整 HTML 的独立文件，原样复制，不套主题 layout
+```
+
+改完产物只剩 158 行，`/skyblog/` 只出现在前缀判断那一行里。
+
+### 36.6 自检
+
+```bash
+npx hexo clean && npx hexo generate
+
+# 1. 不应再套主题 layout
+grep -c 'saukra_css' public/404.html   # 期望 0
+wc -l public/404.html                  # 期望 ~158
+
+# 2. 硬编码前缀只剩判断那一行
+grep -n '/skyblog/' public/404.html
+
+# 3. 两个按钮存在且 id 正确
+grep -n 'lnk-home\|lnk-archives' public/404.html
+```
+
+浏览器实测两种部署：
+
+| 访问地址 | 「浏览文章」应指向 |
+| --- | --- |
+| `https://zhixiaotx.github.io/skyblog/xxx` | `/skyblog/archives/` |
+| `https://skyblog.rainsky.cc.cd/xxx` | `/archives/` |
 
 ---
 
