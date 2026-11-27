@@ -7854,3 +7854,11 @@ td.hljs-ln-numbers {
 @media(max-width:1200px) {
     .toc {display: none;}
 }
+
+/* ===== Live2D 看板娘定位：固定在页面左侧，抬到音乐播放器（#myhkplayer，左下 300×181）上方，互不遮挡 ===== */
+#live2d-widget.live2d-widget-container {
+    left: 0 !important;
+    right: auto !important;
+    bottom: 240px !important;
+    z-index: 9000 !important;
+}

@@ -43,6 +43,7 @@
 22. [导航栏站名左边加头像](#22-导航栏站名左边加头像)
 23. [去掉标题后面的 ¶ 符号](#23-去掉标题后面的--符号)
 24. [关掉头部背景视频（不自动播放）](#24-关掉头部背景视频不自动播放)
+25. [看板娘挪到左侧 + 社交图标改回品牌色](#31-看板娘挪到左侧--社交图标改回品牌色)（正文编号 §31）
 
 ---
 
@@ -1824,6 +1825,68 @@ ls public/links/index.html public/donate/index.html
 curl -sI https://skyblog.traesite.cn/links/  | head -1     # 200
 curl -sI https://skyblog.traesite.cn/donate/ | head -1     # 200
 ```
+
+---
+
+## 31. 看板娘挪到左侧 + 社交图标改回品牌色
+
+### 31.1 问题
+
+1. Live2D 看板娘默认在右下角，和音乐播放器（`#myhkplayer`，左下 300×181）挤在一起、互相遮挡。
+2. 首页 banner 中间那排社交图标（`.top-social_v2`）全是白色剪影，看不出是哪个平台。
+
+### 31.2 看板娘：改 `position` 与 `vOffset`
+
+`themes/sakura/layout/_partial/footer.ejs`：
+
+```ejs
+display: { superSample: 2, width: 150, height: 300, position: 'left', hOffset: 0, vOffset: 240 },
+```
+
+| 参数 | 原值 | 新值 | 作用 |
+|---|---|---|---|
+| `position` | `'right'` | `'left'` | 挪到页面左侧 |
+| `vOffset` | `-20` | `240` | 往上抬 240px，避开左下 300×181 的播放器 |
+
+**关键坑：不能只靠 CSS 覆盖。** L2Dwidget 会给自己注入内联样式 `bottom: -20px`（值就是 `vOffset`），实测在样式表里写 `#live2d-widget{bottom:240px !important}` 在这套脚本里并不生效，最稳的做法是**直接改 `vOffset`**，让脚本自己算出正确的 `bottom`。
+
+（`style.css` 末尾也留了一条同名规则做双保险，注释已标明。）
+
+### 31.3 社交图标：把 SVG 的 `fill` 从白改回品牌色
+
+`source/img/social/*.svg` 六个文件原来都是 `fill="#ffffff"`，逐个替换：
+
+| 文件 | 颜色 | 平台 |
+|---|---|---|
+| `github.svg` | `#181717` | GitHub |
+| `sina.svg` | `#E6162D` | 新浪微博 |
+| `wangyiyun.svg` | `#C20C0C` | 网易云音乐 |
+| `zhihu.svg` | `#0084FF` | 知乎 |
+| `email.svg` | `#D44638` | 邮箱 |
+| `wechat.svg` | `#07C160` | 微信 / 公众号 |
+
+图标仍是本地 SVG（跟着 `url_for()` 走 `/skyblog/img/social/`），没有换回主题的 honjun CDN，避免裂图。
+
+### 31.4 自检
+
+```bash
+# 看板娘配置
+grep -o "position: 'left'\|vOffset: 240" public/index.html
+
+# 社交图标不再是白色
+grep -o 'fill="#[0-9A-Fa-f]*"' public/img/social/*.svg
+# → #181717 / #E6162D / #C20C0C / #0084FF / #D44638 / #07C160
+```
+
+### 31.5 线上验证
+
+```js
+// 看板娘在左侧、抬到播放器上方
+const w = document.querySelector('#live2d-widget').getBoundingClientRect();
+// { x: 0, y: 170, width: 150, height: 300 }  → left=0，bottom=240
+```
+
+音乐播放器 `#myhkplayer` 占底部 40–221px（300×181），看板娘从 240px 起，**两者不再重叠**。
 
 ---
 
