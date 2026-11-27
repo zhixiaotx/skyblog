@@ -466,6 +466,7 @@
 <li><a href="#%E7%AC%AC-19-%E6%AD%A5%E7%BB%99%E5%AF%BC%E8%88%AA%E6%A0%8F%E7%AB%99%E5%90%8D%E5%B7%A6%E8%BE%B9%E5%8A%A0%E5%A4%B4%E5%83%8F">第 19 步：给导航栏站名左边加头像</a></li>
 <li><a href="#%E7%AC%AC-20-%E6%AD%A5%E5%8E%BB%E6%8E%89%E6%A0%87%E9%A2%98%E5%90%8E%E9%9D%A2%E7%9A%84--%E7%AC%A6%E5%8F%B7">第 20 步：去掉标题后面的 ¶ 符号</a></li>
 <li><a href="#%E7%AC%AC-21-%E6%AD%A5%E5%85%B3%E6%8E%89%E5%A4%B4%E9%83%A8%E8%87%AA%E5%8A%A8%E6%92%AD%E6%94%BE%E7%9A%84%E8%83%8C%E6%99%AF%E8%A7%86%E9%A2%91">第 21 步：关掉头部自动播放的背景视频</a></li>
+<li><a href="#%E7%AC%AC-22-%E6%AD%A5%E7%9C%8B%E6%9D%BF%E5%A8%98%E6%8C%AA%E5%88%B0%E5%B7%A6%E4%BE%A7--%E7%A4%BE%E4%BA%A4%E5%9B%BE%E6%A0%87%E6%94%B9%E5%9B%9E%E5%93%81%E7%89%8C%E8%89%B2">第 22 步：看板娘挪到左侧 + 社交图标改回品牌色</a></li>
 <li><a href="#%E9%99%84%E5%BD%95-a%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5">附录 A：命令速查</a></li>
 <li><a href="#%E9%99%84%E5%BD%95-b%E8%A1%80%E6%B3%AA%E9%81%BF%E5%9D%91%E6%B8%85%E5%8D%95">附录 B：血泪避坑清单</a></li>
 </ul>
@@ -1290,6 +1291,92 @@
 
 <h3 id="🚨-7-网易云歌单外链大量失效"><a href="#🚨-7-网易云歌单外链大量失效" class="headerlink" title="🚨 7. 网易云歌单外链大量失效"></a>🚨 7. 网易云歌单外链大量失效</h3><p>播放器会卡在放不了的歌。换歌单 ID 治标，本地 mp3 治本。</p>
 <hr>
+<h2 id="第-22-步：看板娘挪到左侧-社交图标改回品牌色"><a href="#第-22-步：看板娘挪到左侧-社交图标改回品牌色" class="headerlink" title="第 22 步：看板娘挪到左侧 + 社交图标改回品牌色"></a>第 22 步：看板娘挪到左侧 + 社交图标改回品牌色</h2><h3 id="22-1-需求"><a href="#22-1-需求" class="headerlink" title="22.1 需求"></a>22.1 需求</h3><ol>
+<li>Live2D 看板娘默认贴在右下角，跟音乐播放器（<code>#myhkplayer</code>，左下 300×181）挤在一块互相遮挡，挪到页面<strong>左侧</strong>并且不能压住播放器。</li>
+<li>首页 banner 中间那排社交图标全是白色剪影，看不清平台，要改回彩色。</li>
+</ol>
+<h3 id="22-2-看板娘：改-position-和-vOffset"><a href="#22-2-看板娘：改-position-和-vOffset" class="headerlink" title="22.2 看板娘：改 position 和 vOffset"></a>22.2 看板娘：改 <code>position</code> 和 <code>vOffset</code></h3><p>打开 <code>themes/sakura/layout/_partial/footer.ejs</code>，找到 <code>L2Dwidget.init</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">display: &#123; superSample: 2, width: 150, height: 300, position: &#x27;left&#x27;, hOffset: 0, vOffset: 240 &#125;,</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>原来</th>
+<th>改成</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>position</code></td>
+<td><code>&#39;right&#39;</code></td>
+<td><code>&#39;left&#39;</code></td>
+<td>挪到左侧</td>
+</tr>
+<tr>
+<td><code>vOffset</code></td>
+<td><code>-20</code></td>
+<td><code>240</code></td>
+<td>往上抬 240px，让出左下给播放器</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🚨 <strong>坑：只写 CSS 没用。</strong><br>L2Dwidget 会给自己注入内联样式 <code>bottom: -20px</code>（值直接来自 <code>vOffset</code>）。<br>我一开始在 <code>style.css</code> 里写 <code>#live2d-widget{bottom:240px !important}</code>，实测照样是 <code>-20px</code>。<br>最靠谱的做法是<strong>直接改 <code>vOffset</code></strong>，让脚本自己算出正确的 <code>bottom</code>。<br>（<code>style.css</code> 末尾留了同名规则做双保险，注释已标注。）</p>
+</blockquote>
+<p>算一下：播放器占底部 40–221px（高 181 + 距底 40），看板娘从 240px 起、高 300，两者间隔 19px，<strong>不重叠</strong>。</p>
+<h3 id="22-3-社交图标：把-SVG-的白色-fill-换成品牌色"><a href="#22-3-社交图标：把-SVG-的白色-fill-换成品牌色" class="headerlink" title="22.3 社交图标：把 SVG 的白色 fill 换成品牌色"></a>22.3 社交图标：把 SVG 的白色 <code>fill</code> 换成品牌色</h3><p>六个图标在 <code>source/img/social/</code>，原来全部是 <code>fill=&quot;#ffffff&quot;</code>。逐个替换：</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>改成</th>
+<th>平台</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>github.svg</code></td>
+<td><code>#181717</code></td>
+<td>GitHub</td>
+</tr>
+<tr>
+<td><code>sina.svg</code></td>
+<td><code>#E6162D</code></td>
+<td>新浪微博</td>
+</tr>
+<tr>
+<td><code>wangyiyun.svg</code></td>
+<td><code>#C20C0C</code></td>
+<td>网易云音乐</td>
+</tr>
+<tr>
+<td><code>zhihu.svg</code></td>
+<td><code>#0084FF</code></td>
+<td>知乎</td>
+</tr>
+<tr>
+<td><code>email.svg</code></td>
+<td><code>#D44638</code></td>
+<td>邮箱</td>
+</tr>
+<tr>
+<td><code>wechat.svg</code></td>
+<td><code>#07C160</code></td>
+<td>微信 &#x2F; 公众号</td>
+</tr>
+</tbody></table>
+<p>一条 PowerShell 批量改（按需改颜色表）：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> hexo<span class="literal">-blog</span></span><br><span class="line"><span class="variable">$map</span> = <span class="selector-tag">@</span>&#123; <span class="string">&#x27;github.svg&#x27;</span>=<span class="string">&#x27;#181717&#x27;</span>; <span class="string">&#x27;sina.svg&#x27;</span>=<span class="string">&#x27;#E6162D&#x27;</span>; <span class="string">&#x27;wangyiyun.svg&#x27;</span>=<span class="string">&#x27;#C20C0C&#x27;</span></span><br><span class="line">          <span class="string">&#x27;zhihu.svg&#x27;</span>=<span class="string">&#x27;#0084FF&#x27;</span>; <span class="string">&#x27;email.svg&#x27;</span>=<span class="string">&#x27;#D44638&#x27;</span>; <span class="string">&#x27;wechat.svg&#x27;</span>=<span class="string">&#x27;#07C160&#x27;</span> &#125;</span><br><span class="line"><span class="keyword">foreach</span> (<span class="variable">$k</span> <span class="keyword">in</span> <span class="variable">$map</span>.Keys) &#123;</span><br><span class="line">    <span class="variable">$p</span> = <span class="string">&quot;source\img\social\<span class="variable">$k</span>&quot;</span></span><br><span class="line">    <span class="variable">$c</span> = (<span class="built_in">Get-Content</span> <span class="variable">$p</span> <span class="literal">-Raw</span>) <span class="operator">-replace</span> <span class="string">&#x27;fill=&quot;#ffffff&quot;&#x27;</span>, (<span class="string">&#x27;fill=&quot;&#x27;</span> + <span class="variable">$map</span>[<span class="variable">$k</span>] + <span class="string">&#x27;&quot;&#x27;</span>)</span><br><span class="line">    [<span class="type">System.IO.File</span>]::WriteAllText((<span class="built_in">Resolve-Path</span> <span class="variable">$p</span>), <span class="variable">$c</span>, (<span class="built_in">New-Object</span> System.Text.UTF8Encoding(<span class="variable">$false</span>)))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>图标仍然走本地 <code>source/img/social/*.svg</code>（经 <code>url_for()</code> 输出 <code>/skyblog/img/social/</code>），<br>没有换回主题自带的 honjun CDN，避免 CDN 挂了整排裂图。<br>写文件用 <code>UTF8Encoding($false)</code> 是为了不带 BOM，否则个别浏览器会把 BOM 当成图标内容的一部分。</p>
+</blockquote>
+<h3 id="22-4-自检"><a href="#22-4-自检" class="headerlink" title="22.4 自检"></a>22.4 自检</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 看板娘配置对不对</span></span><br><span class="line">grep -o <span class="string">&quot;position: &#x27;left&#x27;\|vOffset: 240&quot;</span> public/index.html</span><br><span class="line"></span><br><span class="line"><span class="comment"># 图标不再是白色</span></span><br><span class="line">grep -o <span class="string">&#x27;fill=&quot;#[0-9A-Fa-f]*&quot;&#x27;</span> public/img/social/*.svg</span><br><span class="line"><span class="comment"># → #181717 / #E6162D / #C20C0C / #0084FF / #D44638 / #07C160</span></span><br></pre></td></tr></table></figure>
+
+<p>浏览器里量一下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#live2d-widget&#x27;</span>).<span class="title function_">getBoundingClientRect</span>()</span><br><span class="line"><span class="comment">// &#123; x: 0, y: 170, width: 150, height: 300 &#125;   左侧、bottom=240</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="22-5-别忘了重新部署"><a href="#22-5-别忘了重新部署" class="headerlink" title="22.5 别忘了重新部署"></a>22.5 别忘了重新部署</h3><p>改完一定要 <code>npx hexo clean &amp;&amp; npx hexo generate</code> 再推 <code>gh-pages</code>。<br><code>hexo generate</code> 是增量构建，只改 CSS&#x2F;SVG 时旧产物可能留在 <code>public/</code> 里。</p>
+<hr>
 <p><strong>恭喜读到这里！</strong> 现在你已经能从零搭起并上线一个 Hexo + Sakura 博客了。<br>剩下就是多写、多改、多看 <code>npx hexo server</code> 的实时预览。<br>有问题就回看本教程的排错表，或者到 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">Hexo 文档</a> 查。</p>
 
         </div>
@@ -1382,7 +1469,7 @@
     <div class="ins-search-mask"></div>
     <div class="ins-search-container">
         <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
+            <input type="text" class="ins-search-input" placeholder="Type something..."/>
             <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="ins-section-wrapper">
@@ -1394,10 +1481,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: '文章',
-            // PAGES: '页面',
-            CATEGORIES: '分类',
-            TAGS: '标签',
+            POSTS: 'Posts',
+            // PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
         },
         ROOT_URL: '/skyblog/',
         CONTENT_URL: '/skyblog/content.json',
