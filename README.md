@@ -44,6 +44,7 @@
 23. [去掉标题后面的 ¶ 符号](#23-去掉标题后面的--符号)
 24. [关掉头部背景视频（不自动播放）](#24-关掉头部背景视频不自动播放)
 25. [看板娘挪到左侧 + 社交图标改回品牌色](#31-看板娘挪到左侧--社交图标改回品牌色)（正文编号 §31）
+26. [移动端页脚与电脑端署名统一](#32-移动端页脚与电脑端署名统一)（正文编号 §32）
 
 ---
 
@@ -1887,6 +1888,84 @@ const w = document.querySelector('#live2d-widget').getBoundingClientRect();
 ```
 
 音乐播放器 `#myhkplayer` 占底部 40–221px（300×181），看板娘从 240px 起，**两者不再重叠**。
+
+---
+
+## 32. 移动端页脚与电脑端署名统一
+
+### 32.1 问题
+
+电脑端页脚是改过的：
+
+```
+© 2026 Sky · 基于 Hexo + Sakura 🌸 搭建 · 托管于 GitHub Pages
+```
+
+但手机端点开侧边菜单，最底下还是主题自带的硬编码文字：
+
+```
+© 2019 hexo-sakura
+```
+
+两处分别写在不同的模板里，改电脑端时漏了移动端。
+
+### 32.2 两处文件
+
+| 位置 | 模板 | 说明 |
+|---|---|---|
+| 电脑端 | `themes/sakura/layout/_partial/footer.ejs` 第 23 行 | `.footer-device` 里的署名 |
+| 移动端 | `themes/sakura/layout/_partial/mheader.ejs` 第 38 行 | `#mo-nav` 抽屉底部，原来是写死的 `&copy 2019 hexo-sakura` |
+
+`mheader.ejs` 那段原来是：
+
+```ejs
+<p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
+```
+
+### 32.3 改法
+
+把移动端那行换成和电脑端一致的内容（保留移动端的小字号与居中，加了左右内边距防止贴边）：
+
+```ejs
+<p style="text-align: center; font-size: 13px; color: #b9b9b9; padding: 0 12px 10px; line-height: 1.8;">
+  <span style="color: #b9b9b9;">© 2026
+    <a href="<%- url_for('/') %>" style="color: #b9b9b9; text-decoration: underline dotted rgba(0, 0, 0, .1);">Sky</a>
+    · 基于 <a href="https://hexo.io/" target="_blank" ...>Hexo</a>
+    + <a href="https://github.com/honjun/hexo-theme-sakura" target="_blank" ...>Sakura</a>
+    <i class="iconfont icon-sakura rotating" style="color: #ffc0cb; display: inline-block;"></i>
+    搭建 · 托管于 <a href="https://pages.github.com/" target="_blank" ...>GitHub Pages</a>
+  </span>
+</p>
+```
+
+要点：
+
+- 站名 `Sky` 用 `url_for('/')` 回首页，**必须带 `<%- %>`**（不转义），否则子目录 `/skyblog/` 下链接会拼错
+- 旋转小花花 `<i class="iconfont icon-sakura rotating">` 一起搬过来，两边视觉一致
+- 颜色统一 `#b9b9b9`，和电脑端同色
+
+### 32.4 自检
+
+```bash
+# 旧文案不该再出现
+grep -rc '2019 hexo-sakura' public/ | grep -v ':0'   # 应无输出
+
+# 移动端抽屉里也有完整署名
+grep -o 'id="mo-nav"' public/index.html
+grep -c '托管于' public/index.html                     # ≥2（电脑端 + 移动端）
+
+# EJS 占位符别漏渲染成字符串
+grep -c '&lt;%-' public/index.html                    # 0
+```
+
+### 32.5 备忘
+
+下次改页脚署名，两处一起改：
+
+```
+themes/sakura/layout/_partial/footer.ejs    # 电脑端
+themes/sakura/layout/_partial/mheader.ejs   # 移动端（#mo-nav 抽屉底部）
+```
 
 ---
 
