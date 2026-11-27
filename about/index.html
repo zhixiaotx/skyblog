@@ -411,7 +411,7 @@
 <p>这是一个基于 Hexo + Butterfly 构建的个人博客，用来记录技术与生活。</p>
 <ul>
 <li>GitHub：<a target="_blank" rel="noopener" href="https://github.com/zhixiaotx">@zhixiaotx</a></li>
-<li>邮箱：<a href="mailto:&#x6c;&#x69;&#x75;&#108;&#x69;&#x75;&#49;&#57;&#57;&#48;&#x31;&#49;&#49;&#48;&#64;&#103;&#109;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#111;&#109;">liuliu19901110@gmail.com</a></li>
+<li>邮箱：<a href="mailto:&#x6c;&#105;&#117;&#108;&#105;&#x75;&#49;&#x39;&#57;&#x30;&#x31;&#49;&#49;&#48;&#x40;&#x67;&#109;&#97;&#x69;&#x6c;&#46;&#x63;&#111;&#109;">liuliu19901110@gmail.com</a></li>
 </ul>
 <p>感谢你的访问，欢迎留言交流！</p>
 
@@ -444,7 +444,8 @@
       <!-- #post-## -->
       <section class="author-profile">
         <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
-          <a href="/skyblog/about/" class="profile gravatar"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/favicon.png" itemprop="image" alt="Sky" height="70" width="70"></a>
+          
+          <a href="/skyblog/about/" class="profile gravatar"><img src="/skyblog/img/favicon.png" itemprop="image" alt="Sky" height="70" width="70"></a>
           <div class="meta">
             <span class="title">Author</span>
             <h3 itemprop="name">
@@ -462,7 +463,7 @@
     <div class="ins-search-mask"></div>
     <div class="ins-search-container">
         <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
+            <input type="text" class="ins-search-input" placeholder="Type something..."/>
             <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="ins-section-wrapper">
@@ -474,10 +475,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: '文章',
-            // PAGES: '页面',
-            CATEGORIES: '分类',
-            TAGS: '标签',
+            POSTS: 'Posts',
+            // PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
         },
         ROOT_URL: '/skyblog/',
         CONTENT_URL: '/skyblog/content.json',
@@ -537,7 +538,7 @@ if (window.L2Dwidget) {
       jsonPath: '/skyblog/live2d/models/tororo/tororo.model.json',
       scale: 1
     },
-    display: { superSample: 2, width: 150, height: 300, position: 'right', hOffset: 0, vOffset: -20 },
+    display: { superSample: 2, width: 150, height: 300, position: 'left', hOffset: 0, vOffset: -20 },
     mobile: { show: false, scale: 0.5 },
     react: { enable: true, opacityDefault: 0.7, opacityOnHover: 0.2 },
     dialog: { enable: false }
@@ -607,7 +608,8 @@ $(document).ready(function() {
   </section>
   <div id="mo-nav" class="">
   <div class="m-avatar">
-    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/favicon.png">
+    
+    <img src="/skyblog/img/favicon.png">
   </div>
   <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">Sky</p>
   <p style="text-align: center; word-spacing: 20px;">
